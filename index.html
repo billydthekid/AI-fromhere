@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>AI FROM HERE — Build AI. Build Skills. Build Local Future.</title>
     <meta name="description" content="แพลตฟอร์ม Project-Based AI Learning ที่เปลี่ยนความรู้และปัญหาในชุมชนให้เป็นห้องเรียน เพื่อให้เด็กสามารถสร้าง AI จากบริบทของพื้นที่ตัวเอง">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
                     <span class="brand-name">AI FROM HERE</span>
                 </div>
                 <p class="auth-tagline" id="auth-tagline-text">เรียนรู้จากสิ่งที่ชุมชนของคุณรู้ และสร้าง AI จากมัน</p>
-                <div class="auth-badge">🚀 JUMP Thailand 2026</div>
+                <div class="auth-badge"><i data-lucide="sparkles"></i> JUMP Thailand 2026</div>
             </div>
 
             <!-- LOGIN VIEW -->
@@ -69,9 +69,18 @@
                 </div>
 
                 <div class="demo-quick-login">
-                    <button type="button" class="btn btn-outline btn-sm" onclick="quickDemoLogin()">
-                        <i data-lucide="play"></i> <span data-i18n="quickDemoLogin">เข้าสู่ระบบแบบ Demo ทันที</span>
-                    </button>
+                    <div class="demo-login-header" data-i18n="quickDemoHeader">ทดลองเข้าสู่ระบบตามบทบาท:</div>
+                    <div class="demo-role-btns">
+                        <button type="button" class="btn btn-outline btn-sm" onclick="quickDemoLogin('student')">
+                            <i data-lucide="user"></i> <span>นักเรียน (Student)</span>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="quickDemoLogin('teacher')">
+                            <i data-lucide="award"></i> <span>ครู / ผู้เชี่ยวชาญ (Teacher)</span>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="quickDemoLogin('admin')">
+                            <i data-lucide="shield-check"></i> <span>Admin / Partner</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -113,8 +122,8 @@
                             <i data-lucide="award"></i>
                             <select id="reg-role" required>
                                 <option value="student" data-i18n="roleStudent">นักเรียน (AI Creator)</option>
-                                <option value="teacher" data-i18n="roleTeacher">ครู / ผู้ดูแล</option>
-                                <option value="expert" data-i18n="roleExpert">ผู้เชี่ยวชาญในชุมชน</option>
+                                <option value="teacher" data-i18n="roleTeacher">ครู / ผู้เชี่ยวชาญในชุมชน</option>
+                                <option value="admin" data-i18n="roleAdmin">ผู้ดูแลระบบ / Partner</option>
                             </select>
                         </div>
                     </div>
@@ -148,7 +157,7 @@
 
                     <button type="submit" class="btn btn-primary btn-full btn-lg auth-submit-btn">
                         <span data-i18n="registerBtn">สร้างบัญชี</span>
-                        <i data-lucide="user-plus"></i>
+                        <i data-lucide="arrow-right"></i>
                     </button>
                 </form>
 
@@ -160,10 +169,10 @@
         </div>
     </div>
 
-    <!-- MAIN APP WRAPPER -->
+    <!-- MAIN APPLICATION CONTAINER -->
     <div id="main-app-container" class="main-app-layout">
-        <!-- Sidebar Navigation -->
-        <aside id="sidebar">
+        <!-- SIDEBAR (WHITE & GREEN) -->
+        <aside id="sidebar" aria-label="Main Navigation">
             <div class="sidebar-brand">
                 <div class="brand-icon">
                     <i data-lucide="sparkles"></i>
@@ -174,110 +183,123 @@
                 </div>
             </div>
 
-            <nav class="sidebar-nav">
-                <a class="nav-item active" data-page="dashboard">
-                    <i data-lucide="home"></i>
-                    <span data-i18n="navDashboard">ภาพรวม</span>
-                </a>
-                <a class="nav-item" data-page="missions">
-                    <i data-lucide="target"></i>
-                    <span data-i18n="navMissions">ภารกิจ</span>
-                </a>
-                <a class="nav-item" data-page="knowledge">
-                    <i data-lucide="book-open"></i>
-                    <span data-i18n="navKnowledge">องค์ความรู้</span>
-                </a>
-                <a class="nav-item" data-page="verify">
-                    <i data-lucide="check-circle-2"></i>
-                    <span data-i18n="navVerify">ตรวจสอบข้อมูล</span>
-                </a>
-                <a class="nav-item" data-page="build">
-                    <i data-lucide="zap"></i>
-                    <span data-i18n="navBuild">สร้าง Local AI</span>
-                </a>
-                <a class="nav-item" data-page="test">
-                    <i data-lucide="flask-conical"></i>
-                    <span data-i18n="navTest">ทดสอบ AI</span>
-                </a>
-                <a class="nav-item" data-page="impact">
-                    <i data-lucide="bar-chart-2"></i>
-                    <span data-i18n="navImpact">ผลกระทบ</span>
-                </a>
-                <a class="nav-item" data-page="profile">
-                    <i data-lucide="user"></i>
-                    <span data-i18n="navProfile">โปรไฟล์</span>
-                </a>
+            <!-- DYNAMIC SIDEBAR NAV BY ROLE -->
+            <nav id="sidebar-nav-container" class="sidebar-nav" aria-label="Sidebar Navigation">
+                <!-- Populated via script.js -->
             </nav>
 
+            <!-- SIDEBAR FOOTER -->
             <div class="sidebar-footer">
-                <!-- Language Switcher -->
                 <div class="lang-switch-container">
-                    <span class="lang-label"><i data-lucide="globe"></i> ภาษา:</span>
+                    <span class="lang-label"><i data-lucide="globe"></i> <span>ภาษา:</span></span>
                     <div class="lang-switch-btn-group">
-                        <button type="button" class="lang-btn active" id="lang-th" onclick="setLanguage('th')">TH</button>
-                        <button type="button" class="lang-btn" id="lang-en" onclick="setLanguage('en')">EN</button>
+                        <button class="lang-btn active" id="lang-th" onclick="setLanguage('th')">TH</button>
+                        <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">EN</button>
                     </div>
                 </div>
 
-                <!-- User Profile & Logout -->
-                <div class="sidebar-user-card">
+                <div class="sidebar-user-card" onclick="navigateTo('profile')" title="ดูโปรไฟล์">
                     <div class="user-avatar-sm" id="sidebar-avatar">B</div>
                     <div class="user-info-sm">
                         <span class="user-name-sm" id="sidebar-user-name">Billy</span>
                         <span class="user-role-sm" id="sidebar-user-role">Local AI Creator</span>
                     </div>
-                    <button class="logout-btn" onclick="handleLogout()" title="ออกจากระบบ" aria-label="Logout">
+                    <button class="logout-btn" onclick="event.stopPropagation(); handleLogout()" title="ออกจากระบบ" aria-label="Logout">
                         <i data-lucide="log-out"></i>
                     </button>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main id="main">
-            <!-- Top Navigation Bar -->
+        <!-- MOBILE SIDEBAR OVERLAY -->
+        <div class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div id="main">
+            <!-- TOPBAR -->
             <header id="topbar">
-                <button id="menu-toggle" class="icon-btn" aria-label="Toggle menu">
+                <button id="menu-toggle" onclick="toggleMobileSidebar()" aria-label="Toggle Mobile Navigation">
                     <i data-lucide="menu"></i>
                 </button>
+
+                <!-- ACTIVE MISSION SELECTOR (STUDENT) -->
+                <div class="mission-quick-selector" id="topbar-mission-selector-container" style="display: none;">
+                    <span class="selector-label"><i data-lucide="target"></i> <span data-i18n="activeMissionLabel">ภารกิจที่ทำอยู่:</span></span>
+                    <select id="active-mission-dropdown" onchange="handleActiveMissionChange(this.value)">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- GLOBAL SEARCH -->
                 <div class="search-box">
                     <i data-lucide="search"></i>
-                    <input type="text" placeholder="ค้นหาภารกิจ, องค์ความรู้..." id="search-input">
+                    <input type="text" id="search-input" placeholder="ค้นหาภารกิจ, องค์ความรู้..." onkeyup="handleGlobalSearch(this.value)">
                 </div>
+
+                <!-- TOPBAR RIGHT ACTIONS -->
                 <div class="topbar-actions">
-                    <button id="demo-btn" class="demo-button" onclick="toggleDemoMode()">
-                        <i data-lucide="play"></i>
+                    <button class="demo-button" id="demo-btn" onclick="toggleDemoMode()">
+                        <i data-lucide="play-circle"></i>
                         <span id="demo-btn-text" data-i18n="demoBtn">Start Demo</span>
                     </button>
-                    <button class="icon-btn notif-btn" id="notif-btn" aria-label="Notifications" onclick="showNotificationToast()">
-                        <i data-lucide="bell"></i>
-                        <span class="notif-badge">3</span>
-                    </button>
-                    <div class="user-profile" id="user-profile" onclick="navigateTo('profile')">
+
+                    <!-- NOTIFICATION BELL & DROPDOWN -->
+                    <div class="notif-wrapper">
+                        <button class="icon-btn" id="notif-btn" onclick="toggleNotificationDropdown()" title="การแจ้งเตือน" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                            <span class="notif-badge hidden" id="notif-badge">0</span>
+                        </button>
+
+                        <div class="notif-dropdown hidden" id="notif-dropdown">
+                            <div class="notif-header">
+                                <h3>การแจ้งเตือน</h3>
+                                <button class="notif-clear-btn" onclick="markAllNotificationsAsRead()">อ่านทั้งหมด</button>
+                            </div>
+                            <div class="notif-list" id="notif-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-profile" onclick="navigateTo('profile')" title="ดูโปรไฟล์">
                         <div class="user-avatar" id="topbar-avatar">B</div>
                         <span class="user-name" id="topbar-name">Billy</span>
-                        <i data-lucide="chevron-right" class="user-chevron"></i>
+                        <span class="role-pill-badge" id="topbar-role-badge">Student</span>
                     </div>
                 </div>
             </header>
 
-            <!-- Demo Progress Bar -->
+            <!-- DEMO PROGRESS BAR (VISIBLE ONLY WHEN DEMO RUNNING) -->
             <div id="demo-bar" class="demo-bar hidden">
                 <div class="demo-bar-inner">
                     <div class="demo-progress-fill" id="demo-progress-fill"></div>
                 </div>
-                <span class="demo-label" id="demo-label">โหมดสาธิต (Demo Flow)</span>
-                <button class="demo-stop" id="demo-stop" aria-label="Stop Demo" onclick="stopDemo()">
-                    <i data-lucide="square"></i> <span>หยุด Demo</span>
-                </button>
+                <span class="demo-label" id="demo-label">Demo Running: Step 1/6</span>
+                <button class="demo-stop" onclick="stopDemo()"><i data-lucide="x"></i> <span data-i18n="stopDemoBtn">หยุด Demo</span></button>
             </div>
 
-            <!-- Pages Container -->
-            <div id="content">
+            <!-- DYNAMIC BREADCRUMB -->
+            <nav class="breadcrumb-container" id="page-breadcrumb" aria-label="Breadcrumb">
+                <span class="breadcrumb-item active"><i data-lucide="home"></i> ภาพรวม</span>
+            </nav>
 
-                <!-- ==================== 1. DASHBOARD ==================== -->
+            <!-- CONTENT PAGES -->
+            <main id="content">
+                <!-- 1. DASHBOARD PAGE -->
                 <section id="page-dashboard" class="page active">
-                    <!-- Hero Section -->
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 id="dash-greeting-title">สวัสดี, Billy</h1>
+                            <p>ยินดีต้อนรับกลับมาสู่ระบบสร้าง AI ประจำชุมชนของคุณ</p>
+                        </div>
+                        <div class="page-title-actions">
+                            <button class="btn btn-primary" onclick="openCreateMissionModal()">
+                                <i data-lucide="plus-circle"></i> <span data-i18n="btnCreateNewMission">สร้างภารกิจใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- HERO BANNER -->
                     <div class="hero">
                         <div class="hero-bg">
                             <div class="hero-orb hero-orb-1"></div>
@@ -285,719 +307,816 @@
                             <div class="hero-orb hero-orb-3"></div>
                         </div>
                         <div class="hero-content">
-                            <div class="hero-badge">
-                                <i data-lucide="sparkles"></i>
-                                <span>JUMP Thailand 2026 — Project-Based AI Learning</span>
-                            </div>
-                            <h1 class="hero-title" data-i18n="heroTitle">สร้าง AI จากสิ่งที่ชุมชนของคุณรู้</h1>
+                            <span class="hero-badge"><i data-lucide="sparkles"></i> JUMP Thailand 2026 — Project-Based AI Learning</span>
+                            <h2 class="hero-title" data-i18n="heroTitle">สร้าง AI จากสิ่งที่ชุมชนของคุณรู้</h2>
                             <p class="hero-subtitle" data-i18n="heroSubtitle">ไม่ใช่แค่เรียน AI แต่ลงมือสร้าง AI จากปัญหาและองค์ความรู้ในพื้นที่จริง</p>
                             <div class="hero-actions">
-                                <button class="btn btn-primary btn-lg" onclick="navigateTo('missions')">
-                                    <i data-lucide="target"></i> <span data-i18n="startMissionBtn">เริ่มภารกิจ</span>
+                                <button class="btn btn-primary" onclick="openCreateMissionModal()">
+                                    <i data-lucide="plus-circle"></i> <span data-i18n="btnCreateNewMission">สร้างภารกิจใหม่</span>
                                 </button>
-                                <button class="btn btn-outline btn-lg" onclick="navigateTo('profile')">
-                                    <i data-lucide="folder-kanban"></i> <span data-i18n="viewMyProjectsBtn">ดูโปรเจกต์ของฉัน</span>
+                                <button class="btn btn-outline" onclick="navigateTo('missions')">
+                                    <i data-lucide="target"></i> <span data-i18n="viewAllMissions">ดูภารกิจทั้งหมด</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Dashboard Stats (4 Cards) -->
+                    <!-- STATS GRID -->
                     <div class="stats-grid">
                         <div class="stat-card" onclick="navigateTo('missions')">
                             <div class="stat-icon green"><i data-lucide="target"></i></div>
-                            <div class="stat-value" id="dash-stat-missions">3</div>
-                            <div class="stat-label" data-i18n="statMissions">ภารกิจ</div>
+                            <div class="stat-value" id="dash-stat-missions">0</div>
+                            <div class="stat-label" data-i18n="statMissions">ภารกิจของฉัน</div>
                         </div>
                         <div class="stat-card" onclick="navigateTo('knowledge')">
                             <div class="stat-icon dark"><i data-lucide="book-open"></i></div>
-                            <div class="stat-value" id="dash-stat-sources">12</div>
-                            <div class="stat-label" data-i18n="statKnowledge">องค์ความรู้</div>
+                            <div class="stat-value" id="dash-stat-sources">0</div>
+                            <div class="stat-label" data-i18n="statKnowledge">องค์ความรู้ที่เก็บ</div>
                         </div>
                         <div class="stat-card" onclick="navigateTo('build')">
                             <div class="stat-icon green"><i data-lucide="cpu"></i></div>
-                            <div class="stat-value" id="dash-stat-ai">1</div>
-                            <div class="stat-label" data-i18n="statAI">AI ที่สร้าง</div>
+                            <div class="stat-value" id="dash-stat-ai">0</div>
+                            <div class="stat-label" data-i18n="statAI">AI ที่สร้างสำเร็จ</div>
                         </div>
                         <div class="stat-card" onclick="navigateTo('profile')">
                             <div class="stat-icon dark"><i data-lucide="award"></i></div>
-                            <div class="stat-value" id="dash-stat-skills">5</div>
+                            <div class="stat-value" id="dash-stat-skills">0</div>
                             <div class="stat-label" data-i18n="statSkills">ทักษะที่ปลดล็อก</div>
                         </div>
                     </div>
 
-                    <!-- Current Mission Card -->
+                    <!-- DASHBOARD CONTROL CENTER — DYNAMIC ACTIVE MISSION CARD & NEXT ACTION CTA -->
                     <div class="section-header">
-                        <h2 data-i18n="currentMissionTitle">ภารกิจปัจจุบัน</h2>
-                        <a class="section-link" onclick="navigateTo('missions')">
-                            <span data-i18n="viewAllMissions">ดูทั้งหมด</span> <i data-lucide="arrow-right"></i>
-                        </a>
+                        <h2 data-i18n="currentMissionTitle">ภารกิจปัจจุบัน (Active Mission)</h2>
+                        <a onclick="navigateTo('missions')" class="section-link"><span data-i18n="viewAllMissions">ดูภารกิจทั้งหมด</span> <i data-lucide="arrow-right"></i></a>
                     </div>
-                    <div class="current-mission-card" onclick="navigateTo('missions')">
-                        <div class="mission-card-left">
-                            <div class="mission-emoji">☕</div>
-                            <div class="mission-card-info">
-                                <h3>Coffee Local AI</h3>
-                                <p data-i18n="coffeeMissionDesc">สร้าง AI Assistant จากองค์ความรู้ของเกษตรกรผู้ปลูกกาแฟในชุมชน</p>
-                            </div>
-                        </div>
-                        <div class="mission-card-right">
-                            <div class="progress-info">
-                                <span class="progress-label" data-i18n="progressLabel">ความคืบหน้า</span>
-                                <span class="progress-value" id="dash-progress-value">72%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="dash-progress-fill" style="width:72%"></div>
-                            </div>
-                        </div>
+                    <div id="dash-active-mission-container">
+                        <!-- Populated dynamically: Shows Active Mission + Dynamic Primary CTA -->
                     </div>
 
-                    <!-- Step Progress (COLLECT → VERIFY → STRUCTURE → BUILD → TEST → DEPLOY) -->
+                    <!-- STEP PROGRESS (PROBLEM -> KNOWLEDGE -> VERIFY -> BUILD -> TEST -> IMPACT) -->
                     <div class="step-progress-container">
-                        <div class="step-progress">
-                            <div class="step completed" onclick="navigateTo('knowledge')">
-                                <div class="step-dot"><i data-lucide="check"></i></div>
-                                <span class="step-label" data-i18n="stepCollect">เก็บข้อมูล</span>
-                            </div>
-                            <div class="step-line completed"></div>
-                            <div class="step completed" onclick="navigateTo('verify')">
-                                <div class="step-dot"><i data-lucide="check"></i></div>
-                                <span class="step-label" data-i18n="stepVerify">ตรวจสอบ</span>
-                            </div>
-                            <div class="step-line completed"></div>
-                            <div class="step completed">
-                                <div class="step-dot"><i data-lucide="check"></i></div>
-                                <span class="step-label" data-i18n="stepStructure">จัดโครงสร้าง</span>
-                            </div>
-                            <div class="step-line active"></div>
-                            <div class="step active" onclick="navigateTo('build')">
-                                <div class="step-dot"></div>
-                                <span class="step-label" data-i18n="stepBuild">สร้าง Local AI</span>
-                            </div>
-                            <div class="step-line"></div>
-                            <div class="step" onclick="navigateTo('test')">
-                                <div class="step-dot"></div>
-                                <span class="step-label" data-i18n="stepTest">ทดสอบ AI</span>
-                            </div>
-                            <div class="step-line"></div>
-                            <div class="step" onclick="navigateTo('impact')">
-                                <div class="step-dot"></div>
-                                <span class="step-label" data-i18n="stepDeploy">Deploy</span>
-                            </div>
+                        <div class="step-progress" id="dash-step-progress">
+                            <!-- Populated dynamically with step statuses & colors -->
                         </div>
                     </div>
 
-                    <!-- Quick Action CTA -->
-                    <div class="dash-cta-banner">
-                        <div class="dash-cta-text">
-                            <h3>Coffee Local AI — ขั้นตอนถัดไป: ทดสอบความรู้ที่สร้าง</h3>
-                            <p>องค์ความรู้ 12 รายการผ่านการตรวจสอบและเชื่อมต่อกับระบบ RAG เรียบร้อยแล้ว</p>
+                    <!-- ============================================
+                         SOLUTION SECTION (REFINED PROFESSIONAL SAAS)
+                         ============================================ -->
+                    <section class="solution-section" id="solution-section">
+                        <div class="solution-header">
+                            <span class="solution-tag">SOLUTION</span>
+                            <h2>AI FROM HERE — เปลี่ยนองค์ความรู้ของชุมชนให้กลายเป็น Local AI</h2>
+                            <p>แพลตฟอร์มที่ช่วยให้ชุมชนสามารถรวบรวม ตรวจสอบ เติมเต็ม และนำองค์ความรู้ท้องถิ่นมาใช้งานผ่าน AI โดยไม่จำเป็นต้องมีความรู้ด้าน AI เชิงลึก</p>
                         </div>
-                        <button class="btn btn-primary btn-lg" onclick="navigateTo('build')">
-                            <i data-lucide="zap"></i> <span data-i18n="continueMissionBtn">ทำภารกิจต่อ</span>
-                        </button>
-                    </div>
 
-                    <!-- Landing Quote & Core Philosophy -->
-                    <div class="landing-message">
-                        <div class="landing-glow"></div>
-                        <h2>AI FROM HERE</h2>
-                        <p class="landing-th">“เราไม่ได้พา AI ไปสอนเด็กในพื้นที่ห่างไกล<br>เราพาเด็กในพื้นที่ห่างไกล เข้ามาเป็นคนสอน AI”</p>
-                        <p class="landing-en">“We don't bring AI to teach children.<br>We empower children to teach AI about their world.”</p>
-                    </div>
+                        <div class="solution-process">
+                            <!-- Step 01 -->
+                            <div class="process-card">
+                                <div class="process-num">01</div>
+                                <div class="process-icon-wrap"><i data-lucide="book-open"></i></div>
+                                <h3>เก็บองค์ความรู้</h3>
+                                <p>รวบรวมข้อมูลจากการสัมภาษณ์ เอกสาร รูปภาพ และไฟล์ต่าง ๆ</p>
+                            </div>
 
-                    <footer class="page-footer">
-                        <span>AI FROM HERE</span> — Build AI. Build Skills. Build Local Future.
-                    </footer>
+                            <div class="process-arrow">
+                                <i data-lucide="arrow-right" class="arrow-desktop"></i>
+                                <i data-lucide="arrow-down" class="arrow-mobile"></i>
+                            </div>
+
+                            <!-- Step 02 -->
+                            <div class="process-card">
+                                <div class="process-num">02</div>
+                                <div class="process-icon-wrap"><i data-lucide="brain"></i></div>
+                                <h3>AI ช่วยตรวจสอบ</h3>
+                                <p>วิเคราะห์คุณภาพข้อมูล ตรวจหาข้อมูลที่ขาด และค้นข้อมูลประกอบจากแหล่งที่น่าเชื่อถือ</p>
+                            </div>
+
+                            <div class="process-arrow">
+                                <i data-lucide="arrow-right" class="arrow-desktop"></i>
+                                <i data-lucide="arrow-down" class="arrow-mobile"></i>
+                            </div>
+
+                            <!-- Step 03 -->
+                            <div class="process-card">
+                                <div class="process-num">03</div>
+                                <div class="process-icon-wrap"><i data-lucide="shield-check"></i></div>
+                                <h3>ตรวจสอบโดยมนุษย์</h3>
+                                <p>ผู้มีสิทธิ์ตรวจสอบและยืนยันข้อมูล ก่อนนำไปใช้เป็นองค์ความรู้</p>
+                            </div>
+
+                            <div class="process-arrow">
+                                <i data-lucide="arrow-right" class="arrow-desktop"></i>
+                                <i data-lucide="arrow-down" class="arrow-mobile"></i>
+                            </div>
+
+                            <!-- Step 04 -->
+                            <div class="process-card">
+                                <div class="process-num">04</div>
+                                <div class="process-icon-wrap"><i data-lucide="bot"></i></div>
+                                <h3>สร้าง Local AI</h3>
+                                <p>เปลี่ยนองค์ความรู้ที่ผ่านการตรวจสอบ ให้เป็น AI เฉพาะของแต่ละชุมชน</p>
+                            </div>
+
+                            <div class="process-arrow">
+                                <i data-lucide="arrow-right" class="arrow-desktop"></i>
+                                <i data-lucide="arrow-down" class="arrow-mobile"></i>
+                            </div>
+
+                            <!-- Step 05 -->
+                            <div class="process-card">
+                                <div class="process-num">05</div>
+                                <div class="process-icon-wrap"><i data-lucide="message-circle"></i></div>
+                                <h3>นำไปใช้งานจริง</h3>
+                                <p>สมาชิกและผู้ที่เกี่ยวข้องสามารถถาม AI และเข้าถึงองค์ความรู้ของชุมชนได้ง่าย</p>
+                            </div>
+                        </div>
+
+                        <!-- KEY VALUE FORMULA CARD -->
+                        <div class="key-value-card">
+                            <div class="key-value-item">
+                                <div class="kv-icon"><i data-lucide="book-open"></i></div>
+                                <span>Community Knowledge</span>
+                            </div>
+                            <span class="kv-operator"><i data-lucide="plus"></i></span>
+                            <div class="key-value-item">
+                                <div class="kv-icon"><i data-lucide="brain"></i></div>
+                                <span>AI Research</span>
+                            </div>
+                            <span class="kv-operator"><i data-lucide="plus"></i></span>
+                            <div class="key-value-item">
+                                <div class="kv-icon"><i data-lucide="shield-check"></i></div>
+                                <span>Human Verification</span>
+                            </div>
+                            <span class="kv-operator"><i data-lucide="equal"></i></span>
+                            <div class="key-value-item highlight">
+                                <div class="kv-icon"><i data-lucide="bot"></i></div>
+                                <span>Trusted Local AI</span>
+                            </div>
+                        </div>
+
+                        <!-- KEY MESSAGE CARD -->
+                        <div class="key-message-card">
+                            <p>“ไม่ใช่แค่ AI ที่ตอบคำถาม แต่คือ AI ที่สร้างจากความรู้ของคนในพื้นที่”</p>
+                        </div>
+                    </section>
                 </section>
 
-                <!-- ==================== 2. MISSIONS ==================== -->
+                <!-- 2. MISSIONS PAGE -->
                 <section id="page-missions" class="page">
-                    <div class="page-title">
-                        <h1 data-i18n="missionsHeader">ภารกิจของฉัน</h1>
-                        <p data-i18n="missionsSubheader">เลือกภารกิจจริงในชุมชนเพื่อสร้าง AI Assistant ที่ตอบโจทย์การใช้งานจริง</p>
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="missionsHeader">ภารกิจของฉัน</h1>
+                            <p data-i18n="missionsSubheader">สร้างและจัดการภารกิจ AI จากโจทย์จริงในชุมชนของคุณ</p>
+                        </div>
+                        <div class="page-title-actions">
+                            <button class="btn btn-primary" onclick="openCreateMissionModal()">
+                                <i data-lucide="plus-circle"></i> <span data-i18n="btnCreateNewMission">สร้างภารกิจใหม่</span>
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="missions-grid">
-                        <!-- Coffee Local AI -->
-                        <div class="mission-card" data-mission="coffee" onclick="openMissionModal('coffee')">
-                            <div class="mission-card-status in-progress" data-i18n="statusInProgress">กำลังดำเนินการ</div>
-                            <div class="mission-card-emoji">☕</div>
-                            <h3>Coffee Local AI</h3>
-                            <p data-i18n="missionCoffeeCardDesc">สร้าง AI Assistant จากองค์ความรู้ของเกษตรกรผู้ปลูกกาแฟในพื้นที่ดอยช้าง</p>
-                            <div class="mission-card-meta">
-                                <span><i data-lucide="database"></i> 12 องค์ความรู้</span>
-                                <span><i data-lucide="map-pin"></i> ชุมชนดอยช้าง เชียงราย</span>
-                            </div>
-                            <div class="progress-bar small">
-                                <div class="progress-fill" style="width:72%"></div>
-                            </div>
-                            <div class="mission-card-action">
-                                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); navigateTo('build')">
-                                    <span data-i18n="btnContinue">ทำต่อ</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Local Tourism AI -->
-                        <div class="mission-card" data-mission="tourism" onclick="openMissionModal('tourism')">
-                            <div class="mission-card-status available" data-i18n="statusAvailable">พร้อมเริ่ม</div>
-                            <div class="mission-card-emoji">🏝️</div>
-                            <h3>Local Tourism AI</h3>
-                            <p data-i18n="missionTourismCardDesc">รวบรวมเรื่องเล่าและสถานที่ท่องเที่ยวลับจากคนในชุมชนเพื่อสร้างไกด์ AI ท้องถิ่น</p>
-                            <div class="mission-card-meta">
-                                <span><i data-lucide="database"></i> 0 องค์ความรู้</span>
-                                <span><i data-lucide="map-pin"></i> ชุมชนท่องเที่ยวเชียงราย</span>
-                            </div>
-                            <div class="progress-bar small">
-                                <div class="progress-fill" style="width:0%"></div>
-                            </div>
-                            <div class="mission-card-action">
-                                <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openMissionModal('tourism')">
-                                    <span data-i18n="btnStartMission">เริ่มภารกิจ</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Smart Farming AI -->
-                        <div class="mission-card" data-mission="farming" onclick="openMissionModal('farming')">
-                            <div class="mission-card-status available" data-i18n="statusAvailable">พร้อมเริ่ม</div>
-                            <div class="mission-card-emoji">🌾</div>
-                            <h3>Smart Farming AI</h3>
-                            <p data-i18n="missionFarmingCardDesc">สร้าง AI ช่วยตอบคำถามด้านการเกษตรและโรคพืชจากปราชญ์ชาวบ้าน</p>
-                            <div class="mission-card-meta">
-                                <span><i data-lucide="database"></i> 0 องค์ความรู้</span>
-                                <span><i data-lucide="map-pin"></i> กลุ่มเกษตรกรภาคเหนือ</span>
-                            </div>
-                            <div class="progress-bar small">
-                                <div class="progress-fill" style="width:0%"></div>
-                            </div>
-                            <div class="mission-card-action">
-                                <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openMissionModal('farming')">
-                                    <span data-i18n="btnStartMission">เริ่มภารกิจ</span>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="missions-grid" id="missions-grid-container">
+                        <!-- Populated dynamically -->
                     </div>
                 </section>
 
-                <!-- ==================== 3. KNOWLEDGE COLLECTION ==================== -->
+                <!-- 3. KNOWLEDGE PAGE -->
                 <section id="page-knowledge" class="page">
-                    <div class="page-title">
-                        <h1 data-i18n="knowledgeHeader">องค์ความรู้ของชุมชน</h1>
-                        <p data-i18n="knowledgeSubheader">อะไรในชุมชนของคุณที่ AI ยังไม่รู้?</p>
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="knowledgeHeader">องค์ความรู้ของชุมชน</h1>
+                            <p data-i18n="knowledgeSubheader">รวบรวมไฟล์เสียง ภาพ ข้อความ และเอกสารภายใต้ภารกิจที่เลือก</p>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="active-mission-badge" id="knowledge-mission-context">
+                                <i data-lucide="target"></i> <span>ภารกิจ: Coffee Local AI</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Upload Area -->
+                    <!-- UPLOAD AREA -->
                     <div class="upload-area" id="upload-area">
                         <div class="upload-icon">
                             <i data-lucide="upload-cloud"></i>
                         </div>
-                        <h3 data-i18n="dropFilesTitle">ลากไฟล์มาวางที่นี่</h3>
-                        <p data-i18n="supportFormats">รองรับไฟล์ Audio, Image, Text, PDF พร้อมระบบบันทึก Consent</p>
+                        <h3 data-i18n="dropFilesTitle">ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</h3>
+                        <p data-i18n="supportFormats">รองรับไฟล์ Audio (เสียงสัมภาษณ์), Image (รูปถ่าย), Text (ข้อความ), PDF</p>
                         <div class="upload-types">
-                            <span class="upload-type"><i data-lucide="mic"></i> Audio (เสียงสัมภาษณ์)</span>
-                            <span class="upload-type"><i data-lucide="image"></i> Image (ภาพถ่ายแปลง)</span>
-                            <span class="upload-type"><i data-lucide="file-text"></i> Text (บันทึกชุมชน)</span>
-                            <span class="upload-type"><i data-lucide="file"></i> PDF (คู่มือเกษตร)</span>
+                            <span class="upload-type"><i data-lucide="mic"></i> Audio</span>
+                            <span class="upload-type"><i data-lucide="image"></i> Image</span>
+                            <span class="upload-type"><i data-lucide="file-text"></i> Text</span>
+                            <span class="upload-type"><i data-lucide="file"></i> PDF</span>
                         </div>
-                        <button class="btn btn-primary" id="add-knowledge-btn" type="button">
-                            <i data-lucide="plus"></i> <span data-i18n="addKnowledgeBtn">+ เพิ่มข้อมูล</span>
+                        <button class="btn btn-primary" id="add-knowledge-trigger-btn" onclick="triggerFileInput()">
+                            <i data-lucide="plus"></i> <span data-i18n="addKnowledgeBtn">เพิ่มข้อมูล</span>
                         </button>
-                        <input type="file" id="file-input" hidden multiple>
+                        <input type="file" id="real-file-input" accept="audio/*,image/*,text/*,application/pdf" style="display: none;" onchange="handleRealFileSelected(this.files)">
                     </div>
 
-                    <!-- Knowledge Sources List -->
-                    <div id="knowledge-list" class="knowledge-list">
-                        <div class="section-header">
-                            <h2 data-i18n="sourcesTitle">แหล่งข้อมูลในระบบ</h2>
-                            <span class="source-count" id="source-count">0 แหล่งข้อมูล</span>
-                        </div>
-                        <div id="knowledge-items"></div>
+                    <!-- KNOWLEDGE SOURCES LIST -->
+                    <div class="section-header">
+                        <h2 data-i18n="sourcesTitle">แหล่งข้อมูลในภารกิจนี้</h2>
+                        <span class="badge" id="source-count">0 แหล่งข้อมูล</span>
+                    </div>
+
+                    <div class="knowledge-items-container" id="knowledge-items">
+                        <!-- Populated dynamically -->
                     </div>
                 </section>
 
-                <!-- ==================== 4. VERIFY SYSTEM ==================== -->
+                <!-- 4. VERIFY PAGE -->
                 <section id="page-verify" class="page">
-                    <div class="page-title">
-                        <h1 data-i18n="verifyHeader">ตรวจสอบองค์ความรู้</h1>
-                        <p data-i18n="verifySubheader">ตรวจสอบความถูกต้อง แหล่งที่มา และความยินยอม (Consent) ก่อนนำเข้าสู่ AI Model</p>
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="verifyHeader">ตรวจสอบองค์ความรู้</h1>
+                            <p data-i18n="verifySubheader">ตรวจทานความถูกต้อง ความยินยอม (Consent) และส่งให้ครู/ผู้เชี่ยวชาญรับรอง</p>
+                        </div>
                     </div>
-
-                    <div class="verify-container">
-                        <div class="verify-main">
-                            <div class="verify-card" id="verify-card">
-                                <div class="verify-label" data-i18n="extractedLabel">ข้อมูลที่ระบบถอดออกมา (Extracted Knowledge)</div>
-                                <blockquote class="verify-quote" id="verify-quote-text">
-                                    “ในช่วงฤดูฝนควรลดความชื้นบริเวณราก เพื่อป้องกันปัญหารากเน่า โดยเฉพาะในพื้นที่ที่ดินระบายน้ำช้า ควรทำร่องระบายน้ำรอบต้นและงดการให้น้ำซ้ำซ้อน”
-                                </blockquote>
-                                <div class="verify-actions" id="verify-actions">
-                                    <button class="btn btn-primary btn-lg" id="approve-btn" onclick="approveKnowledge()">
-                                        <i data-lucide="check-circle-2"></i> <span data-i18n="btnApprove">✓ ยืนยันข้อมูล</span>
-                                    </button>
-                                    <button class="btn btn-outline-warn btn-lg" id="flag-btn" onclick="flagKnowledge()">
-                                        <i data-lucide="alert-triangle"></i> <span data-i18n="btnFlag">⚠ ส่งให้ตรวจสอบเพิ่มเติม</span>
-                                    </button>
-                                </div>
-                                <div class="verify-success hidden" id="verify-success">
-                                    <div class="verify-success-icon">
-                                        <i data-lucide="check"></i>
-                                    </div>
-                                    <div>
-                                        <h4 data-i18n="verifiedSuccessTitle">✓ ข้อมูลได้รับการยืนยัน</h4>
-                                        <p data-i18n="verifiedSuccessDesc">ข้อมูลถูกจัดเก็บเข้าสู่ Verified Knowledge Base พร้อมนำไป Build AI</p>
-                                    </div>
-                                    <button class="btn btn-primary btn-sm" style="margin-left: auto;" onclick="navigateTo('build')">
-                                        <span data-i18n="goBuildBtn">ไปสร้าง AI →</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="verify-sidebar">
-                            <div class="verify-meta-card">
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaSource">ข้อมูลต้นทาง</span>
-                                    <span class="meta-value"><strong>คุณสมชาย — เกษตรกร</strong></span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaDate">วันที่เก็บข้อมูล</span>
-                                    <span class="meta-value">14 สิงหาคม 2026</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaConsent">Consent (ความยินยอม)</span>
-                                    <span class="meta-value consent-ok"><i data-lucide="check-circle-2"></i> ✓ Verified (ได้รับอนุญาต)</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaConfidence">Confidence Score</span>
-                                    <div class="confidence-bar">
-                                        <div class="confidence-fill" style="width:87%"></div>
-                                        <span>87%</span>
-                                    </div>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaType">ประเภทไฟล์</span>
-                                    <span class="meta-value"><i data-lucide="mic"></i> Audio Interview</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label" data-i18n="metaTopic">หัวข้อหลัก</span>
-                                    <span class="meta-value">การดูแลต้นกาแฟในฤดูฝน</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="verify-container" id="verify-main-container">
+                        <!-- Populated dynamically -->
                     </div>
                 </section>
 
-                <!-- ==================== 5. BUILD LOCAL AI ==================== -->
+                <!-- 5. BUILD LOCAL AI PAGE -->
                 <section id="page-build" class="page">
-                    <div class="page-title">
-                        <h1 data-i18n="buildHeader">สร้าง Local AI</h1>
-                        <p data-i18n="buildSubheader">เปลี่ยนองค์ความรู้ที่ผ่านการตรวจสอบให้กลายเป็น AI ที่ใช้งานได้จริง</p>
-                    </div>
-
-                    <!-- Build Configuration State -->
-                    <div id="build-config" class="build-config">
-                        <div class="build-grid">
-                            <div class="build-left">
-                                <div class="build-card">
-                                    <h3><i data-lucide="check-circle-2"></i> <span data-i18n="verifiedSourcesListTitle">แหล่งข้อมูลที่ผ่านการตรวจสอบ</span></h3>
-                                    <ul class="source-list">
-                                        <li class="source-verified"><i data-lucide="check-circle-2"></i> สัมภาษณ์เกษตรกร — คุณสมชาย (Audio)</li>
-                                        <li class="source-verified"><i data-lucide="check-circle-2"></i> คู่มือการปลูกและดูแลกาแฟท้องถิ่น (Text)</li>
-                                        <li class="source-verified"><i data-lucide="check-circle-2"></i> บันทึกกลุ่มเกษตรกรดอยช้าง (PDF)</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="build-right">
-                                <div class="build-card">
-                                    <h3><i data-lucide="sliders"></i> <span data-i18n="configTitle">การกำหนดค่า AI</span></h3>
-                                    <div class="config-field">
-                                        <label data-i18n="configAiName">AI Name</label>
-                                        <div class="config-value">Coffee Local AI</div>
-                                    </div>
-                                    <div class="config-field">
-                                        <label data-i18n="configKnowledgeBase">Knowledge Base</label>
-                                        <div class="config-value">12 แหล่งข้อมูลที่ผ่านการตรวจสอบ</div>
-                                    </div>
-                                    <div class="config-field">
-                                        <label data-i18n="configAiType">AI Type</label>
-                                        <div class="config-value">RAG Assistant (Community-Grounding)</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="buildHeader">สร้าง Local AI</h1>
+                            <p data-i18n="buildSubheader">เปลี่ยนองค์ความรู้ที่ผ่านการตรวจสอบในภารกิจนี้ ให้กลายเป็น AI ผู้ช่วยชุมชน</p>
                         </div>
-                        <div class="build-action">
-                            <button class="btn btn-primary btn-xl build-btn" id="build-ai-btn" onclick="startBuildAI()">
-                                <i data-lucide="zap"></i> <span data-i18n="btnBuildLocalAI">⚡ สร้าง Local AI</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Building Progress State -->
-                    <div id="build-progress" class="build-progress hidden">
-                        <div class="build-progress-card">
-                            <div class="build-spinner"></div>
-                            <div class="build-steps">
-                                <div class="build-step" id="bs-1">
-                                    <div class="build-step-indicator"></div>
-                                    <span data-i18n="bStep1">กำลังประมวลผลข้อมูล...</span>
-                                </div>
-                                <div class="build-step" id="bs-2">
-                                    <div class="build-step-indicator"></div>
-                                    <span data-i18n="bStep2">กำลังสร้าง Knowledge Base...</span>
-                                </div>
-                                <div class="build-step" id="bs-3">
-                                    <div class="build-step-indicator"></div>
-                                    <span data-i18n="bStep3">กำลังเชื่อมต่อ RAG...</span>
-                                </div>
-                                <div class="build-step" id="bs-4">
-                                    <div class="build-step-indicator"></div>
-                                    <span data-i18n="bStep4">กำลังตรวจสอบแหล่งข้อมูล...</span>
-                                </div>
-                                <div class="build-step" id="bs-5">
-                                    <div class="build-step-indicator"></div>
-                                    <span data-i18n="bStep5">กำลังทดสอบ AI...</span>
-                                </div>
+                        <div class="page-title-actions">
+                            <div class="active-mission-badge" id="build-mission-context">
+                                <i data-lucide="target"></i> <span>ภารกิจ: Coffee Local AI</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Success State -->
-                    <div id="build-success" class="build-success hidden">
-                        <div class="build-success-card">
-                            <div class="success-celebration">🎉</div>
-                            <h2 data-i18n="buildSuccessTitle">สร้าง AI สำเร็จ</h2>
-                            <div class="success-details">
-                                <div class="success-ai-name">Coffee Local AI</div>
-                                <div class="success-ai-sources">12 Verified Sources • Ready to deploy</div>
-                            </div>
-                            <button class="btn btn-primary btn-lg" onclick="navigateTo('test')">
-                                <i data-lucide="flask-conical"></i> <span data-i18n="btnOpenAI">เปิด AI</span>
-                            </button>
-                        </div>
+                    <div id="build-workspace-container">
+                        <!-- Populated dynamically -->
                     </div>
                 </section>
 
-                <!-- ==================== 6. TEST AI (CHAT INTERFACE) ==================== -->
+                <!-- 6. TEST AI PAGE (CHAT INTERFACE) -->
                 <section id="page-test" class="page">
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1>ทดสอบ Local AI Assistant</h1>
+                            <p>สนทนาและถามคำถามกับ AI ที่ตอบโดยอิงจากองค์ความรู้ในภารกิจของชุมชน</p>
+                        </div>
+                    </div>
                     <div class="chat-layout">
-                        <!-- Main Chat Container -->
                         <div class="chat-container">
                             <div class="chat-header">
                                 <div class="chat-header-info">
-                                    <span class="chat-emoji">☕</span>
+                                    <div class="chat-emoji" id="chat-header-emoji"><i data-lucide="bot"></i></div>
                                     <div>
-                                        <h3>Coffee Local AI</h3>
-                                        <span class="chat-sources">12 Verified Sources</span>
+                                        <h3 id="chat-header-title">Coffee Local AI</h3>
+                                        <span class="chat-sources" id="chat-header-sources">3 Verified Sources</span>
                                     </div>
                                 </div>
                                 <div class="chat-status">
-                                    <span class="status-dot online"></span> <span data-i18n="chatStatusOnline">🟢 พร้อมใช้งาน</span>
+                                    <span class="status-dot online"></span>
+                                    <span data-i18n="chatStatusOnline">พร้อมใช้งาน</span>
                                 </div>
                             </div>
 
                             <div class="chat-messages" id="chat-messages">
-                                <div class="chat-welcome">
-                                    <div class="chat-welcome-icon">☕</div>
-                                    <h3>Coffee Local AI</h3>
-                                    <p data-i18n="chatWelcomeText">สวัสดีครับ! ผมเป็น AI Assistant ที่สร้างจากองค์ความรู้จริงของเกษตรกรผู้ปลูกกาแฟในชุมชนดอยช้าง ถามคำถามเกี่ยวกับการปลูกและดูแลรักษาได้เลยครับ</p>
-                                </div>
+                                <!-- Populated dynamically -->
                             </div>
 
-                            <!-- Suggested Questions Chips -->
                             <div class="chat-suggestions" id="chat-suggestions">
-                                <button class="suggestion-chip" onclick="sendSuggestion(this)">ช่วงฤดูฝนควรดูแลต้นกาแฟอย่างไร?</button>
-                                <button class="suggestion-chip" onclick="sendSuggestion(this)">ควรรดน้ำต้นกาแฟบ่อยแค่ไหน?</button>
-                                <button class="suggestion-chip" onclick="sendSuggestion(this)">ปัญหาที่เกษตรกรในพื้นที่พบมากที่สุดคืออะไร?</button>
-                                <button class="suggestion-chip" onclick="sendSuggestion(this)">ควรใส่ปุ๋ยช่วงไหน?</button>
-                                <button class="suggestion-chip" onclick="sendSuggestion(this)">วิธีเก็บเกี่ยวกาแฟให้ได้คุณภาพดี?</button>
+                                <!-- Dynamic suggestion chips -->
                             </div>
 
-                            <!-- Input Box -->
                             <div class="chat-input-area">
-                                <input type="text" id="chat-input" placeholder="ถามคำถามกับ Local AI..." onkeydown="handleChatKeydown(event)">
-                                <button class="chat-send-btn" id="chat-send-btn" onclick="sendChatMessage()" aria-label="Send message">
+                                <input type="text" id="chat-input" placeholder="ถามคำถามเกี่ยวกับภารกิจนี้..." onkeydown="handleChatKeydown(event)">
+                                <button class="chat-send-btn" onclick="sendChatMessage()" aria-label="Send Message">
                                     <i data-lucide="send"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- AI Trust Layer Panel -->
+                        <!-- AI TRUST LAYER PANEL -->
                         <div class="trust-panel">
                             <div class="trust-header">
                                 <i data-lucide="shield-check"></i>
                                 <h3 data-i18n="trustLayerTitle">AI Trust Layer</h3>
                             </div>
                             <div class="trust-checks">
-                                <div class="trust-item verified">
-                                    <i data-lucide="check-circle-2"></i>
-                                    <span>Source Trace</span>
-                                </div>
-                                <div class="trust-item verified">
-                                    <i data-lucide="check-circle-2"></i>
-                                    <span>Consent</span>
-                                </div>
-                                <div class="trust-item verified">
-                                    <i data-lucide="check-circle-2"></i>
-                                    <span>Cross-check</span>
-                                </div>
-                                <div class="trust-item verified">
-                                    <i data-lucide="check-circle-2"></i>
-                                    <span>Expert Review</span>
-                                </div>
-                                <div class="trust-item verified">
-                                    <i data-lucide="check-circle-2"></i>
-                                    <span>Citation</span>
-                                </div>
+                                <div class="trust-item verified"><i data-lucide="check-circle-2"></i> Source Trace</div>
+                                <div class="trust-item verified"><i data-lucide="check-circle-2"></i> Consent Verified</div>
+                                <div class="trust-item verified"><i data-lucide="check-circle-2"></i> Grounded RAG</div>
+                                <div class="trust-item verified"><i data-lucide="check-circle-2"></i> Expert Approved</div>
                             </div>
                             <div class="trust-message">
                                 <i data-lucide="info"></i>
-                                <p data-i18n="trustExplanation">AI นี้ตอบคำถามจากองค์ความรู้ที่ผ่านการตรวจสอบแล้ว ทุกคำตอบสามารถสืบย้อนถึงแหล่งที่มาในชุมชนได้</p>
+                                <p id="trust-message-desc">AI นี้ตอบคำถามเฉพาะจากข้อมูลที่ได้รับการยินยอมและผ่านการตรวจสอบในภารกิจนี้เท่านั้น</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ==================== 7. IMPACT PAGE ==================== -->
+                <!-- 7. IMPACT PAGE -->
                 <section id="page-impact" class="page">
-                    <div class="page-title">
-                        <h1 data-i18n="impactHeader">จากการเรียนรู้ สู่ผลกระทบจริง</h1>
-                        <p data-i18n="impactSubheader">เปลี่ยนบทบาทจากผู้ใช้ AI สู่ผู้สร้างสรรค์นวัตกรรม AI เพื่อพัฒนาชุมชน</p>
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="impactHeader">จากการเรียนรู้ สู่ผลกระทบจริง</h1>
+                            <p data-i18n="impactSubheader">เปลี่ยนบทบาทจากผู้ใช้ AI สู่ผู้สร้างสรรค์นวัตกรรม AI เพื่อพัฒนาชุมชน</p>
+                        </div>
                     </div>
 
-                    <!-- Flow: CONNECTIVITY → CAPABILITY → CREATION → IMPACT -->
+                    <!-- IMPACT FLOW -->
                     <div class="impact-flow-container">
                         <div class="impact-flow-item">
                             <div class="flow-badge">1</div>
                             <div class="flow-icon"><i data-lucide="wifi"></i></div>
-                            <h4>CONNECTIVITY</h4>
-                            <p data-i18n="flowStep1">เข้าถึงเทคโนโลยีและการเชื่อมต่อ</p>
+                            <h4 data-i18n="flowStep1">เข้าถึงเทคโนโลยี</h4>
+                            <p>เชื่อมต่อเครือข่ายและเครื่องมือเรียนรู้</p>
                         </div>
-                        <div class="flow-connector"><i data-lucide="chevron-right"></i></div>
+                        <div class="flow-connector"><i data-lucide="arrow-right"></i></div>
                         <div class="impact-flow-item">
                             <div class="flow-badge">2</div>
-                            <div class="flow-icon"><i data-lucide="zap"></i></div>
-                            <h4>CAPABILITY</h4>
-                            <p data-i18n="flowStep2">สร้างทักษะ AI และการคิดวิเคราะห์</p>
+                            <div class="flow-icon"><i data-lucide="brain"></i></div>
+                            <h4 data-i18n="flowStep2">สร้างทักษะ AI</h4>
+                            <p>เรียนรู้ Data & AI Thinking</p>
                         </div>
-                        <div class="flow-connector"><i data-lucide="chevron-right"></i></div>
-                        <div class="impact-flow-item">
+                        <div class="flow-connector"><i data-lucide="arrow-right"></i></div>
+                        <div class="impact-flow-item highlight">
                             <div class="flow-badge">3</div>
                             <div class="flow-icon"><i data-lucide="sparkles"></i></div>
-                            <h4>CREATION</h4>
-                            <p data-i18n="flowStep3">สร้าง Local AI จากภูมิปัญญาท้องถิ่น</p>
+                            <h4 data-i18n="flowStep3">สร้าง Local AI</h4>
+                            <p>ถ่ายทอดภูมิปัญญาท้องถิ่น</p>
                         </div>
-                        <div class="flow-connector"><i data-lucide="chevron-right"></i></div>
-                        <div class="impact-flow-item highlight">
+                        <div class="flow-connector"><i data-lucide="arrow-right"></i></div>
+                        <div class="impact-flow-item">
                             <div class="flow-badge">4</div>
-                            <div class="flow-icon"><i data-lucide="trending-up"></i></div>
-                            <h4>IMPACT</h4>
-                            <p data-i18n="flowStep4">เกิดประโยชน์จริงกับชุมชนและสังคม</p>
+                            <div class="flow-icon"><i data-lucide="heart-handshake"></i></div>
+                            <h4 data-i18n="flowStep4">ผลกระทบชุมชน</h4>
+                            <p>แก้ปัญหาจริงอย่างยั่งยืน</p>
                         </div>
                     </div>
 
-                    <!-- 3 Impact Cards: Student / Community / Partner -->
+                    <!-- IMPACT CARDS -->
                     <div class="impact-grid">
                         <div class="impact-card student">
                             <div class="impact-card-header">
                                 <div class="impact-icon"><i data-lucide="graduation-cap"></i></div>
-                                <h3 data-i18n="impactStudentTitle">👨‍🎓 นักเรียน</h3>
+                                <h3>นักเรียน (Students)</h3>
                                 <span class="impact-role">AI Creator</span>
                             </div>
                             <ul class="impact-list">
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactStudent1">Skills: ทักษะ AI, Data & Critical Thinking</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactStudent1">Skills: AI, Data & Critical Thinking</span></li>
                                 <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactStudent2">Portfolio: ผลงาน AI จริงที่นำไปต่อยอดได้</span></li>
                                 <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactStudent3">Digital Credential: ประกาศนียบัตรรับรองทักษะ</span></li>
                             </ul>
                         </div>
                         <div class="impact-card community">
                             <div class="impact-card-header">
-                                <div class="impact-icon"><i data-lucide="users"></i></div>
-                                <h3 data-i18n="impactCommunityTitle">🏘️ ชุมชน</h3>
-                                <span class="impact-role">Local AI</span>
+                                <div class="impact-icon"><i data-lucide="home"></i></div>
+                                <h3>ชุมชนท้องถิ่น (Community)</h3>
+                                <span class="impact-role">Ground Truth</span>
                             </div>
                             <ul class="impact-list">
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm1">Local Knowledge: อนุรักษ์ภูมิปัญญาท้องถิ่นไม่ให้สูญหาย</span></li>
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm2">Verified Information: ข้อมูลผ่านการตรวจทานน่าเชื่อถือ</span></li>
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm3">AI ที่เข้าใจบริบทพื้นที่: ใช้งานได้จริงในชีวิตประจำวัน</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm1">Local Knowledge: อนุรักษ์ภูมิปัญญาท้องถิ่น</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm2">Verified Info: ข้อมูลผ่านการรับรองน่าเชื่อถือ</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactComm3">AI ที่เข้าใจบริบทพื้นที่: ใช้งานได้จริง</span></li>
                             </ul>
                         </div>
                         <div class="impact-card partner">
                             <div class="impact-card-header">
-                                <div class="impact-icon"><i data-lucide="building-2"></i></div>
-                                <h3 data-i18n="impactPartnerTitle">🤝 Partner</h3>
-                                <span class="impact-role">Scale</span>
+                                <div class="impact-icon"><i data-lucide="building"></i></div>
+                                <h3>พันธมิตรเครือข่าย (Partners)</h3>
+                                <span class="impact-role">JUMP Thailand</span>
                             </div>
                             <ul class="impact-list">
                                 <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart1">Cloud & AI Infrastructure Scaling</span></li>
                                 <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart2">Connectivity for Remote Areas</span></li>
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart3">National Learning Platform Integration</span></li>
-                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart4">CSR / ESG Outcome ที่วัดผลความยั่งยืนได้จริง</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart3">National Platform Integration</span></li>
+                                <li><i data-lucide="check-circle-2"></i> <span data-i18n="impactPart4">CSR / ESG Outcome วัดผลได้จริง</span></li>
                             </ul>
                         </div>
                     </div>
                 </section>
 
-                <!-- ==================== 8. PROFILE ==================== -->
+                <!-- 8. PROFILE PAGE -->
                 <section id="page-profile" class="page">
                     <div class="profile-header">
                         <div class="profile-avatar-lg" id="profile-avatar-lg">B</div>
                         <div class="profile-info">
-                            <h1 id="profile-display-name">Billy</h1>
-                            <div class="profile-badge">
-                                <i data-lucide="award"></i> <span id="profile-role-badge">Local AI Creator</span>
+                            <h1 id="profile-display-name">Billy The Kid</h1>
+                            <div class="profile-badge-row">
+                                <span class="profile-badge" id="profile-role-badge"><i data-lucide="award"></i> Local AI Creator</span>
+                                <span class="profile-sub-badge" id="profile-community-badge"><i data-lucide="map-pin"></i> ชุมชนดอยช้าง เชียงราย</span>
                             </div>
+                            <p class="profile-bio" id="profile-bio-text">นักเรียนผู้สนใจการนำ AI มาอนุรักษ์ความรู้การเกษตรของชุมชน</p>
                         </div>
+                        <button class="btn btn-outline edit-profile-btn" onclick="openEditProfileModal()">
+                            <i data-lucide="edit-3"></i> <span data-i18n="btnEditProfile">แก้ไขโปรไฟล์</span>
+                        </button>
                     </div>
 
+                    <!-- PROFILE STATS -->
                     <div class="profile-stats">
                         <div class="profile-stat-card">
-                            <div class="profile-stat-value">3</div>
-                            <div class="profile-stat-label" data-i18n="profileStatProjects">Projects</div>
+                            <div class="profile-stat-value" id="profile-stat-projects">0</div>
+                            <div class="profile-stat-label" data-i18n="profileStatProjects">ภารกิจที่สร้าง</div>
                         </div>
                         <div class="profile-stat-card">
-                            <div class="profile-stat-value">12</div>
-                            <div class="profile-stat-label" data-i18n="profileStatSources">Verified Sources</div>
+                            <div class="profile-stat-value" id="profile-stat-sources">0</div>
+                            <div class="profile-stat-label" data-i18n="profileStatSources">องค์ความรู้</div>
                         </div>
                         <div class="profile-stat-card">
-                            <div class="profile-stat-value">1</div>
-                            <div class="profile-stat-label" data-i18n="profileStatDeployed">Deployed AI</div>
+                            <div class="profile-stat-value" id="profile-stat-deployed">0</div>
+                            <div class="profile-stat-label" data-i18n="profileStatDeployed">AI ที่สร้างแล้ว</div>
                         </div>
                         <div class="profile-stat-card">
-                            <div class="profile-stat-value">5</div>
-                            <div class="profile-stat-label" data-i18n="profileStatSkills">Skills</div>
+                            <div class="profile-stat-value" id="profile-stat-skills">0</div>
+                            <div class="profile-stat-label" data-i18n="profileStatSkills">ทักษะที่ปลดล็อก</div>
                         </div>
                     </div>
 
+                    <!-- SKILLS PROGRESS -->
                     <div class="section-header">
                         <h2 data-i18n="profileSkillsTitle">ทักษะที่ได้รับการพัฒนา</h2>
                     </div>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Data Collection (การรวบรวมข้อมูลชุมชน)</span>
-                                <span class="skill-percent">80%</span>
-                            </div>
-                            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Verification (การตรวจสอบความถูกต้องและ Consent)</span>
-                                <span class="skill-percent">90%</span>
-                            </div>
-                            <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">RAG / Agent (การสร้างระบบสืบค้นและโมเดล AI)</span>
-                                <span class="skill-percent">70%</span>
-                            </div>
-                            <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">AI Evaluation (การทดสอบและประเมินผล AI)</span>
-                                <span class="skill-percent">60%</span>
-                            </div>
-                            <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Responsible AI (จริยธรรม AI และความรับผิดชอบ)</span>
-                                <span class="skill-percent">80%</span>
-                            </div>
-                            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-                        </div>
+                    <div class="skills-grid" id="profile-skills-container">
+                        <!-- Populated dynamically -->
                     </div>
 
+                    <!-- PORTFOLIO -->
                     <div class="section-header">
                         <h2 data-i18n="profilePortfolioTitle">Project Portfolio (ผลงาน AI)</h2>
                     </div>
-                    <div class="portfolio-grid">
-                        <div class="portfolio-card" onclick="navigateTo('test')">
-                            <div class="portfolio-emoji">☕</div>
-                            <div class="portfolio-info">
-                                <h3>Coffee Local AI</h3>
-                                <span class="portfolio-status deployed"><i data-lucide="check-circle-2"></i> Deployed</span>
-                            </div>
-                        </div>
-                        <div class="portfolio-card" onclick="navigateTo('missions')">
-                            <div class="portfolio-emoji">🏝️</div>
-                            <div class="portfolio-info">
-                                <h3>Local Tourism AI</h3>
-                                <span class="portfolio-status in-progress"><i data-lucide="clock"></i> กำลังดำเนินการ</span>
-                            </div>
-                        </div>
+                    <div class="portfolio-grid" id="profile-portfolio-container">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- SETTINGS & DATA RESET -->
+                    <div class="profile-settings-card">
+                        <h3 data-i18n="settingsTitle"><i data-lucide="settings"></i> การตั้งค่าบัญชี & ข้อมูล</h3>
+                        <p data-i18n="settingsDesc">จัดการข้อมูลส่วนตัว หรือรีเซ็ตข้อมูลภารกิจของฉันสำหรับเริ่มต้นใหม่</p>
+                        <button class="btn btn-outline-warn" onclick="handleResetMyData()">
+                            <i data-lucide="refresh-cw"></i> <span data-i18n="btnResetMyData">รีเซ็ตข้อมูลภารกิจของฉัน</span>
+                        </button>
                     </div>
                 </section>
 
-            </div>
-        </main>
+                <!-- 9. TEACHER REVIEW QUEUE PAGE -->
+                <section id="page-teacher-review" class="page">
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="teacherReviewHeader">รายการรอตรวจสอบองค์ความรู้ (Review Queue)</h1>
+                            <p data-i18n="teacherReviewSubheader">ตรวจสอบความถูกต้อง แหล่งที่มา และให้คำแนะนำแก่นักเรียน</p>
+                        </div>
+                    </div>
+                    <div class="teacher-queue-grid" id="teacher-queue-container">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- 10. TEACHER STUDENTS PAGE -->
+                <section id="page-teacher-students" class="page">
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="teacherStudentsHeader">โครงงาน AI ของนักเรียนทั้งหมด</h1>
+                            <p data-i18n="teacherStudentsSubheader">ติดตามความก้าวหน้าและการพัฒนาทักษะ AI ของนักเรียนในสังกัด</p>
+                        </div>
+                    </div>
+                    <div class="teacher-projects-grid" id="teacher-students-container">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- 11. ADMIN HUB PAGE -->
+                <section id="page-admin-hub" class="page">
+                    <div class="page-title-row">
+                        <div class="page-title">
+                            <h1 data-i18n="adminHubHeader">ภาพรวมเครือข่าย AI FROM HERE</h1>
+                            <p data-i18n="adminHubSubheader">สถิติและผลกระทบของโครงการระดับประเทศ JUMP Thailand 2026</p>
+                        </div>
+                    </div>
+                    <div class="admin-stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="admin-total-users">0</div>
+                            <div class="stat-label">ผู้ใช้งานทั้งหมด</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="admin-total-missions">0</div>
+                            <div class="stat-label">ภารกิจ AI ในระบบ</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="admin-total-sources">0</div>
+                            <div class="stat-label">องค์ความรู้ผ่านรับรอง</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="admin-total-ai">0</div>
+                            <div class="stat-label">Local AI Deployed</div>
+                        </div>
+                    </div>
+                    <div class="admin-table-card">
+                        <h3><i data-lucide="layers"></i> รายชื่อ Community AI Labs</h3>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ชุมชน / โรงเรียน</th>
+                                        <th>ภารกิจ AI</th>
+                                        <th>ผู้สร้าง</th>
+                                        <th>สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-labs-tbody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- PAGE FOOTER -->
+            <footer class="page-footer">
+                <p>© 2026 AI FROM HERE — JUMP Thailand Project-Based AI Learning Platform</p>
+            </footer>
+        </div>
     </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <!-- Populated dynamically -->
+    </nav>
 </div>
 
-<!-- ==================== MODALS ==================== -->
+<!-- ============================================
+     MODALS
+     ============================================ -->
 
-<!-- Mission Detail Modal -->
-<div id="mission-modal" class="modal-overlay hidden">
+<!-- 1. CREATE MISSION MODAL -->
+<div id="create-mission-modal" class="modal-overlay hidden">
     <div class="modal-card">
-        <button class="modal-close" onclick="closeMissionModal()" aria-label="Close modal">
-            <i data-lucide="x"></i>
-        </button>
-        <div class="modal-emoji" id="modal-emoji">☕</div>
-        <h2 id="modal-title">Coffee Local AI</h2>
-        <p id="modal-desc" class="modal-desc">สร้าง AI จากองค์ความรู้ของเกษตรกรในพื้นที่</p>
+        <button class="modal-close" onclick="closeCreateMissionModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="target"></i></div>
+        <h2 data-i18n="modalCreateMissionTitle">สร้างภารกิจใหม่</h2>
+        <p class="modal-desc" data-i18n="modalCreateMissionDesc">กำหนดปัญหาจริงที่คุณพบในชุมชน และตั้งเป้าหมายสร้าง AI ผู้ช่วย</p>
 
-        <div class="modal-details">
-            <div class="modal-detail">
-                <span class="detail-label"><i data-lucide="target"></i> <span data-i18n="modalGoalLabel">Mission Goal (เป้าหมายภารกิจ)</span></span>
-                <span class="detail-value" id="modal-goal">สร้าง AI Assistant จากองค์ความรู้ของผู้ปลูกกาแฟเพื่อถ่ายทอดและอนุรักษ์ภูมิปัญญาชุมชน</span>
+        <form id="create-mission-form" onsubmit="handleCreateMissionSubmit(event)">
+            <div class="form-group">
+                <label for="mission-title-input" data-i18n="fieldMissionTitle">ชื่อภารกิจ AI</label>
+                <input type="text" id="mission-title-input" placeholder="เช่น AI ประวัติศาสตร์ชุมชน, AI แนะนำเส้นทางท่องเที่ยว" required>
             </div>
-            <div class="modal-detail">
-                <span class="detail-label"><i data-lucide="users"></i> <span data-i18n="modalCommunityLabel">Community (ชุมชน)</span></span>
-                <span class="detail-value" id="modal-community">กลุ่มเกษตรกรผู้ปลูกกาแฟดอยช้าง จังหวัดเชียงราย</span>
-            </div>
-            <div class="modal-detail">
-                <span class="detail-label"><i data-lucide="book-open"></i> <span data-i18n="modalSkillsLabel">Required Skills (ทักษะที่ใช้)</span></span>
-                <span class="detail-value" id="modal-skills">การสัมภาษณ์, การตรวจสอบ Consent, พื้นฐาน RAG, Responsible AI</span>
-            </div>
-            <div class="modal-detail">
-                <span class="detail-label"><i data-lucide="database"></i> <span data-i18n="modalDataLabel">Data Needed (ข้อมูลที่ต้องใช้)</span></span>
-                <span class="detail-value" id="modal-data">เสียงสัมภาษณ์เกษตรกร, ภาพถ่ายแปลงปลูก, คู่มือการเกษตรท้องถิ่น</span>
-            </div>
-            <div class="modal-detail">
-                <span class="detail-label"><i data-lucide="trending-up"></i> <span data-i18n="modalImpactLabel">Expected Impact (ผลลัพธ์ที่คาดหวัง)</span></span>
-                <span class="detail-value" id="modal-impact">สร้างระบบตอบคำถามและดูแลกาแฟที่ทุกคนในชุมชนและผู้สนใจเข้าถึงได้ฟรี</span>
-            </div>
-        </div>
 
-        <button class="btn btn-primary btn-lg modal-start" id="modal-start-btn" onclick="startMission()">
-            <i data-lucide="play"></i> <span data-i18n="modalStartMissionBtn">เริ่มภารกิจนี้</span>
-        </button>
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="mission-category-select" data-i18n="fieldCategory">หมวดหมู่</label>
+                    <select id="mission-category-select" onchange="handleCategoryChange(this.value)">
+                        <option value="เกษตรกรรม">เกษตรกรรมและการเพาะปลูก</option>
+                        <option value="อาหารและโภชนาการ">อาหารและโภชนาการท้องถิ่น</option>
+                        <option value="การท่องเที่ยวและวัฒนธรรม">การท่องเที่ยวและวัฒนธรรม</option>
+                        <option value="สมุนไพรและสุขภาพ">สมุนไพรและการแพทย์พื้นบ้าน</option>
+                        <option value="การจัดการขยะและสิ่งแวดล้อม">สิ่งแวดล้อมและนิเวศชุมชน</option>
+                        <option value="other" data-i18n="fieldCustomCategory">อื่น ๆ (ระบุ)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="custom-category-group" style="display: none;">
+                    <label for="custom-category-input" data-i18n="fieldCustomCategory">ระบุหมวดหมู่</label>
+                    <input type="text" id="custom-category-input" placeholder="ระบุหมวดหมู่เพิ่มเติม">
+                </div>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="mission-emoji-select" data-i18n="fieldEmoji">ไอคอนสัญลักษณ์</label>
+                    <select id="mission-emoji-select">
+                        <option value="target">เป้าหมายภารกิจ (Target)</option>
+                        <option value="coffee">เครื่องดื่ม / กาแฟ (Coffee)</option>
+                        <option value="utensils">อาหาร / โภชนาการ (Food)</option>
+                        <option value="sprout">เกษตร / พืชพันธุ์ (Agriculture)</option>
+                        <option value="map">การท่องเที่ยว / แผนที่ (Tourism)</option>
+                        <option value="leaf">สมุนไพร / การแพทย์ (Herbs)</option>
+                        <option value="book-open">ประวัติศาสตร์ / ความรู้ (History)</option>
+                        <option value="recycle">สิ่งแวดล้อม / ขยะ (Environment)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mission-community-input" data-i18n="fieldCommunity">ชุมชน / โรงเรียน / พื้นที่</label>
+                    <input type="text" id="mission-community-input" placeholder="เช่น ชุมชนดอยช้าง, โรงเรียนล้านนา">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="mission-problem-input" data-i18n="fieldProblem">ปัญหาที่ต้องการแก้ (Problem Statement)</label>
+                <textarea id="mission-problem-input" placeholder="อธิบายปัญหาที่พบในชุมชน เช่น คนรุ่นใหม่เริ่มลืมสูตรอาหารโบราณ..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="mission-goal-input" data-i18n="fieldGoal">เป้าหมายของ AI (Goal)</label>
+                <textarea id="mission-goal-input" placeholder="เช่น สร้าง AI ช่วยตอบคำถามและให้ข้อมูลเรื่องสมุนไพรพื้นบ้าน..." required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeCreateMissionModal()" data-i18n="btnCancel">ยกเลิก</button>
+                <button type="submit" class="btn btn-primary" data-i18n="btnSubmitCreateMission">สร้างภารกิจ</button>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- Source Detail Modal -->
+<!-- 2. ADD KNOWLEDGE MODAL (WITH AI QUALITY CHECK & RESEARCH ASSISTANT) -->
+<div id="add-knowledge-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeAddKnowledgeModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="upload-cloud"></i></div>
+        <h2 data-i18n="modalAddKnowledgeTitle">เพิ่มองค์ความรู้เข้าสู่ระบบ</h2>
+        <p class="modal-desc" data-i18n="modalAddKnowledgeDesc">บันทึกข้อมูลและแหล่งที่มาพร้อม Consent จากผู้ให้ข้อมูลในชุมชน</p>
+
+        <!-- FILE PREVIEW CARD -->
+        <div class="file-preview-card" id="file-preview-card">
+            <div class="file-preview-icon" id="file-preview-icon"><i data-lucide="file-text"></i></div>
+            <div class="file-preview-meta">
+                <span class="file-preview-name" id="file-preview-name">document_interview.txt</span>
+                <span class="file-preview-size" id="file-preview-size">24.5 KB</span>
+            </div>
+            <button class="file-change-btn" onclick="triggerFileInput()">เปลี่ยนไฟล์</button>
+        </div>
+
+        <form id="add-knowledge-form" onsubmit="handleSaveKnowledgeSubmit(event)">
+            <div class="form-group">
+                <label for="know-title-input" data-i18n="fieldKnowTitle">ชื่อองค์ความรู้ / หัวข้อ</label>
+                <input type="text" id="know-title-input" placeholder="เช่น สัมภาษณ์ปราชญ์ชุมชนเรื่องวิธีดูแลพืช" required>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="know-contributor-input" data-i18n="fieldContributor">ผู้ให้ข้อมูล (Contributor)</label>
+                    <input type="text" id="know-contributor-input" placeholder="เช่น คุณยายคำ — ปราชญ์ชาวบ้าน" required>
+                </div>
+                <div class="form-group">
+                    <label for="know-source-type-select" data-i18n="fieldSourceType">ประเภทแหล่งข้อมูล</label>
+                    <select id="know-source-type-select">
+                        <option value="text">ข้อความ (Text / Notes)</option>
+                        <option value="audio">เสียงสัมภาษณ์ (Audio)</option>
+                        <option value="image">รูปถ่าย (Image)</option>
+                        <option value="pdf">เอกสาร (PDF)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="know-content-input" data-i18n="fieldKnowContent">เนื้อหาหรือข้อความสำคัญที่สกัดได้ (Extracted Content)</label>
+                <textarea id="know-content-input" placeholder="บันทึกข้อความหรือข้อความสกัดสำคัญ..." required oninput="runAIQualityCheckOnInput(this.value)"></textarea>
+            </div>
+
+            <!-- AI KNOWLEDGE ENRICHMENT / QUALITY CHECK CARD -->
+            <div class="ai-quality-card" id="ai-quality-card">
+                <div class="ai-quality-header">
+                    <i data-lucide="sparkles"></i>
+                    <span>AI ตรวจวิเคราะห์คุณภาพข้อมูล (Data Quality Check)</span>
+                    <span class="quality-score-pill" id="quality-score-pill">68% Quality</span>
+                </div>
+                <div class="ai-quality-checks" id="ai-quality-checks">
+                    <div class="q-item check"><i data-lucide="check-circle-2"></i> หัวข้อข้อมูลชัดเจน</div>
+                    <div class="q-item warn"><i data-lucide="alert-circle"></i> ยังไม่มีข้อมูลรายละเอียดวิธีการและช่วงเวลา</div>
+                </div>
+                <div class="ai-quality-suggestions" id="ai-quality-suggestions">
+                    <span>AI แนะนำให้เพิ่ม: วิธีการแปรรูป, ช่วงฤดูกาล, และแหล่งอ้างอิง</span>
+                </div>
+                <div class="ai-research-btn-row">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="openExternalResearchModal()">
+                        <i data-lucide="search"></i> <span>ค้นข้อมูลประกอบจากภายนอก (Research Assistant)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group terms-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="know-consent-checkbox" checked required>
+                    <span data-i18n="consentAgreementLabel">ได้รับความยินยอม (Consent) จากผู้ให้ข้อมูลในการนำมาสร้าง AI เพื่อประโยชน์ชุมชน</span>
+                </label>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeAddKnowledgeModal()" data-i18n="btnCancel">ยกเลิก</button>
+                <button type="submit" class="btn btn-primary" data-i18n="btnSaveKnowledge">บันทึกองค์ความรู้</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 3. EXTERNAL RESEARCH ASSISTANT MODAL -->
+<div id="external-research-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeExternalResearchModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="globe"></i></div>
+        <h2>AI External Research Assistant</h2>
+        <p class="modal-desc">ค้นหาและเปรียบเทียบข้อมูลประกอบจากแหล่งภายนอก (งานวิจัย / หน่วยงานรัฐ) โดยไม่ปะปนกับ Fact ชุมชน</p>
+
+        <div class="level-indicator-box">
+            <div class="level-badge l1">LEVEL 1: Community Knowledge (ภูมิปัญญาชุมชน)</div>
+            <div class="level-badge l2 active">LEVEL 2: External Research (ข้อมูลประกอบจาก AI)</div>
+            <div class="level-badge l3">LEVEL 3: Verified Knowledge (ผ่านการตรวจทาน)</div>
+        </div>
+
+        <div class="research-results-container" id="research-results-container">
+            <!-- Populated dynamically with research sources -->
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn btn-outline" onclick="closeExternalResearchModal()">ปิด</button>
+            <button type="button" class="btn btn-primary" onclick="applyResearchDraftToInput()">
+                <i data-lucide="plus"></i> <span>เพิ่มเป็นข้อมูลประกอบ (Draft)</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 4. KNOWLEDGE DETAIL MODAL -->
+<div id="knowledge-detail-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeKnowledgeDetailModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <span class="kdetail-status-pill" id="kdetail-status-pill"><i data-lucide="check-circle-2"></i> ผ่านการตรวจสอบแล้ว</span>
+        <h2 id="kdetail-title">สัมภาษณ์คุณยายคำ</h2>
+
+        <div class="kdetail-body">
+            <div class="meta-item">
+                <span class="meta-label">ผู้ให้ข้อมูล:</span>
+                <span class="meta-value" id="kdetail-contributor">ยายคำ</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">ภารกิจ:</span>
+                <span class="meta-value" id="kdetail-mission">Coffee Local AI</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">เนื้อหาที่สกัดได้:</span>
+                <blockquote class="detail-value-quote" id="kdetail-content">“...”</blockquote>
+            </div>
+        </div>
+
+        <div class="kdetail-actions">
+            <button class="btn btn-outline-warn" onclick="handleDeleteKnowledgeFromDetail()"><i data-lucide="trash-2"></i> ลบองค์ความรู้นี้</button>
+        </div>
+    </div>
+</div>
+
+<!-- 5. EDIT PROFILE MODAL -->
+<div id="edit-profile-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeEditProfileModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <h2 data-i18n="modalEditProfileTitle">แก้ไขโปรไฟล์</h2>
+        <p class="modal-desc">อัปเดตข้อมูลส่วนตัวและชุมชนของคุณ</p>
+
+        <form id="edit-profile-form" onsubmit="handleSaveProfileSubmit(event)">
+            <div class="form-group">
+                <label for="edit-profile-name" data-i18n="firstNameLabel">ชื่อผู้ใช้งาน</label>
+                <input type="text" id="edit-profile-name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-profile-community" data-i18n="fieldCommunity">ชุมชน / โรงเรียน</label>
+                <input type="text" id="edit-profile-community">
+            </div>
+            <div class="form-group">
+                <label for="edit-profile-bio" data-i18n="fieldBio">คำแนะนำตัวเอง / ความสนใจ (Bio)</label>
+                <textarea id="edit-profile-bio"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeEditProfileModal()" data-i18n="btnCancel">ยกเลิก</button>
+                <button type="submit" class="btn btn-primary" data-i18n="btnSaveProfile">บันทึกโปรไฟล์</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 6. DELETE CONFIRMATION MODAL -->
+<div id="delete-confirm-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-sm">
+        <div class="modal-header-icon warn"><i data-lucide="alert-triangle"></i></div>
+        <h2 data-i18n="confirmDeleteTitle">ยืนยันการลบข้อมูล</h2>
+        <p class="modal-desc" id="delete-confirm-desc">คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้? การกระทำนี้ไม่สามารถย้อนกลับได้</p>
+        <div class="confirm-actions">
+            <button class="btn btn-outline" onclick="closeDeleteConfirmModal()" data-i18n="btnCancel">ยกเลิก</button>
+            <button class="btn btn-error" onclick="executePendingDelete()" data-i18n="btnConfirmDelete">ลบข้อมูล</button>
+        </div>
+    </div>
+</div>
+
+<!-- 7. SOURCE CITATION DETAIL MODAL (CHAT) -->
 <div id="source-modal" class="modal-overlay hidden">
-    <div class="modal-card source-modal-card">
-        <button class="modal-close" onclick="closeSourceModal()" aria-label="Close modal">
-            <i data-lucide="x"></i>
-        </button>
-        <div class="source-modal-header">
-            <i data-lucide="file-text"></i>
-            <h2 id="source-modal-title">แหล่งข้อมูลอ้างอิง</h2>
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeSourceModal()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="file-text"></i></div>
+        <h2 id="source-modal-title">Verified Ground Truth Source</h2>
+        <div id="source-modal-body" class="kdetail-body">
+            <!-- Populated dynamically -->
         </div>
-        <div class="source-modal-body" id="source-modal-body">
-            <p>เนื้อหาข้อมูลต้นทาง...</p>
-        </div>
-        <div class="source-modal-meta">
-            <span><i data-lucide="check-circle-2"></i> Verified Source (ผ่านการตรวจสอบ)</span>
-            <span><i data-lucide="shield-check"></i> Consent Granted (ได้รับความยินยอม)</span>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeSourceModal()">ปิด</button>
         </div>
     </div>
 </div>
 
-<!-- Toast Container -->
-<div id="toast-container" class="toast-container"></div>
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+</div> <!-- END #app -->
 
 <script src="script.js"></script>
 </body>
