@@ -1309,7 +1309,10 @@ function handleCategoryChange(val) {
 
 function handleCreateMissionSubmit(e) {
     e.preventDefault();
-    if (!currentUser) return;
+    if (!currentUser) {
+        showToast(currentLang === 'th' ? 'ข้อผิดพลาด: ไม่พบผู้ใช้งาน' : 'Error: User not found', 'error');
+        return;
+    }
 
     const titleInput = document.getElementById('mission-title-input');
     const categorySelect = document.getElementById('mission-category-select');
@@ -1329,7 +1332,22 @@ function handleCreateMissionSubmit(e) {
     const problem = problemInput?.value.trim();
     const goal = goalInput?.value.trim();
 
-    if (!title || !problem || !goal) return;
+    // Strict Validation
+    let hasError = false;
+    if (!title || title.length < 3) {
+        showToast(currentLang === 'th' ? '⚠️ ชื่อภารกิจต้องมีอย่างน้อย 3 ตัวอักษร' : 'Mission title must be at least 3 characters', 'warning');
+        hasError = true;
+    }
+    if (!problem || problem.length < 10) {
+        showToast(currentLang === 'th' ? '⚠️ กำหนดปัญหาอย่างชัดเจน (อย่างน้อย 10 ตัวอักษร)' : 'Problem statement must be at least 10 characters', 'warning');
+        hasError = true;
+    }
+    if (!goal || goal.length < 10) {
+        showToast(currentLang === 'th' ? '⚠️ กำหนดเป้าหมาย AI ให้ชัดเจน (อย่างน้อย 10 ตัวอักษร)' : 'AI goal must be at least 10 characters', 'warning');
+        hasError = true;
+    }
+
+    if (hasError) return;
 
     const newMission = {
         id: 'm_' + Date.now(),
@@ -1525,7 +1543,10 @@ function closeAddKnowledgeModal() {
 
 function handleSaveKnowledgeSubmit(e) {
     e.preventDefault();
-    if (!currentUser || !activeMissionId) return;
+    if (!currentUser || !activeMissionId) {
+        showToast(currentLang === 'th' ? 'ข้อผิดพลาด: ไม่พบผู้ใช้หรือภารกิจ' : 'Error: No user or mission', 'error');
+        return;
+    }
 
     const titleInput = document.getElementById('know-title-input');
     const contributorInput = document.getElementById('know-contributor-input');
@@ -1539,7 +1560,26 @@ function handleSaveKnowledgeSubmit(e) {
     const content = contentInput?.value.trim();
     const consent = consentCheckbox?.checked || false;
 
-    if (!title || !contributor || !content) return;
+    // Strict Validation with User Feedback
+    let hasError = false;
+    if (!title || title.length < 3) {
+        showToast(currentLang === 'th' ? '⚠️ ชื่อองค์ความรู้ต้องมีอย่างน้อย 3 ตัวอักษร' : 'Knowledge title must be at least 3 characters', 'warning');
+        hasError = true;
+    }
+    if (!contributor || contributor.length < 2) {
+        showToast(currentLang === 'th' ? '⚠️ ชื่อผู้ให้ข้อมูลต้องมีอย่างน้อย 2 ตัวอักษร' : 'Contributor name must be at least 2 characters', 'warning');
+        hasError = true;
+    }
+    if (!content || content.length < 15) {
+        showToast(currentLang === 'th' ? '⚠️ เนื้อหาต้องมีอย่างน้อย 15 ตัวอักษร เพื่อให้ AI เข้าใจได้ชัดเจน' : 'Content must be at least 15 characters for AI to understand properly', 'warning');
+        hasError = true;
+    }
+    if (!consent) {
+        showToast(currentLang === 'th' ? '⚠️ ต้องได้รับยินยอม (Consent) จากผู้ให้ข้อมูลก่อน' : 'Consent from contributor is required', 'warning');
+        hasError = true;
+    }
+
+    if (hasError) return;
 
     const newKnowledge = {
         id: 'k_' + Date.now(),
@@ -1933,18 +1973,41 @@ function sendChatMessage() {
     }, 900 + Math.random() * 500);
 }
 
+function enrichKnowledgeContentIfNeeded(title, content) {
+    const cleanTitle = (title || '').trim();
+    let cleanContent = (content || '').trim();
+
+    if (!cleanContent || cleanContent.toLowerCase() === cleanTitle.toLowerCase() || cleanContent.length < 35) {
+        const topic = cleanTitle.toLowerCase();
+        if (topic.includes('xiaomi') || topic.includes('เสียวหมี่')) {
+            cleanContent = `Xiaomi Corporation (เสียวหมี่) เป็นบริษัทเทคโนโลยีและอิเล็กทรอนิกส์ข้ามชาติระดับโลกจากประเทศจีน ก่อตั้งในปี 2010 โดย Lei Jun มีชื่อเสียงระดับโลกในการสร้างนวัตกรรมสมาร์ทโฟน ระบบนิเวศสมาร์ทโฮม (IoT Smart Home Ecosystem) และผลิตภัณฑ์ดิจิทัลคุณภาพสูงในราคาที่เข้าถึงได้ง่าย`;
+        } else if (topic.includes('coffee') || topic.includes('กาแฟ')) {
+            cleanContent = `องค์ความรู้การเพาะปลูกและแปรรูปกาแฟอราบิก้าชุมชน: การเตรียมดินร่วนระบายน้ำดีในพื้นที่สูง การตัดแต่งกิ่งเพื่อลดความชื้นป้องกันโรคราสนิม การเก็บเกี่ยวเฉพาะผลสุกสีแดง Cherry Red และเทคนิคการแปรรูป Honey Process เพื่อดึงกลิ่นหอมและรสชาติหวานธรรมชาติ`;
+        } else if (topic.includes('เกษตร') || topic.includes('พืช')) {
+            cleanContent = `ภูมิปัญญาการเกษตรยั่งยืนของชุมชน: การบำรุงดินด้วยปุ๋ยหมักชีวภาพ การจัดระบบทางระบายน้ำช่วงฤดูฝน การป้องกันแมลงศัตรูพืชด้วยสารสกัดธรรมชาติ และการสร้างมูลค่าเพิ่มแก่ผลผลิตชุมชน`;
+        } else {
+            cleanContent = `องค์ความรู้เรื่อง "${cleanTitle}": รวบรวมข้อมูลสำคัญ รายละเอียดเชิงลึก สาระน่ารู้ และภูมิปัญญาท้องถิ่นเพื่อการจัดเก็บและถ่ายทอดผ่าน Local AI ประจำชุมชน`;
+        }
+    }
+    return cleanContent;
+}
+
 function generateAIResponse(query, mission, knowledgeList) {
     const q = query.toLowerCase().trim();
+    const missionName = mission ? mission.title : 'Local AI';
 
-    // Use mission knowledge if available, or fall back to user's all knowledge
+    // Candidate knowledge items for Grounded RAG (ONLY verified sources)
     let candidateList = (knowledgeList && knowledgeList.length > 0) 
         ? knowledgeList 
-        : (currentUser ? StorageService.getUserKnowledge(currentUser.id) : []);
+        : (currentUser ? StorageService.getUserKnowledge(currentUser.id).filter(k => k.status === 'verified') : []);
 
     let matchedItem = null;
     let maxScore = 0;
 
+    // Search for relevant knowledge from verified sources only
     for (const item of candidateList) {
+        if (item.status !== 'verified') continue; // Skip unverified sources
+        
         const textToSearch = `${item.title} ${item.topic} ${item.content} ${item.contributor}`.toLowerCase();
         const words = q.split(/\s+/);
         let score = 0;
@@ -1959,39 +2022,34 @@ function generateAIResponse(query, mission, knowledgeList) {
         }
     }
 
-    const missionName = mission ? mission.title : 'Local AI';
-
+    // ✅ Community Knowledge Found - Answer ONLY from verified sources
     if (matchedItem && maxScore > 0) {
-        const contentStr = matchedItem.content || '';
-        const titleStr = matchedItem.title || '';
-        const isShortTitleMatch = (contentStr.toLowerCase().trim() === titleStr.toLowerCase().trim()) || contentStr.length < 25;
-
-        let replyText = '';
-        if (isShortTitleMatch) {
-            replyText = `ข้อมูลจากเอกสาร **"${titleStr}"** ในภารกิจ ${missionName}:\n\n` +
-                        `ระบุหัวข้อ: "${contentStr}"\n\n` +
-                        `💡 *คำแนะนำ: คุณสามารถกดอัปโหลดไฟล์รายละเอียดเพิ่มเติมเกี่ยวกับเรื่องนี้ เพื่อให้ Local AI ตัวนี้เรียนรู้และตอบได้ลึกซึ้งยิ่งขึ้นครับ*`;
-        } else {
-            replyText = `อ้างอิงจากเอกสาร **"${titleStr}"** (${matchedItem.contributor}):\n\n` +
-                        `${contentStr}`;
-        }
+        const fileContent = matchedItem.content || matchedItem.title;
+        
+        let answerMarkdown = `### 🤖 คำตอบจาก ${missionName} Local AI\n\n` +
+            `✅ **ข้อมูลจากชุมชนที่ได้รับการยืนยันแล้ว** ("${matchedItem.title}"):\n` +
+            `\n${fileContent}\n\n` +
+            `📌 **สาเหตุ:** คำตอบนี้ถูกสกัดจากข้อมูลที่ผู้ให้ข้อมูล ${matchedItem.contributor} ได้บันทึกไว้ และได้รับการตรวจสอบความถูกต้องแล้ว`;
 
         return {
-            text: replyText,
+            text: answerMarkdown,
             sources: [matchedItem.title]
         };
     }
 
-    if (candidateList.length > 0) {
-        const sample = candidateList[0];
-        return {
-            text: `เกี่ยวกับคำถาม "${query}":\n\nขณะนี้ในคลังความรู้ของ **${missionName}** มีองค์ความรู้เรื่อง **"${sample.title}"** ซึ่งระบุไว้ว่า:\n\n"${sample.content}"\n\nหากคุณต้องการข้อมูลเฉพาะทางเรื่อง "${query}" สามารถกดปุ่ม "+ เพิ่มความรู้" เพื่ออัปโหลดไฟล์เรื่องนี้เพิ่มเติมได้เลยครับ`,
-            sources: [sample.title]
-        };
-    }
-
+    // ❌ No Community Knowledge Match - Tell user to add data
+    const suggestText = `${currentLang === 'th' ? 'ยังไม่มีข้อมูลเกี่ยวกับ "' + query + '" ในคลังความรู้' : 'No community knowledge about "' + query + '" yet'}`;
+    
     return {
-        text: `ขณะนี้ยังไม่มีไฟล์หรือเอกสารเรื่อง "${query}" ในคลังความรู้ของ **${missionName}** ครับ\n\nคุณสามารถกดปุ่ม **"+ เพิ่มความรู้"** เพื่อบันทึกเสียง ถ่ายรูป หรืออัปโหลดไฟล์เกี่ยวกับเรื่องนี้ได้ทันทีครับ!`,
+        text: `### 🤖 ${missionName} Local AI\n\n` +
+            `⚠️ **ข้อมูลไม่พอ**\n\n` +
+            `${suggestText}\n\n` +
+            `💡 **วิธีแก้:** \n` +
+            `1️⃣ ไปที่หน้า "องค์ความรู้" → อัดเสียง/ถ่ายรูป/บันทึกจากผู้รู้ในชุมชน\n` +
+            `2️⃣ บอก AI ว่าข้อมูลเกี่ยวกับอะไร\n` +
+            `3️⃣ ครู/ผู้เชี่ยวชาญจะตรวจสอบและยืนยัน\n` +
+            `4️⃣ พอตรวจสอบเรียบร้อย Local AI จะสามารถตอบคำถามนี้ได้แล้ว\n\n` +
+            `${currentLang === 'th' ? '*นี่คือแก่นแท้ของ AI FROM HERE: เด็กและชุมชนสร้างข้อมูลของตัวเอง ไม่ใช่ดึงจากโลก*' : '*Core concept: Build community knowledge locally first*'}`,
         sources: []
     };
 }
@@ -2142,13 +2200,27 @@ function closeEditProfileModal() {
 
 function handleSaveProfileSubmit(e) {
     e.preventDefault();
-    if (!currentUser) return;
+    if (!currentUser) {
+        showToast(currentLang === 'th' ? 'ข้อผิดพลาด: ไม่พบผู้ใช้งาน' : 'Error: User not found', 'error');
+        return;
+    }
 
     const name = document.getElementById('edit-profile-name')?.value.trim();
     const community = document.getElementById('edit-profile-community')?.value.trim();
     const bio = document.getElementById('edit-profile-bio')?.value.trim();
 
-    if (!name) return;
+    // Validation
+    let hasError = false;
+    if (!name || name.length < 2) {
+        showToast(currentLang === 'th' ? '⚠️ ชื่อต้องมีอย่างน้อย 2 ตัวอักษร' : 'Name must be at least 2 characters', 'warning');
+        hasError = true;
+    }
+    if (bio && bio.length < 3) {
+        showToast(currentLang === 'th' ? '⚠️ ชีวประวัติต้องมีอย่างน้อย 3 ตัวอักษร' : 'Bio must be at least 3 characters', 'warning');
+        hasError = true;
+    }
+
+    if (hasError) return;
 
     currentUser.name = name;
     currentUser.avatar = name.charAt(0).toUpperCase();
