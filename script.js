@@ -1127,11 +1127,17 @@ function renderRoleNavigation() {
         navItems = [
             { page: 'dashboard', icon: 'home', label: i18n[currentLang].navDashboard },
             { page: 'knowledge', icon: 'book-open', label: i18n[currentLang].navKnowledge },
-            { page: 'add-knowledge', icon: 'plus', label: i18n[currentLang].navAdd || 'เพิ่ม', isFab: true },
+            // { page: 'add-knowledge', icon: 'plus', label: i18n[currentLang].navAdd || 'เพิ่ม', isFab: true },  // ใช้ FAB mobile แล้ว
             { page: 'test', icon: 'bot', label: i18n[currentLang].navAI || 'AI' },
             { page: 'profile', icon: 'user', label: i18n[currentLang].navProfile }
         ];
-        mobileNavItems = navItems;
+        mobileNavItems = [
+            { page: 'dashboard', icon: 'home', label: isTh ? 'ภาพรวม' : 'Home' },
+            { page: 'knowledge', icon: 'book-open', label: isTh ? 'องค์ความรู้' : 'Knowledge' },
+            { page: 'add-knowledge', icon: 'plus', label: isTh ? 'เพิ่ม' : 'Add', isFab: true },
+            { page: 'test', icon: 'bot', label: isTh ? 'ทดสอบ AI' : 'Test' },
+            { page: 'profile', icon: 'user', label: isTh ? 'โปรไฟล์' : 'Profile' }
+        ];
     } else if (role === 'teacher') {
         navItems = [
             { page: 'teacher-review', icon: 'check-square', label: i18n[currentLang].navTeacherReview },
@@ -1159,12 +1165,22 @@ function renderRoleNavigation() {
         ];
     }
 
-    navContainer.innerHTML = navItems.map(item => `
-        <a class="nav-item ${currentPage === item.page ? 'active' : ''}" data-page="${item.page}" onclick="navigateTo('${item.page}')">
-            <i data-lucide="${item.icon}"></i>
-            <span>${item.label}</span>
-        </a>
-    `).join('');
+    navContainer.innerHTML = navItems.map(item => {
+        if (item.isFab) {
+            return `
+                <a class="nav-item nav-fab" onclick="openAddKnowledgePicker()">
+                    <i data-lucide="${item.icon}"></i>
+                    <span>${item.label}</span>
+                </a>
+            `;
+        }
+        return `
+            <a class="nav-item ${currentPage === item.page ? 'active' : ''}" data-page="${item.page}" onclick="navigateTo('${item.page}')">
+                <i data-lucide="${item.icon}"></i>
+                <span>${item.label}</span>
+            </a>
+        `;
+    }).join('');
 
     if (bottomNav) {
         bottomNav.innerHTML = mobileNavItems.map(item => {
@@ -2328,6 +2344,7 @@ function renderCurrentPage() {
     if (currentPage === 'dashboard') renderDashboardPage();
     else if (currentPage === 'missions') renderMissionsPage();
     else if (currentPage === 'knowledge') renderKnowledgePage();
+    else if (currentPage === 'add-knowledge') renderKnowledgePage();
     else if (currentPage === 'verify') renderVerifyPage();
     else if (currentPage === 'build') renderBuildPage();
     else if (currentPage === 'test') renderTestAIPage();
@@ -2347,12 +2364,12 @@ function renderDashboardPage() {
     const mCount = document.getElementById('dash-stat-missions');
     const kCount = document.getElementById('dash-stat-sources');
     const aiCount = document.getElementById('dash-stat-ai');
-    const sCount = document.getElementById('dash-stat-skills');
+    // const sCount = document.getElementById('dash-stat-skills');  // Removed - not meaningful
 
     if (mCount) mCount.textContent = userMissions.length;
     if (kCount) kCount.textContent = userKnowledge.length;
     if (aiCount) aiCount.textContent = deployedAI;
-    if (sCount) sCount.textContent = Math.min(5, userKnowledge.length + deployedAI);
+    // if (sCount) sCount.textContent = Math.min(5, userKnowledge.length + deployedAI);
 
     const container = document.getElementById('dash-active-mission-container');
     const activeMission = StorageService.getMissionById(activeMissionId);
@@ -3593,23 +3610,16 @@ function closeOnboardingModal() {
 }
 
 function openAddKnowledgePicker() {
-    // Safety: Must have active mission to add knowledge
-    if (!activeMissionId) {
-        showToast(currentLang === 'th' ? '⚠️ ต้องสร้างหรือเลือกภารกิจก่อนเพิ่มความรู้' : 'Please create or select a mission first', 'warning');
-        openCreateMissionModal();
-        return;
-    }
+    // Navigate to knowledge page
+    navigateTo('knowledge');
     
-    const modal = document.getElementById('add-knowledge-picker-modal');
-    if (modal) modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    initIcons();
-}
-
-function closeAddKnowledgePicker() {
-    const modal = document.getElementById('add-knowledge-picker-modal');
-    if (modal) modal.classList.add('hidden');
-    document.body.style.overflow = '';
+    // Scroll to capture cards
+    setTimeout(() => {
+        const grid = document.getElementById('media-capture-grid');
+        if (grid) {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
 }
 
 // ===== MEDIA CAPTURE CONTROLLERS (AUDIO, CAMERA, VIDEO) =====

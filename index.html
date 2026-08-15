@@ -404,11 +404,13 @@
                             <div class="stat-value" id="dash-stat-ai">0</div>
                             <div class="stat-label" data-i18n="statAI">AI ที่สร้างสำเร็จ</div>
                         </div>
+                        <!-- 
                         <div class="stat-card" onclick="navigateTo('profile')">
                             <div class="stat-icon dark"><i data-lucide="award"></i></div>
                             <div class="stat-value" id="dash-stat-skills">0</div>
                             <div class="stat-label" data-i18n="statSkills">ทักษะที่ปลดล็อก</div>
                         </div>
+                        -->
                     </div>
 
                     <!-- DASHBOARD CONTROL CENTER — DYNAMIC ACTIVE MISSION CARD & NEXT ACTION CTA -->
@@ -1282,7 +1284,7 @@
         <h3 data-i18n="pickerTitle">เพิ่มความรู้</h3>
         <p class="bottom-sheet-desc" data-i18n="pickerDesc">เลือกวิธีที่สะดวกที่สุด</p>
         <div class="capture-action-list">
-            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openAudioRecorder()">
+            <button type="button" class="capture-list-item" onclick="openAudioRecorder()">
                 <div class="capture-icon"><i data-lucide="mic"></i></div>
                 <div class="capture-list-text">
                     <span class="capture-label" data-i18n="captureAudio">บันทึกเสียง</span>
@@ -1290,7 +1292,7 @@
                 </div>
                 <i data-lucide="chevron-right" class="capture-arrow"></i>
             </button>
-            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openPhotoCapture()">
+            <button type="button" class="capture-list-item" onclick="openPhotoCapture()">
                 <div class="capture-icon"><i data-lucide="camera"></i></div>
                 <div class="capture-list-text">
                     <span class="capture-label" data-i18n="capturePhoto">ถ่ายรูป</span>
@@ -1298,7 +1300,7 @@
                 </div>
                 <i data-lucide="chevron-right" class="capture-arrow"></i>
             </button>
-            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openVideoCapture()">
+            <button type="button" class="capture-list-item" onclick="openVideoCapture()">
                 <div class="capture-icon"><i data-lucide="video"></i></div>
                 <div class="capture-list-text">
                     <span class="capture-label" data-i18n="captureVideo">ถ่ายวิดีโอ</span>
@@ -1306,7 +1308,7 @@
                 </div>
                 <i data-lucide="chevron-right" class="capture-arrow"></i>
             </button>
-            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); triggerFileInput()">
+            <button type="button" class="capture-list-item" onclick="triggerFileInput()">
                 <div class="capture-icon"><i data-lucide="upload"></i></div>
                 <div class="capture-list-text">
                     <span class="capture-label" data-i18n="captureUpload">อัปโหลดไฟล์</span>
@@ -1315,7 +1317,7 @@
                 <i data-lucide="chevron-right" class="capture-arrow"></i>
             </button>
         </div>
-        <button class="btn btn-outline btn-full" onclick="closeAddKnowledgePicker()" data-i18n="btnCancel">ยกเลิก</button>
+        <button class="btn btn-outline btn-full" onclick="document.getElementById('add-knowledge-picker').classList.add('hidden')" data-i18n="btnCancel">ยกเลิก</button>
     </div>
 </div>
 
@@ -1470,54 +1472,7 @@
 </div>
 
 <!-- ADD KNOWLEDGE INPUT PICKER MODAL (MOBILE-FIRST) -->
-<div id="add-knowledge-picker-modal" class="modal-overlay hidden">
-    <div class="modal-card modal-card-fullscreen-mobile">
-        <button class="modal-close" onclick="closeAddKnowledgePicker()" aria-label="Close Modal"><i data-lucide="x"></i></button>
-        <div class="modal-header-icon"><i data-lucide="plus"></i></div>
-        <h2>เพิ่มความรู้ชุมชน</h2>
-        <p class="modal-desc">เลือกวิธีที่คุณสะดวกในการส่งข้อมูลให้ AI เรียนรู้</p>
-
-        <div class="knowledge-picker-grid">
-            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openAudioRecorder();">
-                <div class="picker-icon mic-bg"><i data-lucide="mic"></i></div>
-                <div class="picker-text">
-                    <h3>บันทึกเสียง</h3>
-                    <p>เล่าเรื่องให้ AI ฟัง (สัมภาษณ์/พูดคุย)</p>
-                </div>
-                <i data-lucide="chevron-right" class="picker-arrow"></i>
-            </button>
-
-            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openPhotoCapture();">
-                <div class="picker-icon camera-bg"><i data-lucide="camera"></i></div>
-                <div class="picker-text">
-                    <h3>ถ่ายรูป</h3>
-                    <p>ถ่ายสิ่งที่อยากเก็บไว้ แล้วบอกคำอธิบาย</p>
-                </div>
-                <i data-lucide="chevron-right" class="picker-arrow"></i>
-            </button>
-
-            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openVideoCapture();">
-                <div class="picker-icon video-bg"><i data-lucide="video"></i></div>
-                <div class="picker-text">
-                    <h3>ถ่ายวิดีโอ</h3>
-                    <p>บันทึกเรื่องราวและบรรยากาศในชุมชน</p>
-                </div>
-                <i data-lucide="chevron-right" class="picker-arrow"></i>
-            </button>
-
-            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); triggerFileInput();">
-                <div class="picker-icon upload-bg"><i data-lucide="upload-cloud"></i></div>
-                <div class="picker-text">
-                    <h3>อัปโหลดไฟล์</h3>
-                    <p>รูป / PDF / Audio / Video / Text</p>
-                </div>
-                <i data-lucide="chevron-right" class="picker-arrow"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Hidden camera file inputs for fallback -->
+                <!-- Hidden camera file inputs for fallback -->
 <input type="file" id="camera-photo-input" accept="image/*" capture="environment" style="display:none" onchange="handleCameraPhotoFallback(this.files)">
 <input type="file" id="camera-video-input" accept="video/*" capture="environment" style="display:none" onchange="handleCameraVideoFallback(this.files)">
 
