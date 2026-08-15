@@ -2570,7 +2570,8 @@ function renderKnowledgePage() {
     const countEl = document.getElementById('source-count');
     if (!container) return;
 
-    if (!activeMissionId) {
+    // Safety: If no mission, guide user to create one
+    if (!activeMissionId || !currentUser) {
         if (countEl) countEl.textContent = '0 แหล่งข้อมูล';
         container.innerHTML = `
             <div class="empty-state-card">
@@ -2608,7 +2609,11 @@ function renderKnowledgePage() {
                 <div class="empty-state-icon"><i data-lucide="book-open"></i></div>
                 <h3>${i18n[currentLang].emptyKnowledgeTitle}</h3>
                 <p>${i18n[currentLang].emptyKnowledgeDesc}</p>
-                <button class="btn btn-primary" onclick="triggerFileInput()">
+                <div style="margin-top: 12px; padding: 12px; background: #f0fdf4; border-radius: 8px; border-left: 3px solid #22c55e; font-size: 13px; color: #15803d;">
+                    <strong>💡 ${currentLang === 'th' ? 'เพิ่มความรู้คืออะไร?' : 'What is "Add Knowledge"?'}</strong>
+                    <p style="margin: 6px 0 0 0;">${currentLang === 'th' ? '• ต้องเก็บข้อมูลจริงจากผู้รู้ในชุมชนของคุณ (สัมภาษณ์ ถ่ายรูป วิดีโอ)\n• AI จะช่วยถอดข้อมูลและตรวจสอบความถูกต้อง\n• ครู/ผู้เชี่ยวชาญจะยืนยันได้รับความยินยอมถูกต้อง (Consent)\n• พอข้อมูลผ่านการตรวจสอบ Local AI จะสามารถตอบคำถามจากข้อมูลของชุมชนได้' : '• Collect real data from community experts (interviews, photos, videos)\n• AI helps extract and verify the information\n• Teachers/experts confirm proper consent\n• Once verified, Local AI can answer questions based on community knowledge'}</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddKnowledgePicker()" style="margin-top: 16px;">
                     <i data-lucide="plus"></i> <span>${i18n[currentLang].btnUploadFirstKnowledge}</span>
                 </button>
             </div>
@@ -3269,43 +3274,7 @@ function setLanguage(lang) {
     showToast(lang === 'th' ? 'เปลี่ยนภาษาเป็น: ภาษาไทย' : 'Language set to: English', 'info');
 }
 
-function processAudioRecording() {
-    if (!activeMissionId) {
-        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
-        return;
-    }
-
-    const previewControls = document.getElementById('audio-preview-controls');
-    const procUI = document.getElementById('audio-processing-ui');
-
-    if (previewControls) previewControls.classList.add('hidden');
-    if (procUI) procUI.classList.remove('hidden');
-
-    setTimeout(() => {
-        const transcriptText = `สัมภาษณ์และบันทึกเสียงความยาว ${audioSeconds} วินาที เกี่ยวกับเรื่องราวและภูมิปัญญาท้องถิ่นของชุมชน`;
-        const newKnowledge = {
-            id: 'k_audio_' + Date.now(),
-            userId: currentUser.id,
-            missionId: activeMissionId,
-            title: `ไฟล์เสียงสัมภาษณ์ (${new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })})`,
-            contributor: currentUser.name + ' (เสียงสัมภาษณ์)',
-            sourceType: 'audio',
-            content: transcriptText,
-            topic: 'เสียงสัมภาษณ์ชุมชน',
-            consent: true,
-            status: 'verified',
-            createdAt: new Date().toISOString().split('T')[0]
-        };
-
-        StorageService.addKnowledge(newKnowledge);
-        updateActiveMissionProgressOnAdd();
-        closeAudioRecorder();
-        showToast('AI แปลงเสียงและเรียนรู้ข้อมูลเรียบร้อยแล้ว! พร้อมใช้งานทันที', 'success');
-
-        renderCurrentPage();
-        navigateTo('knowledge');
-    }, 1800);
-}
+// Removed duplicate processAudioRecording - kept the one with 'pending' status for proper verification flow
 
 function processPhotoCapture() {
     if (!activeMissionId) {
@@ -3331,7 +3300,7 @@ function processPhotoCapture() {
             content: `ภาพถ่ายพร้อมคำอธิบาย: "${desc}" — AI วิเคราะห์และสกัดคุณลักษณะสำคัญเพื่อบันทึกเข้า Knowledge Base`,
             topic: 'ภาพถ่ายภูมิปัญญา',
             consent: true,
-            status: 'verified',
+            status: 'pending',
             createdAt: new Date().toISOString().split('T')[0]
         };
 
@@ -3360,13 +3329,12 @@ function handleCameraPhotoFallback(files) {
         content: `ภาพถ่าย: ${file.name} — คำอธิบาย: "${desc}"`,
         topic: 'ภาพถ่ายชุมชน',
         consent: true,
-        status: 'verified',
+        status: 'pending',
         createdAt: new Date().toISOString().split('T')[0]
     };
 
     StorageService.addKnowledge(newKnowledge);
-    updateActiveMissionProgressOnAdd();
-    showToast('เพิ่มภาพถ่ายเรียบร้อยแล้ว', 'success');
+    showToast('เพิ่มภาพถ่ายเรียบร้อยแล้ว ส่งเข้าคิวรอตรวจสอบ', 'success');
     renderCurrentPage();
     navigateTo('knowledge');
 }
@@ -3625,6 +3593,13 @@ function closeOnboardingModal() {
 }
 
 function openAddKnowledgePicker() {
+    // Safety: Must have active mission to add knowledge
+    if (!activeMissionId) {
+        showToast(currentLang === 'th' ? '⚠️ ต้องสร้างหรือเลือกภารกิจก่อนเพิ่มความรู้' : 'Please create or select a mission first', 'warning');
+        openCreateMissionModal();
+        return;
+    }
+    
     const modal = document.getElementById('add-knowledge-picker-modal');
     if (modal) modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
