@@ -1134,8 +1134,8 @@ function renderRoleNavigation() {
         mobileNavItems = [
             { page: 'dashboard', icon: 'home', label: isTh ? 'ภาพรวม' : 'Home' },
             { page: 'knowledge', icon: 'book-open', label: isTh ? 'องค์ความรู้' : 'Knowledge' },
+            { page: 'build', icon: 'cpu', label: isTh ? 'Local AI' : 'Local AI' },
             { page: 'add-knowledge', icon: 'plus', label: isTh ? 'เพิ่ม' : 'Add', isFab: true },
-            { page: 'test', icon: 'bot', label: isTh ? 'ทดสอบ AI' : 'Test' },
             { page: 'profile', icon: 'user', label: isTh ? 'โปรไฟล์' : 'Profile' }
         ];
     } else if (role === 'teacher') {
@@ -1199,6 +1199,14 @@ function renderRoleNavigation() {
                 </a>
             `;
         }).join('');
+    }
+
+    // Ensure action buttons stay aligned to the active mission instead of the demo mission
+    if (!currentUser) return;
+    const userMissions = StorageService.getUserMissions(currentUser.id);
+    if (userMissions.length > 0 && activeMissionId && !userMissions.some(m => m.id === activeMissionId)) {
+        activeMissionId = userMissions[0].id;
+        renderActiveMissionUI();
     }
 
     initIcons();
