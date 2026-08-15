@@ -1239,10 +1239,14 @@ function setupActiveMission() {
 }
 
 function handleActiveMissionChange(missionId) {
+    if (missionId === 'create_new') {
+        openCreateMissionModal();
+        return;
+    }
     activeMissionId = missionId;
     renderActiveMissionUI();
     renderCurrentPage();
-    showToast(currentLang === 'th' ? 'เปลี่ยนภารกิจที่ใช้งานแล้ว' : 'Switched active mission', 'info');
+    showToast(currentLang === 'th' ? 'เปลี่ยน Local AI ที่ใช้งานแล้ว' : 'Switched active Local AI', 'info');
 }
 
 function renderActiveMissionUI() {
@@ -1263,8 +1267,8 @@ function renderActiveMissionUI() {
     if (selectorContainer) selectorContainer.style.display = 'flex';
     if (dropdown) {
         dropdown.innerHTML = userMissions.map(m => `
-            <option value="${m.id}" ${m.id === activeMissionId ? 'selected' : ''}>${m.title}</option>
-        `).join('');
+            <option value="${m.id}" ${m.id === activeMissionId ? 'selected' : ''}>🤖 ${m.title}</option>
+        `).join('') + `<option value="create_new">➕ สร้าง Local AI ตัวใหม่...</option>`;
     }
 
     const activeMission = StorageService.getMissionById(activeMissionId);
@@ -1332,8 +1336,8 @@ function handleCreateMissionSubmit(e) {
         problem: problem,
         goal: goal,
         status: 'in-progress',
-        progress: 10,
-        builtAi: false,
+        progress: 100,
+        builtAi: true,
         createdAt: new Date().toISOString().split('T')[0]
     };
 
@@ -1343,7 +1347,7 @@ function handleCreateMissionSubmit(e) {
     closeCreateMissionModal();
     document.getElementById('create-mission-form')?.reset();
 
-    showToast(currentLang === 'th' ? `สร้างภารกิจ "${title}" สำเร็จแล้ว` : `Mission "${title}" created successfully!`, 'success');
+    showToast(currentLang === 'th' ? `สร้าง Local AI "${title}" เรียบร้อยแล้ว! อัปโหลดไฟล์หรือเริ่มถามตอบได้ทันที` : `Created Local AI "${title}"! Ready to use.`, 'success');
     renderActiveMissionUI();
     renderCurrentPage();
     navigateTo('knowledge');
@@ -1925,45 +1929,65 @@ function sendChatMessage() {
 }
 
 function generateAIResponse(query, mission, knowledgeList) {
-    if (!mission || knowledgeList.length === 0) {
-        return {
-            text: currentLang === 'th' ? 'ขออภัย ภารกิจนี้ยังไม่มีองค์ความรู้ที่ผ่านการตรวจสอบ กรุณาเพิ่มและตรวจสอบข้อมูลก่อนเริ่มใช้งาน AI' : 'Sorry, no verified knowledge found for this mission yet.',
-            sources: []
-        };
-    }
+    const q = query.toLowerCase().trim();
 
-    const q = query.toLowerCase();
+    // Use mission knowledge if available, or fall back to user's all knowledge
+    let candidateList = (knowledgeList && knowledgeList.length > 0) 
+        ? knowledgeList 
+        : (currentUser ? StorageService.getUserKnowledge(currentUser.id) : []);
 
     let matchedItem = null;
-    let maxMatch = 0;
+    let maxScore = 0;
 
-    for (const item of knowledgeList) {
-        const textToSearch = `${item.title} ${item.topic} ${item.content}`.toLowerCase();
+    for (const item of candidateList) {
+        const textToSearch = `${item.title} ${item.topic} ${item.content} ${item.contributor}`.toLowerCase();
         const words = q.split(/\s+/);
         let score = 0;
         for (const w of words) {
-            if (w.length > 2 && textToSearch.includes(w)) {
-                score++;
+            if (w.length >= 2 && textToSearch.includes(w)) {
+                score += (item.title.toLowerCase().includes(w) ? 3 : 1);
             }
         }
-        if (score > maxMatch) {
-            maxMatch = score;
+        if (score > maxScore) {
+            maxScore = score;
             matchedItem = item;
         }
     }
 
-    if (matchedItem) {
-        const answerIntro = currentLang === 'th' ? `จากองค์ความรู้ของ ${matchedItem.contributor} ในภารกิจ ${mission.title}:` : `According to ${matchedItem.contributor} for ${mission.title}:`;
+    const missionName = mission ? mission.title : 'Local AI';
+
+    if (matchedItem && maxScore > 0) {
+        const contentStr = matchedItem.content || '';
+        const titleStr = matchedItem.title || '';
+        const isShortTitleMatch = (contentStr.toLowerCase().trim() === titleStr.toLowerCase().trim()) || contentStr.length < 25;
+
+        let replyText = '';
+        if (isShortTitleMatch) {
+            replyText = `ข้อมูลจากเอกสาร **"${titleStr}"** ในภารกิจ ${missionName}:\n\n` +
+                        `ระบุหัวข้อ: "${contentStr}"\n\n` +
+                        `💡 *คำแนะนำ: คุณสามารถกดอัปโหลดไฟล์รายละเอียดเพิ่มเติมเกี่ยวกับเรื่องนี้ เพื่อให้ Local AI ตัวนี้เรียนรู้และตอบได้ลึกซึ้งยิ่งขึ้นครับ*`;
+        } else {
+            replyText = `อ้างอิงจากเอกสาร **"${titleStr}"** (${matchedItem.contributor}):\n\n` +
+                        `${contentStr}`;
+        }
+
         return {
-            text: `${answerIntro} ${matchedItem.content}`,
+            text: replyText,
             sources: [matchedItem.title]
         };
     }
 
-    const fallbackItem = knowledgeList[0];
+    if (candidateList.length > 0) {
+        const sample = candidateList[0];
+        return {
+            text: `เกี่ยวกับคำถาม "${query}":\n\nขณะนี้ในคลังความรู้ของ **${missionName}** มีองค์ความรู้เรื่อง **"${sample.title}"** ซึ่งระบุไว้ว่า:\n\n"${sample.content}"\n\nหากคุณต้องการข้อมูลเฉพาะทางเรื่อง "${query}" สามารถกดปุ่ม "+ เพิ่มความรู้" เพื่ออัปโหลดไฟล์เรื่องนี้เพิ่มเติมได้เลยครับ`,
+            sources: [sample.title]
+        };
+    }
+
     return {
-        text: currentLang === 'th' ? `จากองค์ความรู้ที่บันทึกไว้สำหรับ ${mission.title}: ${fallbackItem.content}` : `Based on verified community knowledge for ${mission.title}: ${fallbackItem.content}`,
-        sources: [fallbackItem.title]
+        text: `ขณะนี้ยังไม่มีไฟล์หรือเอกสารเรื่อง "${query}" ในคลังความรู้ของ **${missionName}** ครับ\n\nคุณสามารถกดปุ่ม **"+ เพิ่มความรู้"** เพื่อบันทึกเสียง ถ่ายรูป หรืออัปโหลดไฟล์เกี่ยวกับเรื่องนี้ได้ทันทีครับ!`,
+        sources: []
     };
 }
 
@@ -2485,6 +2509,21 @@ function renderKnowledgePage() {
 
     const kList = StorageService.getKnowledgeForMission(activeMissionId);
     if (countEl) countEl.textContent = `${kList.length} แหล่งข้อมูล`;
+
+    // Update filter badge counts
+    const elAll = document.getElementById('k-count-all');
+    const elLearning = document.getElementById('k-count-learning');
+    const elPending = document.getElementById('k-count-pending');
+    const elVerified = document.getElementById('k-count-verified');
+
+    const vCount = kList.filter(k => k.status === 'verified').length;
+    const pCount = kList.filter(k => k.status === 'pending').length;
+    const lCount = kList.filter(k => k.status === 'learning').length;
+
+    if (elAll) elAll.textContent = kList.length;
+    if (elLearning) elLearning.textContent = lCount;
+    if (elPending) elPending.textContent = pCount;
+    if (elVerified) elVerified.textContent = vCount;
 
     if (kList.length === 0) {
         container.innerHTML = `
