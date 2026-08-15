@@ -205,9 +205,9 @@
                 </div>
 
                 <div class="sidebar-user-card" onclick="navigateTo('profile')" title="ดูโปรไฟล์">
-                    <div class="user-avatar-sm" id="sidebar-avatar">B</div>
+                    <div class="user-avatar-sm" id="sidebar-avatar">ย</div>
                     <div class="user-info-sm">
-                        <span class="user-name-sm" id="sidebar-user-name">Billy</span>
+                        <span class="user-name-sm" id="sidebar-user-name">เยาวชนผู้สร้าง AI</span>
                         <span class="user-role-sm" id="sidebar-user-role">Local AI Creator</span>
                     </div>
                     <button class="logout-btn" onclick="event.stopPropagation(); handleLogout()" title="ออกจากระบบ" aria-label="Logout">
@@ -268,8 +268,8 @@
                     </div>
 
                     <div class="user-profile" onclick="navigateTo('profile')" title="ดูโปรไฟล์">
-                        <div class="user-avatar" id="topbar-avatar">B</div>
-                        <span class="user-name" id="topbar-name">Billy</span>
+                        <div class="user-avatar" id="topbar-avatar">ย</div>
+                        <span class="user-name" id="topbar-name">เยาวชนผู้สร้าง AI</span>
                         <span class="role-pill-badge" id="topbar-role-badge">Student</span>
                     </div>
                 </div>
@@ -355,7 +355,7 @@
                     <div id="desktop-home-view" class="desktop-home">
                     <div class="page-title-row">
                         <div class="page-title">
-                            <h1 id="dash-greeting-title">สวัสดี, Billy</h1>
+                            <h1 id="dash-greeting-title">สวัสดี, ผู้ใช้งาน</h1>
                             <p>ยินดีต้อนรับกลับมาสู่ระบบสร้าง AI ประจำชุมชนของคุณ</p>
                         </div>
                         <div class="page-title-actions">
@@ -812,18 +812,23 @@
                 <!-- 8. PROFILE PAGE -->
                 <section id="page-profile" class="page">
                     <div class="profile-header">
-                        <div class="profile-avatar-lg" id="profile-avatar-lg">B</div>
+                        <div class="profile-avatar-lg" id="profile-avatar-lg">ย</div>
                         <div class="profile-info">
-                            <h1 id="profile-display-name">Billy The Kid</h1>
+                            <h1 id="profile-display-name">เยาวชนผู้สร้าง AI</h1>
                             <div class="profile-badge-row">
                                 <span class="profile-badge" id="profile-role-badge"><i data-lucide="award"></i> Local AI Creator</span>
                                 <span class="profile-sub-badge" id="profile-community-badge"><i data-lucide="map-pin"></i> ชุมชนดอยช้าง เชียงราย</span>
                             </div>
                             <p class="profile-bio" id="profile-bio-text">นักเรียนผู้สนใจการนำ AI มาอนุรักษ์ความรู้การเกษตรของชุมชน</p>
                         </div>
-                        <button class="btn btn-outline edit-profile-btn" onclick="openEditProfileModal()">
-                            <i data-lucide="edit-3"></i> <span data-i18n="btnEditProfile">แก้ไขโปรไฟล์</span>
-                        </button>
+                        <div class="profile-header-actions">
+                            <button class="btn btn-outline edit-profile-btn" onclick="openEditProfileModal()">
+                                <i data-lucide="edit-3"></i> <span data-i18n="btnEditProfile">แก้ไขโปรไฟล์</span>
+                            </button>
+                            <button class="btn btn-outline-danger logout-profile-btn" onclick="handleLogout()">
+                                <i data-lucide="log-out"></i> <span>ออกจากระบบ</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- PROFILE STATS -->
@@ -865,10 +870,15 @@
                     <!-- SETTINGS & DATA RESET -->
                     <div class="profile-settings-card">
                         <h3 data-i18n="settingsTitle"><i data-lucide="settings"></i> การตั้งค่าบัญชี & ข้อมูล</h3>
-                        <p data-i18n="settingsDesc">จัดการข้อมูลส่วนตัว หรือรีเซ็ตข้อมูลภารกิจของฉันสำหรับเริ่มต้นใหม่</p>
-                        <button class="btn btn-outline-warn" onclick="handleResetMyData()">
-                            <i data-lucide="refresh-cw"></i> <span data-i18n="btnResetMyData">รีเซ็ตข้อมูลภารกิจของฉัน</span>
-                        </button>
+                        <p data-i18n="settingsDesc">จัดการข้อมูลส่วนตัว ออกจากระบบ หรือรีเซ็ตข้อมูลภารกิจของฉันสำหรับเริ่มต้นใหม่</p>
+                        <div class="profile-settings-btns">
+                            <button class="btn btn-outline-warn" onclick="handleResetMyData()">
+                                <i data-lucide="refresh-cw"></i> <span data-i18n="btnResetMyData">รีเซ็ตข้อมูลภารกิจของฉัน</span>
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="handleLogout()">
+                                <i data-lucide="log-out"></i> <span>ออกจากระบบ (Logout)</span>
+                            </button>
+                        </div>
                     </div>
                 </section>
 

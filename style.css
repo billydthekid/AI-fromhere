@@ -2554,10 +2554,34 @@ ul { list-style: none; }
     line-height: 1.45;
 }
 
+.profile-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .edit-profile-btn {
     color: var(--primary-dark);
     border-color: var(--primary);
     background: var(--primary-light);
+}
+
+.btn-outline-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger-border);
+}
+.btn-outline-danger:hover {
+    background: #FEE2E2;
+    border-color: var(--danger);
+}
+
+.profile-settings-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
 }
 
 .profile-stats {

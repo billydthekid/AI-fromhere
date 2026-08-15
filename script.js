@@ -407,20 +407,20 @@ const i18n = {
 class StorageService {
     static getUsers() {
         try {
-            const raw = localStorage.getItem('afh_users_v2');
+            const raw = localStorage.getItem('afh_users_v3');
             if (raw) return JSON.parse(raw);
         } catch (e) {}
         
         const defaultUsers = [
             {
-                id: 'user_billy',
-                name: 'Billy',
-                lastName: 'The Kid',
-                email: 'billy@aifromhere.edu',
+                id: 'user_student',
+                name: 'เยาวชนผู้สร้าง AI',
+                lastName: '(นักเรียน)',
+                email: 'student@aifromhere.edu',
                 password: 'password123',
                 role: 'student',
                 roleTitle: 'Local AI Creator',
-                avatar: 'B',
+                avatar: 'ย',
                 community: 'ชุมชนดอยช้าง เชียงราย',
                 bio: 'นักเรียนผู้สนใจการนำ AI มาอนุรักษ์ความรู้การเกษตรของชุมชน',
                 createdAt: '2026-08-10'
@@ -457,7 +457,7 @@ class StorageService {
     }
 
     static saveUsers(users) {
-        localStorage.setItem('afh_users_v2', JSON.stringify(users));
+        localStorage.setItem('afh_users_v3', JSON.stringify(users));
     }
 
     static getCurrentUserId() {
@@ -837,8 +837,8 @@ function initIcons() {
 function initAuth() {
     currentUser = StorageService.getCurrentUser();
     if (currentUser) {
-        if (currentUser.id === 'user_billy') {
-            ensureDemoMissionForBilly();
+        if (currentUser.role === 'student') {
+            ensureDemoMissionForUser(currentUser.id);
         }
         setupActiveMission();
         showMainApp();
@@ -847,12 +847,14 @@ function initAuth() {
     }
 }
 
-function ensureDemoMissionForBilly() {
-    const missions = StorageService.getUserMissions('user_billy');
+function ensureDemoMissionForUser(userId) {
+    if (!userId) return;
+    const missions = StorageService.getUserMissions(userId);
     if (missions.length === 0) {
+        const mId = 'mission_coffee_demo_' + userId;
         const demoMission = {
-            id: 'mission_coffee_demo',
-            userId: 'user_billy',
+            id: mId,
+            userId: userId,
             title: 'Coffee Local AI',
             category: 'เกษตรกรรมและการเพาะปลูก',
             icon: 'coffee',
@@ -868,9 +870,9 @@ function ensureDemoMissionForBilly() {
 
         const sampleK = [
             {
-                id: 'k_1',
-                userId: 'user_billy',
-                missionId: 'mission_coffee_demo',
+                id: 'k_1_' + userId,
+                userId: userId,
+                missionId: mId,
                 title: 'สัมภาษณ์เกษตรกร — คุณสมชาย',
                 contributor: 'คุณสมชาย — ปราชญ์กาแฟ',
                 sourceType: 'audio',
@@ -881,9 +883,9 @@ function ensureDemoMissionForBilly() {
                 createdAt: '2026-08-12'
             },
             {
-                id: 'k_2',
-                userId: 'user_billy',
-                missionId: 'mission_coffee_demo',
+                id: 'k_2_' + userId,
+                userId: userId,
+                missionId: mId,
                 title: 'คู่มือการปลูกและแปรรูปกาแฟท้องถิ่น',
                 contributor: 'กลุ่มวิสาหกิจชุมชนดอยช้าง',
                 sourceType: 'text',
@@ -894,9 +896,9 @@ function ensureDemoMissionForBilly() {
                 createdAt: '2026-08-13'
             },
             {
-                id: 'k_3',
-                userId: 'user_billy',
-                missionId: 'mission_coffee_demo',
+                id: 'k_3_' + userId,
+                userId: userId,
+                missionId: mId,
                 title: 'บันทึกการควบคุมโรคราสนิมและการฟื้นฟูดิน',
                 contributor: 'สภาเกษตรกรชุมชน',
                 sourceType: 'pdf',
@@ -1065,8 +1067,8 @@ function quickDemoLogin(role = 'student') {
     currentUser = user;
     StorageService.setCurrentUserId(currentUser.id);
     
-    if (currentUser.id === 'user_billy') {
-        ensureDemoMissionForBilly();
+    if (currentUser.role === 'student') {
+        ensureDemoMissionForUser(currentUser.id);
     }
     setupActiveMission();
 
@@ -2619,12 +2621,26 @@ function renderVerifyPage() {
     initIcons();
 }
 
+function updateActiveMissionProgressOnAdd() {
+    if (!activeMissionId) return;
+    const mission = StorageService.getMissionById(activeMissionId);
+    if (!mission) return;
+    const kList = StorageService.getKnowledgeForMission(mission.id);
+    const verifiedCount = kList.filter(k => k.status === 'verified').length;
+    mission.progress = Math.min(100, Math.round((verifiedCount / Math.max(1, kList.length)) * 75 + 25));
+    if (kList.length >= 3) {
+        mission.builtAi = true;
+    }
+    StorageService.updateMission(mission);
+}
+
 function handleVerifyApproveSelf(kId) {
     const all = StorageService.getKnowledge();
     const item = all.find(k => k.id === kId);
     if (item) {
         item.status = 'verified';
         StorageService.updateKnowledge(item);
+        updateActiveMissionProgressOnAdd();
 
         NotificationManager.addNotification({
             userId: item.userId,
@@ -2634,8 +2650,8 @@ function handleVerifyApproveSelf(kId) {
             relatedId: item.id
         });
 
-        showToast(currentLang === 'th' ? 'ยืนยันข้อมูลเรียบร้อยแล้ว' : 'Knowledge source verified', 'success');
-        renderVerifyPage();
+        showToast(currentLang === 'th' ? 'ยืนยันข้อมูลเรียบร้อยแล้ว! AI พร้อมใช้งานทันที' : 'Knowledge source verified', 'success');
+        renderCurrentPage();
     }
 }
 
@@ -2801,9 +2817,24 @@ function sendSuggestionFromChip(text) {
 }
 
 function renderProfilePage() {
+    if (!currentUser) return;
+    ensureDemoMissionForUser(currentUser.id);
+
     const userMissions = StorageService.getUserMissions(currentUser.id);
     const userKnowledge = StorageService.getUserKnowledge(currentUser.id);
     const deployedAI = userMissions.filter(m => m.builtAi).length;
+
+    const pAvatar = document.getElementById('profile-avatar-lg');
+    const pName = document.getElementById('profile-display-name');
+    const pRole = document.getElementById('profile-role-badge');
+    const pComm = document.getElementById('profile-community-badge');
+    const pBio = document.getElementById('profile-bio-text');
+
+    if (pAvatar) pAvatar.textContent = currentUser.avatar || currentUser.name.charAt(0);
+    if (pName) pName.textContent = currentUser.name + (currentUser.lastName ? ' ' + currentUser.lastName : '');
+    if (pRole) pRole.innerHTML = `<i data-lucide="award"></i> ${currentUser.roleTitle || currentUser.role}`;
+    if (pComm) pComm.innerHTML = `<i data-lucide="map-pin"></i> ${currentUser.community || 'ชุมชนท้องถิ่น'}`;
+    if (pBio) pBio.textContent = currentUser.bio || 'นักเรียนผู้สนใจการนำ AI มาอนุรักษ์ความรู้ของชุมชน';
 
     const pProjects = document.getElementById('profile-stat-projects');
     const pSources = document.getElementById('profile-stat-sources');
@@ -3120,6 +3151,108 @@ function setLanguage(lang) {
     localStorage.setItem('afh_lang', lang);
     applyLanguage(lang);
     showToast(lang === 'th' ? 'เปลี่ยนภาษาเป็น: ภาษาไทย' : 'Language set to: English', 'info');
+}
+
+function processAudioRecording() {
+    if (!activeMissionId) {
+        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
+        return;
+    }
+
+    const previewControls = document.getElementById('audio-preview-controls');
+    const procUI = document.getElementById('audio-processing-ui');
+
+    if (previewControls) previewControls.classList.add('hidden');
+    if (procUI) procUI.classList.remove('hidden');
+
+    setTimeout(() => {
+        const transcriptText = `สัมภาษณ์และบันทึกเสียงความยาว ${audioSeconds} วินาที เกี่ยวกับเรื่องราวและภูมิปัญญาท้องถิ่นของชุมชน`;
+        const newKnowledge = {
+            id: 'k_audio_' + Date.now(),
+            userId: currentUser.id,
+            missionId: activeMissionId,
+            title: `ไฟล์เสียงสัมภาษณ์ (${new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })})`,
+            contributor: currentUser.name + ' (เสียงสัมภาษณ์)',
+            sourceType: 'audio',
+            content: transcriptText,
+            topic: 'เสียงสัมภาษณ์ชุมชน',
+            consent: true,
+            status: 'verified',
+            createdAt: new Date().toISOString().split('T')[0]
+        };
+
+        StorageService.addKnowledge(newKnowledge);
+        updateActiveMissionProgressOnAdd();
+        closeAudioRecorder();
+        showToast('AI แปลงเสียงและเรียนรู้ข้อมูลเรียบร้อยแล้ว! พร้อมใช้งานทันที', 'success');
+
+        renderCurrentPage();
+        navigateTo('knowledge');
+    }, 1800);
+}
+
+function processPhotoCapture() {
+    if (!activeMissionId) {
+        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
+        return;
+    }
+
+    const desc = document.getElementById('photo-description-input')?.value.trim() || 'ภาพถ่ายสถานที่/วัตถุในชุมชน';
+    const form = document.getElementById('photo-desc-form');
+    const proc = document.getElementById('photo-processing-ui');
+
+    if (form) form.classList.add('hidden');
+    if (proc) proc.classList.remove('hidden');
+
+    setTimeout(() => {
+        const newKnowledge = {
+            id: 'k_img_' + Date.now(),
+            userId: currentUser.id,
+            missionId: activeMissionId,
+            title: `ภาพถ่ายชุมชน (${new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })})`,
+            contributor: currentUser.name + ' (ภาพถ่าย)',
+            sourceType: 'image',
+            content: `ภาพถ่ายพร้อมคำอธิบาย: "${desc}" — AI วิเคราะห์และสกัดคุณลักษณะสำคัญเพื่อบันทึกเข้า Knowledge Base`,
+            topic: 'ภาพถ่ายภูมิปัญญา',
+            consent: true,
+            status: 'verified',
+            createdAt: new Date().toISOString().split('T')[0]
+        };
+
+        StorageService.addKnowledge(newKnowledge);
+        updateActiveMissionProgressOnAdd();
+        closePhotoCapture();
+        showToast('บันทึกภาพถ่ายและวิเคราะห์ข้อมูลเรียบร้อยแล้ว!', 'success');
+
+        renderCurrentPage();
+        navigateTo('knowledge');
+    }, 1500);
+}
+
+function handleCameraPhotoFallback(files) {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const desc = prompt('ภาพถ่ายนี้เกี่ยวกับอะไร? (ระบุคำอธิบายสั้น ๆ):', file.name) || 'ภาพถ่ายจากกล้อง';
+
+    const newKnowledge = {
+        id: 'k_img_' + Date.now(),
+        userId: currentUser.id,
+        missionId: activeMissionId,
+        title: `ภาพถ่าย: ${file.name}`,
+        contributor: currentUser.name,
+        sourceType: 'image',
+        content: `ภาพถ่าย: ${file.name} — คำอธิบาย: "${desc}"`,
+        topic: 'ภาพถ่ายชุมชน',
+        consent: true,
+        status: 'verified',
+        createdAt: new Date().toISOString().split('T')[0]
+    };
+
+    StorageService.addKnowledge(newKnowledge);
+    updateActiveMissionProgressOnAdd();
+    showToast('เพิ่มภาพถ่ายเรียบร้อยแล้ว', 'success');
+    renderCurrentPage();
+    navigateTo('knowledge');
 }
 
 function applyLanguage(lang) {
