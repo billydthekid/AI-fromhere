@@ -3635,15 +3635,18 @@ ul { list-style: none; }
     border: 1px dashed var(--border);
 }
 
-/* Capture action grid (Knowledge page mobile) */
-.mobile-capture-grid {
-    display: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
+/* Capture action grid (Knowledge page Desktop & Mobile) */
+.media-capture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
 }
 @media (max-width: 768px) {
-    .mobile-capture-grid { display: grid; }
+    .media-capture-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
 }
 
 .capture-action-card {
@@ -3739,7 +3742,15 @@ ul { list-style: none; }
 
     .mobile-nav-item {
         flex: 1;
-        max-width: 72px;
+        min-width: 0;
+        padding: 4px 2px;
+    }
+    .mobile-nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 10px;
+        line-height: 1.1;
     }
 
     .mobile-nav-item.nav-fab-wrap {

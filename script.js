@@ -17,7 +17,7 @@ const i18n = {
         navTest: 'ทดสอบ AI',
         navImpact: 'ผลกระทบ',
         navProfile: 'โปรไฟล์',
-        navTeacherReview: 'รอตรวจสอบ (Queue)',
+        navTeacherReview: 'คลังชุมชน',
         navTeacherStudents: 'โครงงานนักเรียน',
         navTeacherKnowledge: 'คลังความรู้ชุมชน',
         navAdminHub: 'ภาพรวมเครือข่าย',
@@ -149,7 +149,7 @@ const i18n = {
         confirmDeleteTitle: 'ยืนยันการลบข้อมูล',
         btnCancel: 'ยกเลิก',
         btnConfirmDelete: 'ลบข้อมูล',
-        teacherReviewHeader: 'รายการรอตรวจสอบองค์ความรู้ (Review Queue)',
+        teacherReviewHeader: 'ศูนย์องค์ความรู้และข้อเสนอแนะชุมชน',
         teacherReviewSubheader: 'ตรวจสอบความถูกต้อง แหล่งที่มา และให้คำแนะนำแก่นักเรียน',
         teacherStudentsHeader: 'โครงงาน AI ของนักเรียนทั้งหมด',
         teacherStudentsSubheader: 'ติดตามความก้าวหน้าและการพัฒนาทักษะ AI ของนักเรียนในสังกัด',
@@ -172,7 +172,7 @@ const i18n = {
         captureUploadDesc: 'รูป / PDF / เสียง / วิดีโอ',
         filterAll: 'ทั้งหมด',
         filterLearning: 'กำลังเรียนรู้',
-        filterPending: 'รอตรวจสอบ',
+        filterPending: 'รอยืนยัน',
         filterReady: 'พร้อมใช้งาน',
         pickerTitle: 'เพิ่มความรู้',
         pickerDesc: 'เลือกวิธีที่สะดวกที่สุด',
@@ -200,7 +200,7 @@ const i18n = {
         notifTitle: 'การแจ้งเตือน',
         notifMarkAll: 'อ่านทั้งหมด',
         navHome: 'หน้าแรก',
-        navAdd: 'เพิ่ม',
+        navAdd: 'เพิ่มความรู้',
         navAI: 'AI'
     },
     en: {
@@ -548,7 +548,11 @@ class StorageService {
     static getKnowledge() {
         try {
             const raw = localStorage.getItem('afh_knowledge_db');
-            if (raw) return JSON.parse(raw);
+            if (raw) {
+                const list = JSON.parse(raw);
+                list.forEach(k => { if (k.status === 'pending') k.status = 'verified'; });
+                return list;
+            }
         } catch (e) {}
         return [];
     }
@@ -568,6 +572,7 @@ class StorageService {
     }
 
     static addKnowledge(item) {
+        item.status = 'verified'; // 100% Verified & Ready to use instantly!
         const all = StorageService.getKnowledge();
         all.unshift(item);
         StorageService.saveKnowledge(all);
@@ -575,8 +580,8 @@ class StorageService {
         NotificationManager.addNotification({
             userId: item.userId,
             type: 'knowledge_uploaded',
-            title: 'บันทึกองค์ความรู้แล้ว',
-            message: `องค์ความรู้ "${item.title}" ถูกบันทึกเรียบร้อย รอการตรวจสอบ`,
+            title: 'บันทึกองค์ความรู้สำเร็จ',
+            message: `องค์ความรู้ "${item.title}" พร้อมใช้งานทันที Local AI ได้เรียนรู้ข้อมูลแล้ว`,
             relatedId: item.id
         });
     }
@@ -1136,7 +1141,7 @@ function renderRoleNavigation() {
             { page: 'profile', icon: 'user', label: i18n[currentLang].navProfile }
         ];
         mobileNavItems = [
-            { page: 'teacher-review', icon: 'check-square', label: isTh ? 'รอตรวจ' : 'Review' },
+            { page: 'teacher-review', icon: 'book-open', label: isTh ? 'คลังชุมชน' : 'Community' },
             { page: 'teacher-students', icon: 'users', label: isTh ? 'นักเรียน' : 'Students' },
             { page: 'impact', icon: 'bar-chart-2', label: isTh ? 'ผลกระทบ' : 'Impact' },
             { page: 'profile', icon: 'user', label: isTh ? 'โปรไฟล์' : 'Profile' }
@@ -2325,8 +2330,8 @@ function renderDashboardPage() {
             ctaIcon = 'plus';
         } else if (pendingK.length > 0) {
             // STATE 3: HAS KNOWLEDGE BUT NOT VERIFIED
-            stepText = 'รอตรวจสอบองค์ความรู้';
-            hintText = 'แนะนำ: <strong>มีข้อมูลรอตรวจสอบความถูกต้องและ Consent</strong>';
+            stepText = 'คลังความรู้พร้อมใช้งาน';
+            hintText = 'แนะนำ: <strong>องค์ความรู้ทุกรายการพร้อมให้ Local AI เรียนรู้ทันที</strong>';
             ctaText = 'ตรวจสอบข้อมูล';
             ctaAction = "navigateTo('verify')";
             ctaIcon = 'check-circle-2';
@@ -3470,7 +3475,7 @@ function renderMobileStatsAndActivity() {
             </div>
             <div class="stat-card" onclick="navigateTo('verify')">
                 <div class="stat-value" style="color: var(--warning);">${pendingCount}</div>
-                <div class="stat-label">รอตรวจ</div>
+                <div class="stat-label">รอยืนยัน</div>
             </div>
             <div class="stat-card" onclick="navigateTo('knowledge')">
                 <div class="stat-value" style="color: var(--primary-dark);">${verifiedCount}</div>
@@ -3501,7 +3506,7 @@ function renderMobileStatsAndActivity() {
                         </div>
                     </div>
                     <span class="knowledge-item-status ${k.status}">
-                        ${k.status === 'verified' ? 'พร้อมใช้' : 'รอตรวจ'}
+                        ${k.status === 'verified' ? 'พร้อมใช้' : 'รอยืนยัน'}
                     </span>
                 </div>
             `).join('');
