@@ -13,6 +13,12 @@
 </head>
 <body>
 <div id="app">
+    <!-- OFFLINE NOTIFICATION BANNER -->
+    <div id="offline-banner" class="offline-banner hidden">
+        <i data-lucide="wifi-off"></i>
+        <span>ไม่มีอินเทอร์เน็ต — ข้อมูลของคุณถูกเก็บไว้ในเครื่อง และจะส่งเมื่อเชื่อมต่ออีกครั้ง</span>
+    </div>
+
     <!-- AUTH CONTAINER (Login & Register SPA Views) -->
     <div id="auth-container" class="auth-container hidden">
         <div class="auth-box">
@@ -287,6 +293,66 @@
             <main id="content">
                 <!-- 1. DASHBOARD PAGE -->
                 <section id="page-dashboard" class="page active">
+
+                    <!-- MOBILE-FIRST HOME (shown on mobile only) -->
+                    <div id="mobile-home-view" class="mobile-home">
+                        <header class="mobile-home-header">
+                            <div class="mobile-home-brand">
+                                <div class="brand-icon-sm"><i data-lucide="sparkles"></i></div>
+                                <div>
+                                    <h1 class="mobile-app-title">AI FROM HERE</h1>
+                                    <span class="mobile-ai-status" id="mobile-ai-status">
+                                        <span class="status-dot online"></span>
+                                        <span id="mobile-ai-status-text">Local AI พร้อมใช้งาน</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="icon-btn mobile-notif-btn" onclick="toggleMobileNotificationSheet()" aria-label="Notifications">
+                                <i data-lucide="bell"></i>
+                                <span class="notif-badge hidden" id="mobile-notif-badge">0</span>
+                            </button>
+                        </header>
+
+                        <div class="mobile-home-greeting">
+                            <p class="mobile-greeting-name" id="mobile-greeting-name">สวัสดี</p>
+                            <h2 class="mobile-home-question" data-i18n="mobileHomeQuestion">วันนี้อยากทำอะไร?</h2>
+                        </div>
+
+                        <div class="mobile-main-actions">
+                            <button class="mobile-action-btn primary" onclick="openAddKnowledgePicker()">
+                                <i data-lucide="plus"></i>
+                                <span data-i18n="mobileAddKnowledge">เพิ่มความรู้</span>
+                            </button>
+                            <button class="mobile-action-btn secondary" onclick="navigateTo('test')">
+                                <i data-lucide="bot"></i>
+                                <span data-i18n="mobileAskAI">ถาม Local AI</span>
+                            </button>
+                        </div>
+
+                        <section class="mobile-section" id="mobile-learning-section">
+                            <div class="mobile-section-header">
+                                <h3 data-i18n="mobileLearningTitle">กำลังเรียนรู้</h3>
+                                <button class="text-link-btn" id="mobile-learning-toggle" onclick="toggleLearningDetails()">
+                                    <span data-i18n="mobileViewDetails">ดูรายละเอียด</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                            </div>
+                            <div id="mobile-learning-card-container"></div>
+                        </section>
+
+                        <section class="mobile-section">
+                            <h3 class="mobile-section-title" data-i18n="mobileCommunityKnowledge">ความรู้ของชุมชน</h3>
+                            <div class="mobile-stat-row" id="mobile-knowledge-stats"></div>
+                        </section>
+
+                        <section class="mobile-section">
+                            <h3 class="mobile-section-title" data-i18n="mobileRecentActivity">กิจกรรมล่าสุด</h3>
+                            <div id="mobile-recent-activity" class="mobile-activity-list"></div>
+                        </section>
+                    </div>
+
+                    <!-- DESKTOP DASHBOARD (hidden on mobile) -->
+                    <div id="desktop-home-view" class="desktop-home">
                     <div class="page-title-row">
                         <div class="page-title">
                             <h1 id="dash-greeting-title">สวัสดี, Billy</h1>
@@ -461,6 +527,7 @@
                             <p>“ไม่ใช่แค่ AI ที่ตอบคำถาม แต่คือ AI ที่สร้างจากความรู้ของคนในพื้นที่”</p>
                         </div>
                     </section>
+                    </div><!-- end desktop-home-view -->
                 </section>
 
                 <!-- 2. MISSIONS PAGE -->
@@ -483,10 +550,10 @@
 
                 <!-- 3. KNOWLEDGE PAGE -->
                 <section id="page-knowledge" class="page">
-                    <div class="page-title-row">
+                    <div class="page-title-row knowledge-page-header">
                         <div class="page-title">
                             <h1 data-i18n="knowledgeHeader">องค์ความรู้ของชุมชน</h1>
-                            <p data-i18n="knowledgeSubheader">รวบรวมไฟล์เสียง ภาพ ข้อความ และเอกสารภายใต้ภารกิจที่เลือก</p>
+                            <p class="desktop-only-desc" data-i18n="knowledgeSubheader">รวบรวมไฟล์เสียง ภาพ ข้อความ และเอกสารภายใต้ภารกิจที่เลือก</p>
                         </div>
                         <div class="page-title-actions">
                             <div class="active-mission-badge" id="knowledge-mission-context">
@@ -495,8 +562,52 @@
                         </div>
                     </div>
 
-                    <!-- UPLOAD AREA -->
-                    <div class="upload-area" id="upload-area">
+                    <!-- MOBILE: ADD KNOWLEDGE ACTION CARDS -->
+                    <div class="mobile-capture-grid" id="mobile-capture-grid">
+                        <button type="button" class="capture-action-card" onclick="openAudioRecorder()">
+                            <div class="capture-icon"><i data-lucide="mic"></i></div>
+                            <span class="capture-label" data-i18n="captureAudio">บันทึกเสียง</span>
+                            <span class="capture-desc" data-i18n="captureAudioDesc">เล่าเรื่องให้ AI ฟัง</span>
+                        </button>
+                        <button type="button" class="capture-action-card" onclick="openPhotoCapture()">
+                            <div class="capture-icon"><i data-lucide="camera"></i></div>
+                            <span class="capture-label" data-i18n="capturePhoto">ถ่ายรูป</span>
+                            <span class="capture-desc" data-i18n="capturePhotoDesc">ถ่ายสิ่งที่อยากเก็บไว้</span>
+                        </button>
+                        <button type="button" class="capture-action-card" onclick="openVideoCapture()">
+                            <div class="capture-icon"><i data-lucide="video"></i></div>
+                            <span class="capture-label" data-i18n="captureVideo">ถ่ายวิดีโอ</span>
+                            <span class="capture-desc" data-i18n="captureVideoDesc">บันทึกเรื่องราวของชุมชน</span>
+                        </button>
+                        <button type="button" class="capture-action-card" onclick="triggerFileInput()">
+                            <div class="capture-icon"><i data-lucide="upload"></i></div>
+                            <span class="capture-label" data-i18n="captureUpload">อัปโหลดไฟล์</span>
+                            <span class="capture-desc" data-i18n="captureUploadDesc">รูป / PDF / เสียง / วิดีโอ</span>
+                        </button>
+                    </div>
+
+                    <!-- KNOWLEDGE FILTER TABS (Mobile horizontal scroll) -->
+                    <div class="knowledge-filter-tabs" id="knowledge-filter-tabs">
+                        <button class="k-filter-tab active" data-filter="all" onclick="setKnowledgeFilter('all')">
+                            <span data-i18n="filterAll">ทั้งหมด</span>
+                            <span class="k-filter-count" id="k-count-all">0</span>
+                        </button>
+                        <button class="k-filter-tab" data-filter="learning" onclick="setKnowledgeFilter('learning')">
+                            <span data-i18n="filterLearning">กำลังเรียนรู้</span>
+                            <span class="k-filter-count" id="k-count-learning">0</span>
+                        </button>
+                        <button class="k-filter-tab" data-filter="pending" onclick="setKnowledgeFilter('pending')">
+                            <span data-i18n="filterPending">รอตรวจสอบ</span>
+                            <span class="k-filter-count" id="k-count-pending">0</span>
+                        </button>
+                        <button class="k-filter-tab" data-filter="verified" onclick="setKnowledgeFilter('verified')">
+                            <span data-i18n="filterReady">พร้อมใช้งาน</span>
+                            <span class="k-filter-count" id="k-count-verified">0</span>
+                        </button>
+                    </div>
+
+                    <!-- UPLOAD AREA (Desktop) -->
+                    <div class="upload-area desktop-upload-area" id="upload-area">
                         <div class="upload-icon">
                             <i data-lucide="upload-cloud"></i>
                         </div>
@@ -511,7 +622,7 @@
                         <button class="btn btn-primary" id="add-knowledge-trigger-btn" onclick="triggerFileInput()">
                             <i data-lucide="plus"></i> <span data-i18n="addKnowledgeBtn">เพิ่มข้อมูล</span>
                         </button>
-                        <input type="file" id="real-file-input" accept="audio/*,image/*,text/*,application/pdf" style="display: none;" onchange="handleRealFileSelected(this.files)">
+                        <input type="file" id="real-file-input" accept="audio/*,image/*,video/*,text/*,application/pdf" style="display: none;" onchange="handleRealFileSelected(this.files)">
                     </div>
 
                     <!-- KNOWLEDGE SOURCES LIST -->
@@ -1115,6 +1226,290 @@
 
 <!-- TOAST CONTAINER -->
 <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<!-- OFFLINE BANNER -->
+<div id="offline-banner" class="offline-banner hidden">
+    <i data-lucide="wifi-off"></i>
+    <div>
+        <strong data-i18n="offlineTitle">ไม่มีอินเทอร์เน็ต</strong>
+        <span data-i18n="offlineDesc">ข้อมูลของคุณถูกเก็บไว้ในเครื่อง และจะส่งเมื่อเชื่อมต่ออีกครั้ง</span>
+    </div>
+</div>
+
+<!-- ONBOARDING OVERLAY -->
+<div id="onboarding-overlay" class="onboarding-overlay hidden">
+    <div class="onboarding-card">
+        <div class="onboarding-step active" id="onboarding-step-1">
+            <div class="onboarding-icon"><i data-lucide="sparkles"></i></div>
+            <h2 data-i18n="onboardWelcome">ยินดีต้อนรับสู่ AI FROM HERE</h2>
+            <p data-i18n="onboardDesc">มาช่วยกันเก็บความรู้ของชุมชน และสร้าง AI จากมัน</p>
+            <button class="btn btn-primary btn-full btn-lg" onclick="onboardingNext(2)">
+                <span data-i18n="onboardContinue">เริ่มต้น</span>
+                <i data-lucide="arrow-right"></i>
+            </button>
+        </div>
+        <div class="onboarding-step hidden" id="onboarding-step-2">
+            <div class="onboarding-icon"><i data-lucide="target"></i></div>
+            <h2 data-i18n="onboardChoose">เลือกสิ่งที่อยากทำ</h2>
+            <div class="onboarding-actions">
+                <button class="mobile-action-btn primary" onclick="completeOnboarding('knowledge')">
+                    <i data-lucide="plus"></i>
+                    <span data-i18n="onboardAddFirst">เพิ่มความรู้ครั้งแรก</span>
+                </button>
+                <button class="mobile-action-btn secondary" onclick="completeOnboarding('test')">
+                    <i data-lucide="bot"></i>
+                    <span data-i18n="onboardTryAI">ลองถาม Local AI</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD KNOWLEDGE PICKER (Bottom Sheet) -->
+<div id="add-knowledge-picker" class="bottom-sheet-overlay hidden">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+        <div class="bottom-sheet-handle"></div>
+        <h3 data-i18n="pickerTitle">เพิ่มความรู้</h3>
+        <p class="bottom-sheet-desc" data-i18n="pickerDesc">เลือกวิธีที่สะดวกที่สุด</p>
+        <div class="capture-action-list">
+            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openAudioRecorder()">
+                <div class="capture-icon"><i data-lucide="mic"></i></div>
+                <div class="capture-list-text">
+                    <span class="capture-label" data-i18n="captureAudio">บันทึกเสียง</span>
+                    <span class="capture-desc" data-i18n="captureAudioDesc">เล่าเรื่องให้ AI ฟัง</span>
+                </div>
+                <i data-lucide="chevron-right" class="capture-arrow"></i>
+            </button>
+            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openPhotoCapture()">
+                <div class="capture-icon"><i data-lucide="camera"></i></div>
+                <div class="capture-list-text">
+                    <span class="capture-label" data-i18n="capturePhoto">ถ่ายรูป</span>
+                    <span class="capture-desc" data-i18n="capturePhotoDesc">ถ่ายสิ่งที่อยากเก็บไว้</span>
+                </div>
+                <i data-lucide="chevron-right" class="capture-arrow"></i>
+            </button>
+            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); openVideoCapture()">
+                <div class="capture-icon"><i data-lucide="video"></i></div>
+                <div class="capture-list-text">
+                    <span class="capture-label" data-i18n="captureVideo">ถ่ายวิดีโอ</span>
+                    <span class="capture-desc" data-i18n="captureVideoDesc">บันทึกเรื่องราวของชุมชน</span>
+                </div>
+                <i data-lucide="chevron-right" class="capture-arrow"></i>
+            </button>
+            <button type="button" class="capture-list-item" onclick="closeAddKnowledgePicker(); triggerFileInput()">
+                <div class="capture-icon"><i data-lucide="upload"></i></div>
+                <div class="capture-list-text">
+                    <span class="capture-label" data-i18n="captureUpload">อัปโหลดไฟล์</span>
+                    <span class="capture-desc" data-i18n="captureUploadDesc">รูป / PDF / เสียง / วิดีโอ</span>
+                </div>
+                <i data-lucide="chevron-right" class="capture-arrow"></i>
+            </button>
+        </div>
+        <button class="btn btn-outline btn-full" onclick="closeAddKnowledgePicker()" data-i18n="btnCancel">ยกเลิก</button>
+    </div>
+</div>
+
+<!-- AUDIO RECORDER MODAL -->
+<div id="audio-recorder-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-fullscreen-mobile">
+        <button class="modal-close" onclick="closeAudioRecorder()" aria-label="Close"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="mic"></i></div>
+        <h2 data-i18n="audioRecorderTitle">บันทึกเสียง</h2>
+        <p class="modal-desc" data-i18n="audioRecorderDesc">พูดเล่าเรื่องที่อยากเก็บไว้ AI จะช่วยถอดเป็นข้อความ</p>
+
+        <div class="recorder-ui" id="audio-recorder-ui">
+            <div class="recorder-timer" id="audio-recorder-timer">00:00</div>
+            <div class="recorder-visualizer" id="audio-visualizer">
+                <span class="rec-dot"></span><span class="rec-dot"></span><span class="rec-dot"></span>
+            </div>
+            <div class="recorder-status" id="audio-recorder-status" data-i18n="audioReady">พร้อมบันทึก</div>
+            <div class="recorder-controls" id="audio-recorder-controls">
+                <button type="button" class="rec-btn rec-btn-record" id="audio-btn-record" onclick="startAudioRecording()">
+                    <i data-lucide="mic"></i>
+                </button>
+            </div>
+            <div class="recorder-controls hidden" id="audio-recording-controls">
+                <button type="button" class="rec-btn rec-btn-secondary" onclick="pauseAudioRecording()" title="Pause"><i data-lucide="pause"></i></button>
+                <button type="button" class="rec-btn rec-btn-stop" onclick="stopAudioRecording()" title="Stop"><i data-lucide="square"></i></button>
+            </div>
+            <div class="recorder-preview hidden" id="audio-preview-section">
+                <audio id="audio-preview-player" controls></audio>
+                <div class="recorder-preview-actions">
+                    <button type="button" class="btn btn-outline" onclick="deleteAudioRecording()"><i data-lucide="trash-2"></i> <span data-i18n="btnDelete">ลบ</span></button>
+                    <button type="button" class="btn btn-primary" onclick="processAudioRecording()"><i data-lucide="sparkles"></i> <span data-i18n="btnConvertAI">ให้ AI แปลงเป็นข้อมูล</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="ai-processing hidden" id="audio-processing-ui">
+            <div class="build-spinner"></div>
+            <p id="audio-processing-text">AI กำลังถอดเสียง...</p>
+        </div>
+    </div>
+</div>
+
+<!-- PHOTO CAPTURE MODAL -->
+<div id="photo-capture-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-fullscreen-mobile">
+        <button class="modal-close" onclick="closePhotoCapture()" aria-label="Close"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="camera"></i></div>
+        <h2 data-i18n="photoCaptureTitle">ถ่ายรูป</h2>
+        <p class="modal-desc" data-i18n="photoCaptureDesc">ถ่ายภาพสิ่งที่อยากเก็บไว้ แล้วบอก AI ว่าเกี่ยวกับอะไร</p>
+
+        <div class="camera-ui" id="photo-camera-ui">
+            <video id="photo-camera-preview" autoplay playsinline muted class="camera-preview"></video>
+            <canvas id="photo-canvas" class="hidden"></canvas>
+            <img id="photo-preview-img" class="camera-preview hidden" alt="Preview">
+            <div class="camera-controls" id="photo-camera-controls">
+                <button type="button" class="rec-btn rec-btn-record" onclick="takePhoto()"><i data-lucide="camera"></i></button>
+            </div>
+            <div class="camera-controls hidden" id="photo-preview-controls">
+                <button type="button" class="btn btn-outline" onclick="retakePhoto()"><i data-lucide="rotate-ccw"></i> <span data-i18n="btnRetake">ถ่ายใหม่</span></button>
+            </div>
+        </div>
+        <div class="photo-desc-form hidden" id="photo-desc-form">
+            <div class="form-group">
+                <label data-i18n="photoAboutLabel">ภาพนี้เกี่ยวกับอะไร?</label>
+                <textarea id="photo-description-input" placeholder="อธิบายสั้น ๆ ว่าภาพนี้คืออะไร..." rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary btn-full" onclick="processPhotoCapture()">
+                <i data-lucide="sparkles"></i> <span data-i18n="btnAnalyzeAI">ให้ AI วิเคราะห์</span>
+            </button>
+        </div>
+        <div class="ai-processing hidden" id="photo-processing-ui">
+            <div class="build-spinner"></div>
+            <p>AI กำลังวิเคราะห์ภาพ...</p>
+        </div>
+    </div>
+</div>
+
+<!-- VIDEO CAPTURE MODAL -->
+<div id="video-capture-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-fullscreen-mobile">
+        <button class="modal-close" onclick="closeVideoCapture()" aria-label="Close"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="video"></i></div>
+        <h2 data-i18n="videoCaptureTitle">ถ่ายวิดีโอ</h2>
+        <p class="modal-desc" data-i18n="videoCaptureDesc">บันทึกเรื่องราวของชุมชน AI จะช่วยถอดและจัดข้อมูล</p>
+
+        <div class="camera-ui" id="video-camera-ui">
+            <video id="video-camera-preview" autoplay playsinline muted class="camera-preview"></video>
+            <video id="video-preview-player" class="camera-preview hidden" controls playsinline></video>
+            <div class="recorder-timer" id="video-recorder-timer">00:00</div>
+            <div class="camera-controls" id="video-record-controls">
+                <button type="button" class="rec-btn rec-btn-record" id="video-btn-record" onclick="startVideoRecording()"><i data-lucide="video"></i></button>
+            </div>
+            <div class="camera-controls hidden" id="video-preview-controls">
+                <button type="button" class="btn btn-outline" onclick="deleteVideoRecording()"><i data-lucide="trash-2"></i> <span data-i18n="btnDelete">ลบ</span></button>
+                <button type="button" class="btn btn-primary" onclick="processVideoRecording()"><i data-lucide="sparkles"></i> <span data-i18n="btnConvertAI">ให้ AI แปลงเป็นข้อมูล</span></button>
+            </div>
+        </div>
+        <div class="ai-processing hidden" id="video-processing-ui">
+            <div class="build-spinner"></div>
+            <p>AI กำลังวิเคราะห์วิดีโอ...</p>
+        </div>
+    </div>
+</div>
+
+<!-- MOBILE NOTIFICATION BOTTOM SHEET -->
+<div id="notif-bottom-sheet" class="bottom-sheet-overlay hidden">
+    <div class="bottom-sheet notif-sheet" onclick="event.stopPropagation()">
+        <div class="bottom-sheet-handle"></div>
+        <div class="notif-sheet-header">
+            <h3 data-i18n="notifTitle">การแจ้งเตือน</h3>
+            <button class="notif-clear-btn" onclick="markAllNotificationsAsRead()" data-i18n="notifMarkAll">อ่านทั้งหมด</button>
+        </div>
+        <div class="notif-list" id="mobile-notif-list"></div>
+        <button class="btn btn-outline btn-full" onclick="closeMobileNotificationSheet()" data-i18n="btnClose">ปิด</button>
+    </div>
+</div>
+
+<!-- FIRST TIME ONBOARDING MODAL -->
+<div id="onboarding-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-sm onboarding-card">
+        <div class="onboarding-icon">
+            <i data-lucide="sparkles"></i>
+        </div>
+        <h2>ยินดีต้อนรับสู่ AI FROM HERE</h2>
+        <p class="onboarding-subtitle">มาช่วยกันเก็บความรู้ของชุมชน แล้วเปลี่ยนเป็น Local AI กัน!</p>
+
+        <div class="onboarding-features">
+            <div class="onboarding-feat-item">
+                <i data-lucide="mic"></i>
+                <span>อัดเสียง/ถ่ายภาพเรื่องราวในชุมชน</span>
+            </div>
+            <div class="onboarding-feat-item">
+                <i data-lucide="brain"></i>
+                <span>AI ช่วยถอดสรุป และตรวจสอบความถูกต้อง</span>
+            </div>
+            <div class="onboarding-feat-item">
+                <i data-lucide="bot"></i>
+                <span>สร้าง AI ผู้ช่วยตอบคำถามเฉพาะของชุมชน</span>
+            </div>
+        </div>
+
+        <div class="onboarding-actions">
+            <button class="btn btn-primary btn-full btn-lg" onclick="closeOnboardingModal(); openAddKnowledgePicker();">
+                <i data-lucide="plus-circle"></i>
+                <span>เพิ่มความรู้ครั้งแรก</span>
+            </button>
+            <button class="btn btn-outline btn-full" onclick="closeOnboardingModal(); navigateTo('test');">
+                <i data-lucide="bot"></i>
+                <span>ลองถาม Local AI</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD KNOWLEDGE INPUT PICKER MODAL (MOBILE-FIRST) -->
+<div id="add-knowledge-picker-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-card-fullscreen-mobile">
+        <button class="modal-close" onclick="closeAddKnowledgePicker()" aria-label="Close Modal"><i data-lucide="x"></i></button>
+        <div class="modal-header-icon"><i data-lucide="plus"></i></div>
+        <h2>เพิ่มความรู้ชุมชน</h2>
+        <p class="modal-desc">เลือกวิธีที่คุณสะดวกในการส่งข้อมูลให้ AI เรียนรู้</p>
+
+        <div class="knowledge-picker-grid">
+            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openAudioRecorder();">
+                <div class="picker-icon mic-bg"><i data-lucide="mic"></i></div>
+                <div class="picker-text">
+                    <h3>บันทึกเสียง</h3>
+                    <p>เล่าเรื่องให้ AI ฟัง (สัมภาษณ์/พูดคุย)</p>
+                </div>
+                <i data-lucide="chevron-right" class="picker-arrow"></i>
+            </button>
+
+            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openPhotoCapture();">
+                <div class="picker-icon camera-bg"><i data-lucide="camera"></i></div>
+                <div class="picker-text">
+                    <h3>ถ่ายรูป</h3>
+                    <p>ถ่ายสิ่งที่อยากเก็บไว้ แล้วบอกคำอธิบาย</p>
+                </div>
+                <i data-lucide="chevron-right" class="picker-arrow"></i>
+            </button>
+
+            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); openVideoCapture();">
+                <div class="picker-icon video-bg"><i data-lucide="video"></i></div>
+                <div class="picker-text">
+                    <h3>ถ่ายวิดีโอ</h3>
+                    <p>บันทึกเรื่องราวและบรรยากาศในชุมชน</p>
+                </div>
+                <i data-lucide="chevron-right" class="picker-arrow"></i>
+            </button>
+
+            <button type="button" class="picker-card" onclick="closeAddKnowledgePicker(); triggerFileInput();">
+                <div class="picker-icon upload-bg"><i data-lucide="upload-cloud"></i></div>
+                <div class="picker-text">
+                    <h3>อัปโหลดไฟล์</h3>
+                    <p>รูป / PDF / Audio / Video / Text</p>
+                </div>
+                <i data-lucide="chevron-right" class="picker-arrow"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden camera file inputs for fallback -->
+<input type="file" id="camera-photo-input" accept="image/*" capture="environment" style="display:none" onchange="handleCameraPhotoFallback(this.files)">
+<input type="file" id="camera-video-input" accept="video/*" capture="environment" style="display:none" onchange="handleCameraVideoFallback(this.files)">
 
 </div> <!-- END #app -->
 

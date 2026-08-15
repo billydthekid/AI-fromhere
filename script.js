@@ -154,7 +154,54 @@ const i18n = {
         teacherStudentsHeader: 'โครงงาน AI ของนักเรียนทั้งหมด',
         teacherStudentsSubheader: 'ติดตามความก้าวหน้าและการพัฒนาทักษะ AI ของนักเรียนในสังกัด',
         adminHubHeader: 'ภาพรวมเครือข่าย AI FROM HERE',
-        adminHubSubheader: 'สถิติและผลกระทบของโครงการระดับประเทศ JUMP Thailand 2026'
+        adminHubSubheader: 'สถิติและผลกระทบของโครงการระดับประเทศ JUMP Thailand 2026',
+        mobileHomeQuestion: 'วันนี้อยากทำอะไร?',
+        mobileAddKnowledge: 'เพิ่มความรู้',
+        mobileAskAI: 'ถาม Local AI',
+        mobileLearningTitle: 'กำลังเรียนรู้',
+        mobileViewDetails: 'ดูรายละเอียด',
+        mobileCommunityKnowledge: 'ความรู้ของชุมชน',
+        mobileRecentActivity: 'กิจกรรมล่าสุด',
+        captureAudio: 'บันทึกเสียง',
+        captureAudioDesc: 'เล่าเรื่องให้ AI ฟัง',
+        capturePhoto: 'ถ่ายรูป',
+        capturePhotoDesc: 'ถ่ายสิ่งที่อยากเก็บไว้',
+        captureVideo: 'ถ่ายวิดีโอ',
+        captureVideoDesc: 'บันทึกเรื่องราวของชุมชน',
+        captureUpload: 'อัปโหลดไฟล์',
+        captureUploadDesc: 'รูป / PDF / เสียง / วิดีโอ',
+        filterAll: 'ทั้งหมด',
+        filterLearning: 'กำลังเรียนรู้',
+        filterPending: 'รอตรวจสอบ',
+        filterReady: 'พร้อมใช้งาน',
+        pickerTitle: 'เพิ่มความรู้',
+        pickerDesc: 'เลือกวิธีที่สะดวกที่สุด',
+        audioRecorderTitle: 'บันทึกเสียง',
+        audioRecorderDesc: 'พูดเล่าเรื่องที่อยากเก็บไว้ AI จะช่วยถอดเป็นข้อความ',
+        photoCaptureTitle: 'ถ่ายรูป',
+        photoCaptureDesc: 'ถ่ายภาพสิ่งที่อยากเก็บไว้ แล้วบอก AI ว่าเกี่ยวกับอะไร',
+        videoCaptureTitle: 'ถ่ายวิดีโอ',
+        videoCaptureDesc: 'บันทึกเรื่องราวของชุมชน AI จะช่วยถอดและจัดข้อมูล',
+        btnConvertAI: 'ให้ AI แปลงเป็นข้อมูล',
+        btnAnalyzeAI: 'ให้ AI วิเคราะห์',
+        btnDelete: 'ลบ',
+        btnRetake: 'ถ่ายใหม่',
+        btnClose: 'ปิด',
+        photoAboutLabel: 'ภาพนี้เกี่ยวกับอะไร?',
+        audioReady: 'พร้อมบันทึก',
+        onboardWelcome: 'ยินดีต้อนรับสู่ AI FROM HERE',
+        onboardDesc: 'มาช่วยกันเก็บความรู้ของชุมชน และสร้าง AI จากมัน',
+        onboardContinue: 'เริ่มต้น',
+        onboardChoose: 'เลือกสิ่งที่อยากทำ',
+        onboardAddFirst: 'เพิ่มความรู้ครั้งแรก',
+        onboardTryAI: 'ลองถาม Local AI',
+        offlineTitle: 'ไม่มีอินเทอร์เน็ต',
+        offlineDesc: 'ข้อมูลของคุณถูกเก็บไว้ในเครื่อง และจะส่งเมื่อเชื่อมต่ออีกครั้ง',
+        notifTitle: 'การแจ้งเตือน',
+        notifMarkAll: 'อ่านทั้งหมด',
+        navHome: 'หน้าแรก',
+        navAdd: 'เพิ่ม',
+        navAI: 'AI'
     },
     en: {
         appName: 'AI FROM HERE',
@@ -305,7 +352,54 @@ const i18n = {
         teacherStudentsHeader: 'All Student AI Projects',
         teacherStudentsSubheader: 'Monitor learning progress and AI project development.',
         adminHubHeader: 'AI FROM HERE Network Overview',
-        adminHubSubheader: 'National metrics and community impact for JUMP Thailand 2026.'
+        adminHubSubheader: 'National metrics and community impact for JUMP Thailand 2026.',
+        mobileHomeQuestion: 'What do you want to do today?',
+        mobileAddKnowledge: 'Add Knowledge',
+        mobileAskAI: 'Ask Local AI',
+        mobileLearningTitle: 'AI is Learning',
+        mobileViewDetails: 'View details',
+        mobileCommunityKnowledge: 'Community Knowledge',
+        mobileRecentActivity: 'Recent Activity',
+        captureAudio: 'Record Audio',
+        captureAudioDesc: 'Tell your story to AI',
+        capturePhoto: 'Take Photo',
+        capturePhotoDesc: 'Capture what you want to save',
+        captureVideo: 'Record Video',
+        captureVideoDesc: 'Record community stories',
+        captureUpload: 'Upload File',
+        captureUploadDesc: 'Image / PDF / Audio / Video',
+        filterAll: 'All',
+        filterLearning: 'Learning',
+        filterPending: 'Pending Review',
+        filterReady: 'Ready',
+        pickerTitle: 'Add Knowledge',
+        pickerDesc: 'Choose the easiest way',
+        audioRecorderTitle: 'Record Audio',
+        audioRecorderDesc: 'Speak what you want to save — AI will transcribe it',
+        photoCaptureTitle: 'Take Photo',
+        photoCaptureDesc: 'Capture an image and tell AI what it is about',
+        videoCaptureTitle: 'Record Video',
+        videoCaptureDesc: 'Record community stories — AI will extract knowledge',
+        btnConvertAI: 'Convert with AI',
+        btnAnalyzeAI: 'Analyze with AI',
+        btnDelete: 'Delete',
+        btnRetake: 'Retake',
+        btnClose: 'Close',
+        photoAboutLabel: 'What is this photo about?',
+        audioReady: 'Ready to record',
+        onboardWelcome: 'Welcome to AI FROM HERE',
+        onboardDesc: 'Let\'s collect community knowledge and build AI from it',
+        onboardContinue: 'Get Started',
+        onboardChoose: 'Choose what to do',
+        onboardAddFirst: 'Add first knowledge',
+        onboardTryAI: 'Try Local AI',
+        offlineTitle: 'No internet connection',
+        offlineDesc: 'Your data is saved locally and will sync when connected',
+        notifTitle: 'Notifications',
+        notifMarkAll: 'Mark all read',
+        navHome: 'Home',
+        navAdd: 'Add',
+        navAI: 'AI'
     }
 };
 
@@ -601,13 +695,41 @@ class NotificationManager {
 
         if (list) {
             if (userNotifs.length === 0) {
-                list.innerHTML = `<div class="notif-empty">ไม่มีการแจ้งเตือนในขณะนี้</div>`;
+                list.innerHTML = `<div class="notif-empty">${currentLang === 'th' ? 'ไม่มีการแจ้งเตือนในขณะนี้' : 'No notifications'}</div>`;
             } else {
                 list.innerHTML = userNotifs.map(n => `
                     <div class="notif-item ${n.read ? 'read' : 'unread'}" onclick="handleNotificationClick('${n.id}')">
                         <div class="notif-icon">
                             <i data-lucide="${getNotifIcon(n.type)}"></i>
                         </div>
+                        <div class="notif-content">
+                            <div class="notif-item-title">${n.title}</div>
+                            <div class="notif-item-msg">${n.message}</div>
+                            <div class="notif-item-time">${n.createdAt}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            initIcons();
+        }
+
+        const mobileList = document.getElementById('mobile-notif-list');
+        const mobileBadge = document.getElementById('mobile-notif-badge');
+        if (mobileBadge) {
+            if (unreadCount > 0) {
+                mobileBadge.textContent = unreadCount;
+                mobileBadge.classList.remove('hidden');
+            } else {
+                mobileBadge.classList.add('hidden');
+            }
+        }
+        if (mobileList) {
+            if (userNotifs.length === 0) {
+                mobileList.innerHTML = `<div class="notif-empty">${currentLang === 'th' ? 'ไม่มีการแจ้งเตือนในขณะนี้' : 'No notifications'}</div>`;
+            } else {
+                mobileList.innerHTML = userNotifs.map(n => `
+                    <div class="notif-item ${n.read ? 'read' : 'unread'}" onclick="handleNotificationClick('${n.id}'); closeMobileNotificationSheet();">
+                        <div class="notif-icon"><i data-lucide="${getNotifIcon(n.type)}"></i></div>
                         <div class="notif-content">
                             <div class="notif-item-title">${n.title}</div>
                             <div class="notif-item-msg">${n.message}</div>
@@ -672,6 +794,27 @@ let pendingDeleteAction = null;
 let selectedFileForUpload = null;
 let demoRunning = false;
 let demoTimeouts = [];
+let knowledgeFilter = 'all';
+let learningDetailsExpanded = false;
+
+// Active media capture state
+let audioRecorder = null;
+let audioChunks = [];
+let audioBlob = null;
+let audioStream = null;
+let audioTimerInterval = null;
+let audioSeconds = 0;
+let audioPaused = false;
+
+let photoStream = null;
+let photoBlob = null;
+
+let videoRecorder = null;
+let videoChunks = [];
+let videoBlob = null;
+let videoStream = null;
+let videoTimerInterval = null;
+let videoSeconds = 0;
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -679,6 +822,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initAuth();
     initDragAndDropUpload();
     initKeyboardShortcuts();
+    initOfflineDetection();
+    checkAndShowOnboarding();
     initIcons();
 });
 
@@ -802,6 +947,7 @@ function showMainApp() {
     renderActiveMissionUI();
     NotificationManager.renderBadgeAndPanel();
     renderCurrentPage();
+    checkAndShowOnboarding();
     initIcons();
 }
 
@@ -973,22 +1119,12 @@ function renderRoleNavigation() {
     if (role === 'student') {
         navItems = [
             { page: 'dashboard', icon: 'home', label: i18n[currentLang].navDashboard },
-            { page: 'missions', icon: 'target', label: i18n[currentLang].navMissions },
             { page: 'knowledge', icon: 'book-open', label: i18n[currentLang].navKnowledge },
-            { page: 'verify', icon: 'check-circle-2', label: i18n[currentLang].navVerify },
-            { page: 'build', icon: 'cpu', label: i18n[currentLang].navBuild },
-            { page: 'test', icon: 'flask-conical', label: i18n[currentLang].navTest },
-            { page: 'impact', icon: 'bar-chart-2', label: i18n[currentLang].navImpact },
+            { page: 'add-knowledge', icon: 'plus', label: i18n[currentLang].navAdd || 'เพิ่ม', isFab: true },
+            { page: 'test', icon: 'bot', label: i18n[currentLang].navAI || 'AI' },
             { page: 'profile', icon: 'user', label: i18n[currentLang].navProfile }
         ];
-        mobileNavItems = [
-            { page: 'dashboard', icon: 'home', label: isTh ? 'ภาพรวม' : 'Home' },
-            { page: 'missions', icon: 'target', label: isTh ? 'ภารกิจ' : 'Missions' },
-            { page: 'knowledge', icon: 'book-open', label: isTh ? 'ความรู้' : 'Knowledge' },
-            { page: 'build', icon: 'cpu', label: isTh ? 'สร้าง AI' : 'Build' },
-            { page: 'test', icon: 'flask-conical', label: isTh ? 'คุยกับ AI' : 'Chat' },
-            { page: 'profile', icon: 'user', label: isTh ? 'โปรไฟล์' : 'Profile' }
-        ];
+        mobileNavItems = navItems;
     } else if (role === 'teacher') {
         navItems = [
             { page: 'teacher-review', icon: 'check-square', label: i18n[currentLang].navTeacherReview },
@@ -1024,12 +1160,22 @@ function renderRoleNavigation() {
     `).join('');
 
     if (bottomNav) {
-        bottomNav.innerHTML = mobileNavItems.map(item => `
-            <a class="mobile-nav-item ${currentPage === item.page ? 'active' : ''}" onclick="navigateTo('${item.page}')">
-                <i data-lucide="${item.icon}"></i>
-                <span>${item.label}</span>
-            </a>
-        `).join('');
+        bottomNav.innerHTML = mobileNavItems.map(item => {
+            if (item.isFab) {
+                return `
+                    <a class="mobile-nav-item nav-fab-wrap" onclick="openAddKnowledgePicker()">
+                        <div class="mobile-nav-fab"><i data-lucide="plus"></i></div>
+                        <span>${item.label}</span>
+                    </a>
+                `;
+            }
+            return `
+                <a class="mobile-nav-item ${currentPage === item.page ? 'active' : ''}" onclick="navigateTo('${item.page}')">
+                    <i data-lucide="${item.icon}"></i>
+                    <span>${item.label}</span>
+                </a>
+            `;
+        }).join('');
     }
 
     initIcons();
@@ -2090,6 +2236,7 @@ function renderCurrentPage() {
 
 // ===== DASHBOARD CONTROL CENTER ENGINE (DYNAMIC NEXT ACTION CTA) =====
 function renderDashboardPage() {
+    renderMobileHomeView();
     const userMissions = StorageService.getUserMissions(currentUser.id);
     const userKnowledge = StorageService.getUserKnowledge(currentUser.id);
     const deployedAI = userMissions.filter(m => m.builtAi).length;
@@ -3038,6 +3185,732 @@ function initKeyboardShortcuts() {
 
             const dropdown = document.getElementById('notif-dropdown');
             if (dropdown) dropdown.classList.add('hidden');
+
+            closeOnboardingModal();
+            closeAddKnowledgePicker();
+            closeAudioRecorder();
+            closePhotoCapture();
+            closeVideoCapture();
+            closeMobileNotificationSheet();
         }
     });
 }
+
+// ===== MOBILE HOME & LEARNING ROADMAP RENDERER =====
+function renderMobileHomeView() {
+    if (!currentUser) return;
+    const nameEl = document.getElementById('mobile-greeting-name');
+    if (nameEl) nameEl.textContent = `สวัสดี, ${currentUser.name}`;
+
+    renderMobileLearningCard();
+    renderMobileStatsAndActivity();
+}
+
+function renderMobileLearningCard() {
+    const container = document.getElementById('mobile-learning-card-container');
+    if (!container) return;
+
+    const activeMission = StorageService.getMissionById(activeMissionId);
+    const kList = activeMission ? StorageService.getKnowledgeForMission(activeMission.id) : [];
+    const verifiedK = kList.filter(k => k.status === 'verified');
+    const pendingK = kList.filter(k => k.status === 'pending');
+
+    let step1 = kList.length > 0 ? 'done' : 'doing';
+    let step2 = kList.length > 0 ? (pendingK.length > 0 ? 'doing' : 'done') : 'waiting';
+    let step3 = pendingK.length > 0 ? 'doing' : (verifiedK.length > 0 ? 'done' : 'waiting');
+    let step4 = verifiedK.length > 0 ? (activeMission?.builtAi ? 'done' : 'doing') : 'waiting';
+    let step5 = activeMission?.builtAi ? 'done' : 'waiting';
+
+    let progressPct = activeMission ? (activeMission.builtAi ? 100 : Math.min(95, Math.round((verifiedK.length / Math.max(1, kList.length)) * 70 + 20))) : 0;
+    const topicTitle = activeMission ? activeMission.title : 'ภูมิปัญญาในชุมชน';
+
+    container.innerHTML = `
+        <div class="learning-roadmap-card">
+            <div class="roadmap-header">
+                <h4>AI กำลังเรียนรู้</h4>
+                <span class="roadmap-badge">${progressPct}% Progress</span>
+            </div>
+            <div class="roadmap-topic-title">เรื่อง: ${topicTitle}</div>
+            <div class="roadmap-step-list">
+                <div class="roadmap-step-item ${step1 === 'done' ? 'completed' : (step1 === 'doing' ? 'active' : '')}">
+                    <span>01 เก็บความรู้</span>
+                    <span class="roadmap-step-status-tag ${step1}">${step1 === 'done' ? 'เสร็จแล้ว' : (step1 === 'doing' ? 'กำลังทำ' : 'รอ')}</span>
+                </div>
+                <div class="roadmap-step-item ${step2 === 'done' ? 'completed' : (step2 === 'doing' ? 'active' : '')}">
+                    <span>02 ทำความเข้าใจข้อมูล</span>
+                    <span class="roadmap-step-status-tag ${step2}">${step2 === 'done' ? 'เสร็จแล้ว' : (step2 === 'doing' ? 'กำลังทำ' : 'รอ')}</span>
+                </div>
+                <div class="roadmap-step-item ${step3 === 'done' ? 'completed' : (step3 === 'doing' ? 'active' : '')}">
+                    <span>03 ตรวจสอบข้อมูล</span>
+                    <span class="roadmap-step-status-tag ${step3}">${step3 === 'done' ? 'เสร็จแล้ว' : (step3 === 'doing' ? 'กำลังทำ' : 'รอ')}</span>
+                </div>
+                <div class="roadmap-step-item ${step4 === 'done' ? 'completed' : (step4 === 'doing' ? 'active' : '')}">
+                    <span>04 สร้าง Local AI</span>
+                    <span class="roadmap-step-status-tag ${step4}">${step4 === 'done' ? 'เสร็จแล้ว' : (step4 === 'doing' ? 'กำลังทำ' : 'รอ')}</span>
+                </div>
+                <div class="roadmap-step-item ${step5 === 'done' ? 'completed' : (step5 === 'doing' ? 'active' : '')}">
+                    <span>05 พร้อมใช้งาน</span>
+                    <span class="roadmap-step-status-tag ${step5}">${step5 === 'done' ? 'เสร็จแล้ว' : (step5 === 'doing' ? 'กำลังทำ' : 'รอ')}</span>
+                </div>
+            </div>
+
+            <div class="roadmap-checklist">
+                <div class="check-item ${kList.length > 0 ? 'done' : 'active'}">
+                    <i data-lucide="${kList.length > 0 ? 'check-circle-2' : 'loader-2'}"></i>
+                    <span>อ่านข้อมูลที่คุณส่งมา (${kList.length} แหล่ง)</span>
+                </div>
+                <div class="check-item ${kList.length > 0 ? 'done' : ''}">
+                    <i data-lucide="${kList.length > 0 ? 'check-circle-2' : 'circle'}"></i>
+                    <span>วิเคราะห์เนื้อหาและสรุปหัวข้อ</span>
+                </div>
+                <div class="check-item ${pendingK.length > 0 ? 'active' : (verifiedK.length > 0 ? 'done' : '')}">
+                    <i data-lucide="${pendingK.length > 0 ? 'loader-2' : (verifiedK.length > 0 ? 'check-circle-2' : 'circle')}"></i>
+                    <span>ตรวจสอบความถูกต้องของข้อมูล</span>
+                </div>
+                <div class="check-item ${verifiedK.length > 0 ? 'done' : ''}">
+                    <i data-lucide="${verifiedK.length > 0 ? 'check-circle-2' : 'circle'}"></i>
+                    <span>สร้างความเชื่อมโยง (Community RAG Grounding)</span>
+                </div>
+                <div class="check-item ${activeMission?.builtAi ? 'done' : ''}">
+                    <i data-lucide="${activeMission?.builtAi ? 'check-circle-2' : 'circle'}"></i>
+                    <span>พร้อมสร้าง Local AI ประจำชุมชน</span>
+                </div>
+            </div>
+        </div>
+    `;
+    initIcons();
+}
+
+function renderMobileStatsAndActivity() {
+    const statsContainer = document.getElementById('mobile-knowledge-stats');
+    const activityContainer = document.getElementById('mobile-recent-activity');
+    if (!currentUser) return;
+
+    const userK = StorageService.getUserKnowledge(currentUser.id);
+    const verifiedCount = userK.filter(k => k.status === 'verified').length;
+    const pendingCount = userK.filter(k => k.status === 'pending').length;
+
+    if (statsContainer) {
+        statsContainer.innerHTML = `
+            <div class="stat-card" onclick="navigateTo('knowledge')">
+                <div class="stat-value">${userK.length}</div>
+                <div class="stat-label">ทั้งหมด</div>
+            </div>
+            <div class="stat-card" onclick="navigateTo('verify')">
+                <div class="stat-value" style="color: var(--warning);">${pendingCount}</div>
+                <div class="stat-label">รอตรวจ</div>
+            </div>
+            <div class="stat-card" onclick="navigateTo('knowledge')">
+                <div class="stat-value" style="color: var(--primary-dark);">${verifiedCount}</div>
+                <div class="stat-label">พร้อมใช้</div>
+            </div>
+        `;
+    }
+
+    if (activityContainer) {
+        if (userK.length === 0) {
+            activityContainer.innerHTML = `
+                <div class="empty-state-card" style="padding: 16px;">
+                    <p style="font-size: 12px; color: var(--text-muted);">ยังไม่มีกิจกรรมล่าสุด กดปุ่ม "+ เพิ่มความรู้" เพื่อเริ่มต้น</p>
+                </div>
+            `;
+        } else {
+            const recents = userK.slice(0, 3);
+            activityContainer.innerHTML = recents.map(k => `
+                <div class="knowledge-item" onclick="openKnowledgeDetail('${k.id}')">
+                    <div class="knowledge-type-icon ${k.sourceType}">
+                        <i data-lucide="${k.sourceType === 'audio' ? 'mic' : (k.sourceType === 'image' ? 'camera' : (k.sourceType === 'video' ? 'video' : 'file-text'))}"></i>
+                    </div>
+                    <div class="knowledge-item-info">
+                        <h4>${k.title}</h4>
+                        <div class="knowledge-item-meta">
+                            <span><i data-lucide="user"></i> ${k.contributor}</span>
+                            <span><i data-lucide="calendar"></i> ${k.createdAt}</span>
+                        </div>
+                    </div>
+                    <span class="knowledge-item-status ${k.status}">
+                        ${k.status === 'verified' ? 'พร้อมใช้' : 'รอตรวจ'}
+                    </span>
+                </div>
+            `).join('');
+        }
+        initIcons();
+    }
+}
+
+function toggleLearningDetails() {
+    const list = document.querySelector('.roadmap-step-list');
+    const checklist = document.querySelector('.roadmap-checklist');
+    const toggleBtn = document.getElementById('mobile-learning-toggle');
+    if (list && checklist) {
+        const isHidden = list.style.display === 'none';
+        list.style.display = isHidden ? 'flex' : 'none';
+        checklist.style.display = isHidden ? 'flex' : 'none';
+        if (toggleBtn) {
+            toggleBtn.innerHTML = isHidden ? '<span>ซ่อนรายละเอียด</span> <i data-lucide="chevron-up"></i>' : '<span>ดูรายละเอียด</span> <i data-lucide="chevron-down"></i>';
+            initIcons();
+        }
+    }
+}
+
+// ===== ONBOARDING & PICKER MODAL ENGINE =====
+function checkAndShowOnboarding() {
+    const onboarded = localStorage.getItem('afh_onboarded');
+    if (!onboarded && currentUser) {
+        openOnboardingModal();
+    }
+}
+
+function openOnboardingModal() {
+    const modal = document.getElementById('onboarding-modal');
+    if (modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    initIcons();
+}
+
+function closeOnboardingModal() {
+    localStorage.setItem('afh_onboarded', 'true');
+    const modal = document.getElementById('onboarding-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function openAddKnowledgePicker() {
+    const modal = document.getElementById('add-knowledge-picker-modal');
+    if (modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    initIcons();
+}
+
+function closeAddKnowledgePicker() {
+    const modal = document.getElementById('add-knowledge-picker-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+// ===== MEDIA CAPTURE CONTROLLERS (AUDIO, CAMERA, VIDEO) =====
+function openAudioRecorder() {
+    const modal = document.getElementById('audio-recorder-modal');
+    if (modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    audioSeconds = 0;
+    audioPaused = false;
+    audioChunks = [];
+    audioBlob = null;
+    const timerEl = document.getElementById('audio-recorder-timer');
+    if (timerEl) timerEl.textContent = '00:00';
+
+    const controls = document.getElementById('audio-record-controls');
+    const preview = document.getElementById('audio-preview-controls');
+    const proc = document.getElementById('audio-processing-ui');
+
+    if (controls) controls.classList.remove('hidden');
+    if (preview) preview.classList.add('hidden');
+    if (proc) proc.classList.add('hidden');
+
+    initIcons();
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                audioStream = stream;
+            })
+            .catch(err => {
+                console.warn('Microphone permission denied or unsupported:', err);
+                showToast('ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาอนุญาตให้ใช้งานไมโครโฟนในเบราว์เซอร์', 'warning');
+            });
+    } else {
+        showToast('อุปกรณ์ของคุณไม่รองรับการบันทึกเสียงสดผ่านเบราว์เซอร์', 'warning');
+    }
+}
+
+function closeAudioRecorder() {
+    stopAudioRecordingStream();
+    const modal = document.getElementById('audio-recorder-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function stopAudioRecordingStream() {
+    if (audioTimerInterval) clearInterval(audioTimerInterval);
+    if (audioRecorder && audioRecorder.state !== 'inactive') {
+        audioRecorder.stop();
+    }
+    if (audioStream) {
+        audioStream.getTracks().forEach(t => t.stop());
+        audioStream = null;
+    }
+}
+
+function startAudioRecording() {
+    if (!audioStream) {
+        showToast('ไม่พบสัญญาณไมโครโฟน กรุณาอนุญาตสิทธิ์ในเบราว์เซอร์แล้วลองอีกครั้ง', 'error');
+        return;
+    }
+
+    audioChunks = [];
+    try {
+        audioRecorder = new MediaRecorder(audioStream);
+        audioRecorder.ondataavailable = e => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+        };
+        audioRecorder.onstop = () => {
+            audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const player = document.getElementById('audio-preview-player');
+            if (player) {
+                player.src = audioUrl;
+                player.parentElement.classList.remove('hidden');
+            }
+        };
+
+        audioRecorder.start();
+        audioSeconds = 0;
+        audioTimerInterval = setInterval(() => {
+            audioSeconds++;
+            const mins = String(Math.floor(audioSeconds / 60)).padStart(2, '0');
+            const secs = String(audioSeconds % 60).padStart(2, '0');
+            const timerEl = document.getElementById('audio-recorder-timer');
+            if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+        }, 1000);
+
+        const recBtn = document.getElementById('audio-btn-record');
+        if (recBtn) {
+            recBtn.onclick = stopAudioRecording;
+            recBtn.innerHTML = '<i data-lucide="square"></i>';
+            recBtn.classList.add('recording');
+        }
+        initIcons();
+        showToast('กำลังบันทึกเสียง...', 'info');
+    } catch (e) {
+        console.error(e);
+        showToast('เกิดข้อผิดพลาดในการเริ่มบันทึกเสียง', 'error');
+    }
+}
+
+function stopAudioRecording() {
+    if (audioTimerInterval) clearInterval(audioTimerInterval);
+    if (audioRecorder && audioRecorder.state !== 'inactive') {
+        audioRecorder.stop();
+    }
+
+    const controls = document.getElementById('audio-record-controls');
+    const preview = document.getElementById('audio-preview-controls');
+    if (controls) controls.classList.add('hidden');
+    if (preview) preview.classList.remove('hidden');
+
+    initIcons();
+    showToast('หยุดบันทึกเสียงแล้ว สามารถฟังเสียงล่วงหน้าก่อนส่งให้ AI ได้', 'success');
+}
+
+function deleteAudioRecording() {
+    audioBlob = null;
+    audioChunks = [];
+    openAudioRecorder();
+}
+
+function processAudioRecording() {
+    if (!activeMissionId) {
+        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
+        return;
+    }
+
+    const previewControls = document.getElementById('audio-preview-controls');
+    const procUI = document.getElementById('audio-processing-ui');
+
+    if (previewControls) previewControls.classList.add('hidden');
+    if (procUI) procUI.classList.remove('hidden');
+
+    setTimeout(() => {
+        const transcriptText = `สัมภาษณ์และบันทึกเสียงความยาว ${audioSeconds} วินาที เกี่ยวกับเรื่องราวและภูมิปัญญาท้องถิ่นของชุมชน`;
+        const newKnowledge = {
+            id: 'k_audio_' + Date.now(),
+            userId: currentUser.id,
+            missionId: activeMissionId,
+            title: `ไฟล์เสียงสัมภาษณ์ (${new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })})`,
+            contributor: currentUser.name + ' (เสียงสัมภาษณ์)',
+            sourceType: 'audio',
+            content: transcriptText,
+            topic: 'เสียงสัมภาษณ์ชุมชน',
+            consent: true,
+            status: 'pending',
+            createdAt: new Date().toISOString().split('T')[0]
+        };
+
+        StorageService.addKnowledge(newKnowledge);
+        closeAudioRecorder();
+        showToast('AI แปลงเสียงเป็นข้อมูลเรียบร้อยแล้ว! ส่งเข้าสู่คิวรอตรวจสอบ', 'success');
+
+        renderCurrentPage();
+        navigateTo('knowledge');
+    }, 1800);
+}
+
+function openPhotoCapture() {
+    const modal = document.getElementById('photo-capture-modal');
+    if (modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const video = document.getElementById('photo-camera-preview');
+    const controls = document.getElementById('photo-camera-controls');
+    const prevControls = document.getElementById('photo-preview-controls');
+    const form = document.getElementById('photo-desc-form');
+    const imgPreview = document.getElementById('photo-preview-img');
+    const proc = document.getElementById('photo-processing-ui');
+
+    if (video) video.classList.remove('hidden');
+    if (imgPreview) imgPreview.classList.add('hidden');
+    if (controls) controls.classList.remove('hidden');
+    if (prevControls) prevControls.classList.add('hidden');
+    if (form) form.classList.add('hidden');
+    if (proc) proc.classList.add('hidden');
+
+    initIcons();
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(stream => {
+                photoStream = stream;
+                if (video) video.srcObject = stream;
+            })
+            .catch(err => {
+                console.warn('Camera permission denied or unavailable:', err);
+                const input = document.getElementById('camera-photo-input');
+                if (input) input.click();
+            });
+    } else {
+        const input = document.getElementById('camera-photo-input');
+        if (input) input.click();
+    }
+}
+
+function closePhotoCapture() {
+    if (photoStream) {
+        photoStream.getTracks().forEach(t => t.stop());
+        photoStream = null;
+    }
+    const modal = document.getElementById('photo-capture-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function takePhoto() {
+    const video = document.getElementById('photo-camera-preview');
+    const canvas = document.getElementById('photo-canvas');
+    const imgPreview = document.getElementById('photo-preview-img');
+    const controls = document.getElementById('photo-camera-controls');
+    const prevControls = document.getElementById('photo-preview-controls');
+    const form = document.getElementById('photo-desc-form');
+
+    if (video && canvas && imgPreview) {
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg');
+
+        imgPreview.src = dataUrl;
+        imgPreview.classList.remove('hidden');
+        video.classList.add('hidden');
+
+        if (controls) controls.classList.add('hidden');
+        if (prevControls) prevControls.classList.remove('hidden');
+        if (form) form.classList.remove('hidden');
+
+        initIcons();
+    }
+}
+
+function retakePhoto() {
+    openPhotoCapture();
+}
+
+function processPhotoCapture() {
+    if (!activeMissionId) {
+        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
+        return;
+    }
+
+    const desc = document.getElementById('photo-description-input')?.value.trim() || 'ภาพถ่ายสถานที่/วัตถุในชุมชน';
+    const form = document.getElementById('photo-desc-form');
+    const proc = document.getElementById('photo-processing-ui');
+
+    if (form) form.classList.add('hidden');
+    if (proc) proc.classList.remove('hidden');
+
+    setTimeout(() => {
+        const newKnowledge = {
+            id: 'k_img_' + Date.now(),
+            userId: currentUser.id,
+            missionId: activeMissionId,
+            title: `ภาพถ่ายชุมชน (${new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })})`,
+            contributor: currentUser.name + ' (ภาพถ่าย)',
+            sourceType: 'image',
+            content: `ภาพถ่ายพร้อมคำอธิบาย: "${desc}" — AI วิเคราะห์และสกัดคุณลักษณะสำคัญเพื่อบันทึกเข้า Knowledge Base`,
+            topic: 'ภาพถ่ายภูมิปัญญา',
+            consent: true,
+            status: 'pending',
+            createdAt: new Date().toISOString().split('T')[0]
+        };
+
+        StorageService.addKnowledge(newKnowledge);
+        closePhotoCapture();
+        showToast('บันทึกภาพถ่ายและคำอธิบายเรียบร้อยแล้ว!', 'success');
+
+        renderCurrentPage();
+        navigateTo('knowledge');
+    }, 1500);
+}
+
+function handleCameraPhotoFallback(files) {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const desc = prompt('ภาพถ่ายนี้เกี่ยวกับอะไร? (ระบุคำอธิบายสั้น ๆ):', file.name) || 'ภาพถ่ายจากกล้อง';
+
+    const newKnowledge = {
+        id: 'k_img_' + Date.now(),
+        userId: currentUser.id,
+        missionId: activeMissionId,
+        title: `ภาพถ่าย: ${file.name}`,
+        contributor: currentUser.name,
+        sourceType: 'image',
+        content: `ภาพถ่าย: ${file.name} — คำอธิบาย: "${desc}"`,
+        topic: 'ภาพถ่ายชุมชน',
+        consent: true,
+        status: 'pending',
+        createdAt: new Date().toISOString().split('T')[0]
+    };
+
+    StorageService.addKnowledge(newKnowledge);
+    showToast('เพิ่มภาพถ่ายเรียบร้อยแล้ว', 'success');
+    renderCurrentPage();
+    navigateTo('knowledge');
+}
+
+function openVideoCapture() {
+    const modal = document.getElementById('video-capture-modal');
+    if (modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const video = document.getElementById('video-camera-preview');
+    const controls = document.getElementById('video-record-controls');
+    const prevControls = document.getElementById('video-preview-controls');
+    const proc = document.getElementById('video-processing-ui');
+
+    if (video) video.classList.remove('hidden');
+    if (controls) controls.classList.remove('hidden');
+    if (prevControls) prevControls.classList.add('hidden');
+    if (proc) proc.classList.add('hidden');
+
+    initIcons();
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: true })
+            .then(stream => {
+                videoStream = stream;
+                if (video) video.srcObject = stream;
+            })
+            .catch(err => {
+                console.warn('Video camera permission denied or unavailable:', err);
+                const input = document.getElementById('camera-video-input');
+                if (input) input.click();
+            });
+    } else {
+        const input = document.getElementById('camera-video-input');
+        if (input) input.click();
+    }
+}
+
+function closeVideoCapture() {
+    if (videoTimerInterval) clearInterval(videoTimerInterval);
+    if (videoStream) {
+        videoStream.getTracks().forEach(t => t.stop());
+        videoStream = null;
+    }
+    const modal = document.getElementById('video-capture-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function startVideoRecording() {
+    if (!videoStream) {
+        showToast('ไม่พบสัญญาณกล้องวิดีโอ กรุณาอนุญาตสิทธิ์ในเบราว์เซอร์', 'error');
+        return;
+    }
+
+    videoChunks = [];
+    try {
+        videoRecorder = new MediaRecorder(videoStream);
+        videoRecorder.ondataavailable = e => {
+            if (e.data.size > 0) videoChunks.push(e.data);
+        };
+        videoRecorder.onstop = () => {
+            videoBlob = new Blob(videoChunks, { type: 'video/webm' });
+            const videoUrl = URL.createObjectURL(videoBlob);
+            const player = document.getElementById('video-preview-player');
+            const previewStream = document.getElementById('video-camera-preview');
+            if (player) {
+                player.src = videoUrl;
+                player.classList.remove('hidden');
+            }
+            if (previewStream) previewStream.classList.add('hidden');
+        };
+
+        videoRecorder.start();
+        videoSeconds = 0;
+        videoTimerInterval = setInterval(() => {
+            videoSeconds++;
+            const mins = String(Math.floor(videoSeconds / 60)).padStart(2, '0');
+            const secs = String(videoSeconds % 60).padStart(2, '0');
+            const timerEl = document.getElementById('video-recorder-timer');
+            if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+        }, 1000);
+
+        const btn = document.getElementById('video-btn-record');
+        if (btn) {
+            btn.onclick = stopVideoRecording;
+            btn.innerHTML = '<i data-lucide="square"></i>';
+            btn.classList.add('recording');
+        }
+        initIcons();
+        showToast('กำลังบันทึกวิดีโอ...', 'info');
+    } catch (e) {
+        console.error(e);
+        showToast('เกิดข้อผิดพลาดในการเริ่มบันทึกวิดีโอ', 'error');
+    }
+}
+
+function stopVideoRecording() {
+    if (videoTimerInterval) clearInterval(videoTimerInterval);
+    if (videoRecorder && videoRecorder.state !== 'inactive') {
+        videoRecorder.stop();
+    }
+
+    const controls = document.getElementById('video-record-controls');
+    const preview = document.getElementById('video-preview-controls');
+    if (controls) controls.classList.add('hidden');
+    if (preview) preview.classList.remove('hidden');
+
+    initIcons();
+    showToast('บันทึกวิดีโอเสร็จสิ้น', 'success');
+}
+
+function deleteVideoRecording() {
+    openVideoCapture();
+}
+
+function processVideoRecording() {
+    if (!activeMissionId) {
+        showToast('กรุณาเลือกหรือสร้างภารกิจก่อน', 'warning');
+        return;
+    }
+
+    const prevControls = document.getElementById('video-preview-controls');
+    const procUI = document.getElementById('video-processing-ui');
+
+    if (prevControls) prevControls.classList.add('hidden');
+    if (procUI) procUI.classList.remove('hidden');
+
+    setTimeout(() => {
+        const newKnowledge = {
+            id: 'k_video_' + Date.now(),
+            userId: currentUser.id,
+            missionId: activeMissionId,
+            title: `วิดีโอบันทึกชุมชน (${videoSeconds}s)`,
+            contributor: currentUser.name + ' (วิดีโอ)',
+            sourceType: 'video',
+            content: `วิดีโอบันทึกบรรยากาศและการสาธิตภูมิปัญญาความยาว ${videoSeconds} วินาที — AI ถอดคำพูดและภาพเพื่อสร้างสรุปองค์ความรู้`,
+            topic: 'วิดีโอภูมิปัญญา',
+            consent: true,
+            status: 'pending',
+            createdAt: new Date().toISOString().split('T')[0]
+        };
+
+        StorageService.addKnowledge(newKnowledge);
+        closeVideoCapture();
+        showToast('วิเคราะห์วิดีโอและสกัดองค์ความรู้เรียบร้อยแล้ว!', 'success');
+
+        renderCurrentPage();
+        navigateTo('knowledge');
+    }, 2000);
+}
+
+function handleCameraVideoFallback(files) {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+
+    const newKnowledge = {
+        id: 'k_video_' + Date.now(),
+        userId: currentUser.id,
+        missionId: activeMissionId,
+        title: `วิดีโอ: ${file.name}`,
+        contributor: currentUser.name,
+        sourceType: 'video',
+        content: `คลิปวิดีโอบันทึกชุมชน: ${file.name}`,
+        topic: 'วิดีโอชุมชน',
+        consent: true,
+        status: 'pending',
+        createdAt: new Date().toISOString().split('T')[0]
+    };
+
+    StorageService.addKnowledge(newKnowledge);
+    showToast('อัปโหลดวิดีโอเรียบร้อยแล้ว', 'success');
+    renderCurrentPage();
+    navigateTo('knowledge');
+}
+
+// ===== OFFLINE DETECTION & MOBILE SHEET =====
+function initOfflineDetection() {
+    const banner = document.getElementById('offline-banner');
+    function updateOnlineStatus() {
+        if (!navigator.onLine) {
+            document.body.classList.add('offline-mode');
+            if (banner) banner.classList.remove('hidden');
+            showToast('คุณอยู่ในโหมดออฟไลน์ ข้อมูลจะถูกเก็บไว้ในเครื่องและซิงค์เมื่อเชื่อมต่อเน็ต', 'warning');
+        } else {
+            document.body.classList.remove('offline-mode');
+            if (banner) banner.classList.add('hidden');
+        }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    if (!navigator.onLine) updateOnlineStatus();
+}
+
+function toggleMobileNotificationSheet() {
+    const sheet = document.getElementById('notif-bottom-sheet');
+    if (sheet) {
+        const isHidden = sheet.classList.contains('hidden');
+        if (isHidden) {
+            sheet.classList.remove('hidden');
+            renderMobileNotifications();
+        } else {
+            sheet.classList.add('hidden');
+        }
+    }
+}
+
+function closeMobileNotificationSheet() {
+    document.getElementById('notif-bottom-sheet')?.classList.add('hidden');
+}
+
+function renderMobileNotifications() {
+    const list = document.getElementById('mobile-notif-list');
+    if (!list || !currentUser) return;
+
+    const notifs = NotificationManager.getUserNotifications(currentUser.id);
+    if (notifs.length === 0) {
+        list.innerHTML = `<p style="padding: 16px; font-size: 13px; color: var(--text-muted); text-align: center;">ไม่มีการแจ้งเตือนในขณะนี้</p>`;
+    } else {
+        list.innerHTML = notifs.map(n => `
+            <div class="notif-item ${n.read ? '' : 'unread'}" onclick="handleNotificationClick('${n.id}'); closeMobileNotificationSheet();">
+                <div class="notif-item-title">${n.title}</div>
+                <div class="notif-item-msg">${n.message}</div>
+                <div class="notif-item-time">${n.timestamp}</div>
+            </div>
+        `).join('');
+    }
+    initIcons();
+}
+
